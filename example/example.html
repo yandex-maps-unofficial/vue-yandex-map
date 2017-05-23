@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>vue-yandex-map</title>
+</head>
+<body>
+<div id="app">
+    <yandex-map :latitude=54.62896654088406
+                :longtitude=39.731893822753904
+                style="width: 600px; height: 600px;"
+                hint-content="Hint content 1"
+                balloon-content="Balloon content 1"></yandex-map>
+</div>
+<script src="https://cdn.css.net/libs/vue/2.0.3/vue.js"></script>
+<script src="../vue-yandex-maps.js"></script>
+<script>
+	new Vue({
+		el: '#app'
+	})
+</script>
+</body>
+</html>
