@@ -1,6 +1,15 @@
 <template>
   <div id="app">
-    <yandex-map latitude="54.62896654088406" longtitude="39.731893822753904"></yandex-map>
+    <yandex-map :latitude=54.62896654088406
+                :longtitude=39.731893822753904
+                class="yandexMap"
+                hint-content="Hint content 1"
+                balloon-content="Balloon content 1"></yandex-map>
+    <yandex-map :latitude=54.72896654088406
+                :longtitude=39.731893822753904
+                class="yandexMap"
+                hint-content="Hint content 2"
+                balloon-content="Balloon content 2"></yandex-map>
   </div>
 </template>
 
@@ -43,7 +52,7 @@ a {
   color: #42b983;
 }
 
-  #yandexMap {
+  .yandexMap {
     width: 600px;
     height: 600px;
   }

@@ -1,6 +1,34 @@
 var path = require('path')
 var webpack = require('webpack')
 
+var baseConfig = {
+    entry: './src/main.js',
+    module: {
+        loaders: [
+            {
+                test: /\.vue$/,
+                loader: 'vue'
+            },
+            {
+                test: /\.js$/,
+                loader: 'babel',
+                exclude: /node_modules/
+            },
+            {
+                // edit this for additional asset file types
+                test: /\.(png|jpg|gif)$/,
+                loader: 'file?name=[name].[ext]?[hash]'
+            }
+        ],
+    },
+    // example: if you wish to apply custom babel options
+    // instead of using vue-loader's default:
+    babel: {
+        presets: ['es2015', 'stage-0'],
+        plugins: ['transform-runtime']
+    }
+};
+
 module.exports = {
   entry: './src/main.js',
   output: {
