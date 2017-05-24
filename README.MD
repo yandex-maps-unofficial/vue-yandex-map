@@ -63,10 +63,10 @@ Use <yandex-map> tag to enable the map instance, and use attributes to define ma
 
 | Option | Type | Description |
 | ----- | ----- | ----- |
-| latitude | Number | |
-| longtitude | Number | |
-| hint-content | String | |
-| balloon-content | String | |
+| latitude | Number | Latitude of map center |
+| longtitude | Number | Longtitude of map center |
+| hint-content | String | Tooltip content |
+| balloon-content | String | Balloon content |
 
 # License
 
