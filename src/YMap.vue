@@ -18,12 +18,28 @@
                 type: Number,
                 required: true
             },
+            zoom: {
+                type: Number,
+                default: 18
+            },
             hintContent: String,
-            balloonContent: String
+            balloon: Object,
+            icon: Object
         },
         computed: {
             coords() {
                 return [this.latitude, this.longtitude]
+            },
+            iconPreset() {
+                let secondPart;
+                if (this.icon.glyph) {
+                    secondPart = this.icon.glyph.charAt(0).toUpperCase() + this.icon.glyph.slice(1);
+                } else if (this.icon.content) {
+                    secondPart = 'Stretchy'
+                } else {
+                    secondPart = ''
+                }
+                return this.icon.color + secondPart
             }
         },
         beforeCreate() {
@@ -59,12 +75,17 @@
                     console.log(this.ymapId);
                     myMap = new ymaps.Map(this.ymapId, {
                         center: this.coords,
-                        zoom: 18
+                        zoom: this.zoom
                     });
 
                     myPlacemark = new ymaps.Placemark(this.coords, {
                         hintContent: this.hintContent,
-                        balloonContent: this.balloonContent
+                        iconContent: this.icon.content,
+                        balloonContentHeader: this.balloon.header,
+                        balloonContentBody: this.balloon.body,
+                        balloonContentFooter: this.balloon.footer
+                    }, {
+                        preset: `islands#${this.iconPreset}Icon`
                     });
 
                     myMap.geoObjects.add(myPlacemark);

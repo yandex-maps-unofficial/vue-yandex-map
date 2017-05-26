@@ -8,9 +8,11 @@
 <div id="app">
     <yandex-map :latitude=54.62896654088406
                 :longtitude=39.731893822753904
+                :zoom=10
                 style="width: 600px; height: 600px;"
                 hint-content="Hint content 1"
-                balloon-content="Balloon content 1"></yandex-map>
+                :balloon="{header: 'header', body: 'body', footer: 'footer'}"
+                :icon="{color: 'green', content: 'content', glyph: 'cinema'}"></yandex-map>
 </div>
 <script src="https://cdn.css.net/libs/vue/2.0.3/vue.js"></script>
 <script src="../vue-yandex-maps.js"></script>
