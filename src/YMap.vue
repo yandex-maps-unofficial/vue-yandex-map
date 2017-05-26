@@ -1,5 +1,5 @@
 <template>
-    <div :id=ymapId></div>
+    <div :id="ymapId"></div>
 </template>
 
 <script>
