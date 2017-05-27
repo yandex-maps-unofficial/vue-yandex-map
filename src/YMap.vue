@@ -31,7 +31,8 @@
                 return [this.latitude, this.longtitude]
             },
             iconPreset() {
-                let secondPart;
+                let firstPart = this.icon.color || 'blue',
+                    secondPart;
                 if (this.icon.glyph) {
                     secondPart = this.icon.glyph.charAt(0).toUpperCase() + this.icon.glyph.slice(1);
                 } else if (this.icon.content) {
@@ -39,7 +40,7 @@
                 } else {
                     secondPart = ''
                 }
-                return this.icon.color + secondPart
+                return firstPart + secondPart
             }
         },
         beforeCreate() {
