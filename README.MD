@@ -66,8 +66,8 @@ Use <yandex-map> tag to enable the map instance, and use attributes to define ma
 
 | Option | Type | Description |
 | ----- | ----- | ----- |
-| latitude | Number | Latitude of map center |
-| longtitude | Number | Longtitude of map center |
+| latitude | Number | Latitude of map center. Required |
+| longtitude | Number | Longtitude of map center. Required |
 | zoom | Number | Zoom of map (from 0 to 19). Default value is 18. |
 | hint-content | String | Tooltip content |
 | balloon | Object | Balloon content object with three properties: header, body, footer |
