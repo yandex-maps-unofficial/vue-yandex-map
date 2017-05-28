@@ -1,5 +1,8 @@
 <template>
-    <div :id="ymapId"></div>
+    <section class="ymap-container">
+        <div :id="ymapId" :style="{ width: '100%', height: '100%' }"></div>
+        <slot></slot>
+    </section>
 </template>
 
 <script>
@@ -60,7 +63,7 @@
             }
         },
         created() {
-            window.addEventListener('DOMContentLoaded', () => {
+	        window.addEventListener('DOMContentLoaded', () => {
                 let myMap,
                     myPlacemark;
 
@@ -95,3 +98,15 @@
         }
     }
 </script>
+
+<style lang="scss">
+    .ymap-container {
+        width: 100%;
+        height: 100%;
+
+        .ymap-body {
+            width: 100%;
+            height: 100%;
+        }
+    }
+</style>

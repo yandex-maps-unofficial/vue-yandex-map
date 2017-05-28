@@ -1,7 +1,9 @@
 import YMapPlugin from './YMap.vue';
+import Placemark from './Placemark.vue';
 
 const install = function(Vue) {
   Vue.component('yandex-map', YMapPlugin);
+  Vue.component('ymap-placemark', Placemark);
   Vue.prototype.$ymapEventBus = new Vue({
       data: {
           ymapReady: false,
