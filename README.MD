@@ -81,13 +81,18 @@ Type of marker in `marker-type` attribute can be:
 
 # Attributes
 
-| Attribute | Type | Description | supported marker-types |
-| ----- | ----- | ----- | ----- |
-| <yandex-map> options | |
-| coords | Array [ latitude, longtitude ] | Coordinates of map center. Required | |
+## Map attributes
+
+| Attribute | Type | Description |
+| ----- | ----- | ----- |
+| coords | Array [ latitude, longtitude ] | Coordinates of map center. Required |
 | zoom | Number | Zoom of map (from 0 to 19). Default value is 18. |
-| <ymap-marker> options |
-| marker-type | String | Type of marker |
+
+## Marker attributes
+
+| Attribute | Type | Description | Marker-types |
+| ----- | ----- | ----- | ----- |
+| marker-type | String | Type of marker ||
 | coords | Array [ latitude, longtitude ] | Coordinates of point or circle center. Required | Placemark, Circle |
 | coords | Array of arrays [ [latitude, longtitude], [...] ] | Coordinates of shape corners. Required | Rectangle, Polyline |
 | coords | Array of two arrays of coordinates arrays (first for outer contour, second for inner) [ [[latitude, longtitude], [...]], [[...], [...]] ] | Coordinates of shape corners. Required | Polygon |
