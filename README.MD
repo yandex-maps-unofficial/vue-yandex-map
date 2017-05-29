@@ -61,14 +61,12 @@ Type of marker in `marker-type` attribute can be:
 * Circle
 
 ```HTML
-<yandex-map latitude="54.62896654088406"
-            longtitude="39.731893822753904"
+<yandex-map :coords="[54.62896654088406, 39.731893822753904]"
             zoom="10"
             style="width: 600px; height: 600px;">
 
     <ymap-marker marker-type="placemark"
-                 latitude="54.62896654088406"
-                 longtitude="39.731893822753904"
+                 :coords="[54.62896654088406, 39.731893822753904]"
                  hint-content="Hint content 1"
                  :balloon="{header: 'header', body: 'body', footer: 'footer'}"
                  :icon="{color: 'green', glyph: 'cinema'}"></ymap-marker>
