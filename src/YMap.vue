@@ -13,37 +13,23 @@
             }
         },
         props: {
-            latitude: {
-                type: Number,
-                required: true
-            },
-            longtitude: {
-                type: Number,
+            coords: {
+                type: Array,
+                validator(val) {
+                    return !val.filter(item => isNaN(item)).length
+                },
                 required: true
             },
             zoom: {
-                type: Number,
+                validator(val) {
+                    return !isNaN(val)
+                },
                 default: 18
-            },
-            hintContent: String,
-            balloon: Object,
-            icon: Object
+            }
         },
         computed: {
-            coords() {
-                return [this.latitude, this.longtitude]
-            },
-            iconPreset() {
-                let firstPart = this.icon.color || 'blue',
-                    secondPart;
-                if (this.icon.glyph) {
-                    secondPart = this.icon.glyph.charAt(0).toUpperCase() + this.icon.glyph.slice(1);
-                } else if (this.icon.content) {
-                    secondPart = 'Stretchy'
-                } else {
-                    secondPart = ''
-                }
-                return firstPart + secondPart
+            coordinates() {
+                return this.coords.map(item => +item)
             }
         },
         beforeCreate() {
@@ -64,8 +50,7 @@
         },
         created() {
 	        window.addEventListener('DOMContentLoaded', () => {
-                let myMap,
-                    myPlacemark;
+                let myMap;
 
                 if (this.$ymapEventBus.ymapReady) {
                     ymaps.ready(init.bind(this));
@@ -76,23 +61,74 @@
                 }
 
                 function init() {
-                    console.log(this.ymapId);
                     myMap = new ymaps.Map(this.ymapId, {
-                        center: this.coords,
-                        zoom: this.zoom
+                        center: this.coordinates,
+                        zoom: +this.zoom
                     });
 
-                    myPlacemark = new ymaps.Placemark(this.coords, {
-                        hintContent: this.hintContent,
-                        iconContent: this.icon.content,
-                        balloonContentHeader: this.balloon.header,
-                        balloonContentBody: this.balloon.body,
-                        balloonContentFooter: this.balloon.footer
-                    }, {
-                        preset: `islands#${this.iconPreset}Icon`
-                    });
+                    const myMarkers = this.$slots.default.map(marker => {
+                        const props = marker.componentOptions && marker.componentOptions.propsData;
+                        if (!props) return;
+                        return {
+                            markerType: props.markerType,
+                            coords: setCoordsToNumeric(props.coords),
+                            hintContent: props.hintContent,
+                            icon: props.icon,
+                            balloon: props.balloon,
+                            markerStroke: props.markerStroke,
+                            markerFill: props.markerFill,
+                            circleRadius: +props.circleRadius
+                        }
+                    }).filter(marker => marker && marker.markerType);
 
-                    myMap.geoObjects.add(myPlacemark);
+                    for (let i = 0; i < myMarkers.length; i++) {
+                        const markerType = setFirstLetterToUppercase(myMarkers[i].markerType);
+                        const properties = {
+                            hintContent: myMarkers[i].hintContent,
+                            balloonContentHeader: myMarkers[i].balloon && myMarkers[i].balloon.header,
+                            balloonContentBody: myMarkers[i].balloon && myMarkers[i].balloon.body,
+                            balloonContentFooter: myMarkers[i].balloon && myMarkers[i].balloon.footer,
+                            iconContent: myMarkers[i].icon && myMarkers[i].icon.content,
+                        };
+                        const options = {
+                            preset: myMarkers[i].icon && `islands#${getIconPreset(myMarkers[i])}Icon`,
+                            strokeColor: myMarkers[i].markerStroke && myMarkers[i].markerStroke.color || "0066ffff",
+                            strokeOpacity: myMarkers[i].markerStroke && myMarkers[i].markerStroke.opacity || 1,
+                            strokeStyle: myMarkers[i].markerStroke && myMarkers[i].markerStroke.style,
+                            strokeWidth: myMarkers[i].markerStroke && myMarkers[i].markerStroke.width || 1,
+                            fill: myMarkers[i].markerFill && myMarkers[i].markerFill.enabled || true,
+                            fillColor: myMarkers[i].markerFill && myMarkers[i].markerFill.color || "0066ff99",
+                            fillOpacity: myMarkers[i].markerFill && myMarkers[i].markerFill.opacity || 1
+                        };
+                        if (markerType === 'Circle') {
+                            myMarkers[i].coords = [myMarkers[i].coords, myMarkers[i].circleRadius];
+                        }
+                        const marker = new ymaps[markerType](myMarkers[i].coords, properties, options);
+                        myMap.geoObjects.add(marker);
+                    }
+                }
+
+                function getIconPreset(marker) {
+                    let firstPart = marker.icon.color || 'blue',
+                        secondPart;
+                    if (marker.icon.glyph) {
+                        secondPart = setFirstLetterToUppercase(marker.icon.glyph);
+                    } else if (marker.icon.content) {
+                        secondPart = 'Stretchy'
+                    } else {
+                        secondPart = ''
+                    }
+                    return firstPart + secondPart
+                }
+
+                function setFirstLetterToUppercase(string) {
+                    return string.charAt(0).toUpperCase() + string.slice(1);
+                }
+
+                function setCoordsToNumeric(arr) {
+                    return arr.map(item => {
+                        return Array.isArray(item) ? setCoordsToNumeric(item) : +item;
+                    })
                 }
             })
         }
