@@ -75,6 +75,8 @@ Type of marker in `marker-type` attribute can be:
                  :coords="[54.62896654088406, 39.731893822753904]"
                  circle-radius="1600"
                  hint-content="Hint content 1"
+                 :marker-fill="{color: '#000000', opacity: 0.4}"
+                 :marker-stroke="{color: '#ff0000', width: 5}"
                  :balloon="{header: 'header', body: 'body', footer: 'footer'}"></ymap-marker>
 </yandex-map>
 ```
