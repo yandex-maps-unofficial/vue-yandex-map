@@ -1,5 +1,8 @@
 <template>
-    <div :id="ymapId"></div>
+    <section class="ymap-container">
+        <div :id="ymapId" :style="{ width: '100%', height: '100%' }"></div>
+        <slot></slot>
+    </section>
 </template>
 
 <script>
@@ -31,7 +34,8 @@
                 return [this.latitude, this.longtitude]
             },
             iconPreset() {
-                let secondPart;
+                let firstPart = this.icon.color || 'blue',
+                    secondPart;
                 if (this.icon.glyph) {
                     secondPart = this.icon.glyph.charAt(0).toUpperCase() + this.icon.glyph.slice(1);
                 } else if (this.icon.content) {
@@ -39,7 +43,7 @@
                 } else {
                     secondPart = ''
                 }
-                return this.icon.color + secondPart
+                return firstPart + secondPart
             }
         },
         beforeCreate() {
@@ -59,7 +63,7 @@
             }
         },
         created() {
-            window.addEventListener('DOMContentLoaded', () => {
+	        window.addEventListener('DOMContentLoaded', () => {
                 let myMap,
                     myPlacemark;
 
@@ -94,3 +98,15 @@
         }
     }
 </script>
+
+<style lang="scss">
+    .ymap-container {
+        width: 100%;
+        height: 100%;
+
+        .ymap-body {
+            width: 100%;
+            height: 100%;
+        }
+    }
+</style>
