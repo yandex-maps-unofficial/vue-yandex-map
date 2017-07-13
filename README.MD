@@ -50,28 +50,60 @@ You can use the CDN: https://unpkg.com/vue-yandex-maps, `yandexMap` is exposed t
 
 ## Usage
 
-Use <yandex-map> tag to enable the map instance, and use attributes to define map options.
+Use `<yandex-map>` tag to enable the map instance and use attributes to define map options.
+Use `<ymap-marker>` tag to enable the instance of map-marker.
+Type of marker in `marker-type` attribute can be:
+
+* Placemark
+* Polyline
+* Rectangle
+* Polygon
+* Circle
 
 ```HTML
-<yandex-map :latitude=54.62896654088406
-            :longtitude=39.731893822753904
-            :zoom=10
-            :icon="{color: 'green', glyph: 'cinema'}"
-            :balloon="{header: 'header', body: 'body', footer: 'footer'}"
-            hint-content="Hint content 1"
-            style="width: 600px; height: 600px;"></yandex-map>
+<yandex-map :coords="[54.62896654088406, 39.731893822753904]"
+            zoom="10"
+            style="width: 600px; height: 600px;">
+
+    <ymap-marker marker-type="placemark"
+                 :coords="[54.62896654088406, 39.731893822753904]"
+                 hint-content="Hint content 1"
+                 :balloon="{header: 'header', body: 'body', footer: 'footer'}"
+                 :icon="{color: 'green', glyph: 'cinema'}"></ymap-marker>
+
+    <ymap-marker marker-type="circle"
+                 :coords="[54.62896654088406, 39.731893822753904]"
+                 circle-radius="1600"
+                 hint-content="Hint content 1"
+                 :marker-fill="{color: '#000000', opacity: 0.4}"
+                 :marker-stroke="{color: '#ff0000', width: 5}"
+                 :balloon="{header: 'header', body: 'body', footer: 'footer'}"></ymap-marker>
+</yandex-map>
 ```
 
-# Options
+# Attributes
 
-| Option | Type | Description |
+## Map attributes
+
+| Attribute | Type | Description |
 | ----- | ----- | ----- |
-| latitude | Number | Latitude of map center. Required |
-| longtitude | Number | Longtitude of map center. Required |
+| coords | Array [ latitude, longtitude ] | Coordinates of map center. Required |
 | zoom | Number | Zoom of map (from 0 to 19). Default value is 18. |
-| hint-content | String | Tooltip content |
-| balloon | Object | Balloon content object with three properties: header, body, footer |
-| icon | Object | Icon object with three properties: color (default value is 'blue'), content, glyph. Glyph property have higher priority than content. [List of colors and icons](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/option.presetStorage-docpage/) |
+
+## Marker attributes
+
+| Attribute | Type | Description | Marker-types |
+| ----- | ----- | ----- | ----- |
+| marker-type | String | Type of marker ||
+| coords | Array [ latitude, longtitude ] | Coordinates of point or circle center. Required | Placemark, Circle |
+| coords | Array of arrays [ [latitude, longtitude], [...] ] | Coordinates of shape corners. Required | Rectangle, Polyline |
+| coords | Array of two arrays of coordinates arrays (first for outer contour, second for inner) [ [[latitude, longtitude], [...]], [[...], [...]] ] | Coordinates of shape corners. Required | Polygon |
+| hint-content | String | Tooltip content | All |
+| balloon | Object | Balloon content object with three properties: header, body, footer | All |
+| icon | Object | Icon object with three properties: color (default value is 'blue'), content, glyph. Glyph property have higher priority than content. [List of colors and icons](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/option.presetStorage-docpage/) | Placemark |
+| marker-fill | Object | Fill properties object with two properties: enabled, color, opacity | Polygon, Rectangle, Circle |
+| marker-stroke | Object | Stroke properties object with four properties: color, opacity, width, style | Polygon, Rectangle, Circle, Polyline |
+| circle-radius | Number | Radius of circle in meters. Default value is 1000. | Circle |
 
 # License
 
