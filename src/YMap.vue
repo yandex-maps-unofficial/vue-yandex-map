@@ -5,7 +5,9 @@
     </section>
 </template>
 
-<script>
+<script> 
+    import Vue from 'vue';
+
     export default {
         data() {
             return {
@@ -26,8 +28,14 @@
                 default: 18
             },
             hintContent: String,
-            balloon: Object,
-            icon: Object
+            balloon: {
+                type: Object,
+                default: () => ({})
+            },
+            icon: {
+                type: Object,
+                default: () => ({})
+            }
         },
         computed: {
             coords() {
@@ -47,6 +55,14 @@
             }
         },
         beforeCreate() {
+            if (!this.$ymapEventBus) {
+                this.$ymapEventBus = new Vue({
+                    data: {
+                        ymapReady: false,
+                        scriptIsNotAttached: true
+                    }
+                });
+            }
             if (this.$ymapEventBus.scriptIsNotAttached) {
                 const yandexMapScript = document.createElement('SCRIPT');
                 yandexMapScript.setAttribute('src', 'https://api-maps.yandex.ru/2.1/?lang=ru_RU');
