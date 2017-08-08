@@ -76,7 +76,7 @@
                         zoom: +this.zoom
                     });
 
-                    const myMarkers = this.$slots.default.map(marker => {
+                    const myMarkers = this.$slots.default && this.$slots.default.map(marker => {
                         const props = marker.componentOptions && marker.componentOptions.propsData;
                         if (!props) return;
                         return {
@@ -89,7 +89,7 @@
                             markerFill: props.markerFill,
                             circleRadius: +props.circleRadius
                         }
-                    }).filter(marker => marker && marker.markerType);
+                    }).filter(marker => marker && marker.markerType) || [];
 
                     for (let i = 0; i < myMarkers.length; i++) {
                         const markerType = setFirstLetterToUppercase(myMarkers[i].markerType);

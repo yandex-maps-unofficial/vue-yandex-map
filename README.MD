@@ -14,13 +14,13 @@ You can use any build tool which supports `commonjs`:
 
 ```JavaScript
 // register globally
-var yandexMap =  require('vue-yandex-maps');
+var { yandexMap } =  require('vue-yandex-maps');
 Vue.use(yandexMap)
 
 // or for a single instance
-var yandexMap = require('vue-yandex-maps');
+var { yandexMap, ymapMarker } = require('vue-yandex-maps');
 new Vue({
-  components: {yandexMap}
+  components: { yandexMap, ymapMarker }
 })
 
 ```
@@ -29,13 +29,13 @@ Or in ES2015:
 
 ```JavaScript
 // register globally
-import yandexMap from 'vue-yandex-maps'
+import { yandexMap } from 'vue-yandex-maps'
 Vue.use(yandexMap)
 
 // or for a single instance
-import yandexMap from 'vue-yandex-maps'
+import { yandexMap, ymapMarker } from 'vue-yandex-maps'
 new Vue({
-  components: {yandexMap}
+  components: { yandexMap, ymapMarker }
 })
 
 ```

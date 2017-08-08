@@ -12,10 +12,7 @@ const install = function(Vue) {
   });
 };
 
-if (window.Vue) {
-  window.YMapPlugin = YMapPlugin;
-  Vue.use(install); // eslint-disable-line
-}
-
 YMapPlugin.install = install;
-export default YMapPlugin;
+
+export const yandexMap = YMapPlugin;
+export const ymapMarker = Marker;
