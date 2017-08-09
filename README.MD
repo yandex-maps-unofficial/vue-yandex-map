@@ -61,23 +61,43 @@ Type of marker in `marker-type` attribute can be:
 * Circle
 
 ```HTML
-<yandex-map :coords="[54.62896654088406, 39.731893822753904]"
-            zoom="10"
-            style="width: 600px; height: 600px;">
+<yandex-map 
+  :coords="[54.62896654088406, 39.731893822753904]"
+  zoom="10"
+  style="width: 600px; height: 600px;"
+  :cluster-options="{
+    1: {clusterDisableClickZoom: true}
+  }"
+>
 
-    <ymap-marker marker-type="placemark"
-                 :coords="[54.62896654088406, 39.731893822753904]"
-                 hint-content="Hint content 1"
-                 :balloon="{header: 'header', body: 'body', footer: 'footer'}"
-                 :icon="{color: 'green', glyph: 'cinema'}"></ymap-marker>
+    <ymap-marker 
+      marker-type="placemark"
+      :coords="[54.7, 39.7]"
+      hint-content="Hint content 1"
+      :balloon="{header: 'header', body: 'body', footer: 'footer'}"
+      :icon="{color: 'green', glyph: 'cinema'}"
+      cluster-name="1"
+    ></ymap-marker>
 
-    <ymap-marker marker-type="circle"
-                 :coords="[54.62896654088406, 39.731893822753904]"
-                 circle-radius="1600"
-                 hint-content="Hint content 1"
-                 :marker-fill="{color: '#000000', opacity: 0.4}"
-                 :marker-stroke="{color: '#ff0000', width: 5}"
-                 :balloon="{header: 'header', body: 'body', footer: 'footer'}"></ymap-marker>
+    <ymap-marker 
+      marker-type="placemark"
+      :coords="[54.6, 39.8]"
+      hint-content="Hint content 1"
+      :balloon="{header: 'header', body: 'body', footer: 'footer'}"
+      :icon="{color: 'green', glyph: 'cinema'}"
+      cluster-name="1"
+    ></ymap-marker>
+
+    <ymap-marker 
+      marker-type="circle"
+      :coords="[54.62896654088406, 39.731893822753904]"
+      circle-radius="1600"
+      hint-content="Hint content 1"
+      :marker-fill="{color: '#000000', opacity: 0.4}"
+      :marker-stroke="{color: '#ff0000', width: 5}"
+      :balloon="{header: 'header', body: 'body', footer: 'footer'}"
+    ></ymap-marker>
+
 </yandex-map>
 ```
 
@@ -89,6 +109,7 @@ Type of marker in `marker-type` attribute can be:
 | ----- | ----- | ----- |
 | coords | Array [ latitude, longtitude ] | Coordinates of map center. Required |
 | zoom | Number | Zoom of map (from 0 to 19). Default value is 18. |
+| cluster-options | Object | Map, where key is a name of cluster and value is an object of cluster options. [Cluster option](https://tech.yandex.ru/maps/doc/jsapi/2.0/ref/reference/Cluster-docpage/#param-options) |
 
 ## Marker attributes
 
@@ -104,6 +125,7 @@ Type of marker in `marker-type` attribute can be:
 | marker-fill | Object | Fill properties object with two properties: enabled, color, opacity | Polygon, Rectangle, Circle |
 | marker-stroke | Object | Stroke properties object with four properties: color, opacity, width, style | Polygon, Rectangle, Circle, Polyline |
 | circle-radius | Number | Radius of circle in meters. Default value is 1000. | Circle |
+| cluster-name | String | Attribute for grouping markers in clusters | All |
 
 # License
 

@@ -14,6 +14,7 @@
             },
             markerFill: Object,
             markerStroke: Object,
+            clusterName: String,
             circleRadius: {
                 validator(val) {
                     return !isNaN(val)

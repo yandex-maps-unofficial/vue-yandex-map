@@ -1,6 +1,5 @@
 import vue from 'rollup-plugin-vue';
-import buble from 'rollup-plugin-buble';
-import uglify from 'rollup-plugin-uglify';
+import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
 
 export default {
@@ -9,8 +8,7 @@ export default {
   plugins: [
     resolve(),
     vue({compileTemplate: true}),
-    buble(),
-    uglify()
+    babel()
   ],
   format: 'umd',
   moduleName: 'vueYandexMaps'
