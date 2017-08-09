@@ -27,6 +27,10 @@
                     return !isNaN(val)
                 },
                 default: 18
+            },
+            clusterOptions: {
+                type: Object,
+                default: () => ({})
             }
         },
         computed: {
@@ -61,6 +65,7 @@
         created() {
 	        window.addEventListener('DOMContentLoaded', () => {
                 let myMap;
+                let markers = [];
 
                 if (this.$ymapEventBus.ymapReady) {
                     ymaps.ready(init.bind(this));
@@ -87,7 +92,8 @@
                             balloon: props.balloon,
                             markerStroke: props.markerStroke,
                             markerFill: props.markerFill,
-                            circleRadius: +props.circleRadius
+                            circleRadius: +props.circleRadius,
+                            clusterName: props.clusterName
                         }
                     }).filter(marker => marker && marker.markerType) || [];
 
@@ -113,8 +119,25 @@
                         if (markerType === 'Circle') {
                             myMarkers[i].coords = [myMarkers[i].coords, myMarkers[i].circleRadius];
                         }
-                        const marker = new ymaps[markerType](myMarkers[i].coords, properties, options);
+                        let marker = new ymaps[markerType](myMarkers[i].coords, properties, options);
+                        marker.clusterName = myMarkers[i].clusterName;
+                        markers.push(marker);
                         myMap.geoObjects.add(marker);
+                    }
+                    createClusters(markers, this.clusterOptions);
+                }
+
+                function createClusters(markers, options) {
+                    let clusters = {};
+                    for (let marker of markers) {
+                        if (!marker.clusterName) continue;
+                        clusters[marker.clusterName] = clusters[marker.clusterName] ? [...clusters[marker.clusterName], marker] : [marker];
+                    }
+                    for (let clusterName in clusters) {
+                        const clusterOptions = options[clusterName] || {};
+                        const clusterer = new ymaps.Clusterer(clusterOptions);
+                        clusterer.add(clusters[clusterName]);
+                        myMap.geoObjects.add(clusterer);
                     }
                 }
 
