@@ -11,7 +11,8 @@
     export default {
         data() {
             return {
-                ymapId: 'yandexMap' + Math.round(Math.random()*100000)
+                ymapId: 'yandexMap' + Math.round(Math.random()*100000),
+                myMap: {}
             }
         },
         props: {
@@ -38,9 +39,21 @@
                 return this.coords.map(item => +item)
             }
         },
-        beforeCreate() {
+        methods: {
+            changeMarkerProps(options) {
+                this.myMap.geoObjects && this.myMap.geoObjects.each(geoObject => {
+                    console.log(geoObject.getOverlay().then(x => x));
+                })
+            }
+        },
+        watch: {
+            coordinates(newVal) {
+                this.myMap.setCenter(newVal, this.zoom)
+            }
+        },
+        beforeMount() {
             if (!this.$ymapEventBus) {
-                this.$ymapEventBus = new Vue({
+                Vue.prototype.$ymapEventBus = new Vue({
                     data: {
                         ymapReady: false,
                         scriptIsNotAttached: true
@@ -62,9 +75,8 @@
                 return false;
             }
         },
-        created() {
+        mounted() {
 	        window.addEventListener('DOMContentLoaded', () => {
-                let myMap;
                 let markers = [];
 
                 if (this.$ymapEventBus.ymapReady) {
@@ -76,7 +88,7 @@
                 }
 
                 function init() {
-                    myMap = new ymaps.Map(this.ymapId, {
+                    this.myMap = new ymaps.Map(this.ymapId, {
                         center: this.coordinates,
                         zoom: +this.zoom
                     });
@@ -85,6 +97,7 @@
                         const props = marker.componentOptions && marker.componentOptions.propsData;
                         if (!props) return;
                         return {
+                            markerId: props.markerId,
                             markerType: props.markerType,
                             coords: setCoordsToNumeric(props.coords),
                             hintContent: props.hintContent,
@@ -120,14 +133,15 @@
                             myMarkers[i].coords = [myMarkers[i].coords, myMarkers[i].circleRadius];
                         }
                         let marker = new ymaps[markerType](myMarkers[i].coords, properties, options);
+                        marker.id = myMarkers[i].markerId;
                         marker.clusterName = myMarkers[i].clusterName;
                         markers.push(marker);
-                        myMap.geoObjects.add(marker);
+                        this.myMap.geoObjects.add(marker);
                     }
-                    createClusters(markers, this.clusterOptions);
+                    createClusters(markers, this.clusterOptions, this.myMap);
                 }
 
-                function createClusters(markers, options) {
+                function createClusters(markers, options, map) {
                     let clusters = {};
                     for (let marker of markers) {
                         if (!marker.clusterName) continue;
@@ -137,7 +151,7 @@
                         const clusterOptions = options[clusterName] || {};
                         const clusterer = new ymaps.Clusterer(clusterOptions);
                         clusterer.add(clusters[clusterName]);
-                        myMap.geoObjects.add(clusterer);
+                        map.geoObjects.add(clusterer);
                     }
                 }
 
@@ -164,6 +178,7 @@
                     })
                 }
             })
+            this.$ymapEventBus.$on('changeMarkerProps', this.changeMarkerProps)
         }
     }
 </script>

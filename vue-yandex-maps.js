@@ -6752,7 +6752,8 @@ var YMapPlugin = { render: function render() {
     }, staticRenderFns: [],
     data: function data() {
         return {
-            ymapId: 'yandexMap' + Math.round(Math.random() * 100000)
+            ymapId: 'yandexMap' + Math.round(Math.random() * 100000),
+            myMap: {}
         };
     },
 
@@ -6788,11 +6789,25 @@ var YMapPlugin = { render: function render() {
             });
         }
     },
-    beforeCreate: function beforeCreate() {
+    methods: {
+        changeMarkerProps: function changeMarkerProps(options) {
+            this.myMap.geoObjects && this.myMap.geoObjects.each(function (geoObject) {
+                console.log(geoObject.getOverlay().then(function (x) {
+                    return x;
+                }));
+            });
+        }
+    },
+    watch: {
+        coordinates: function coordinates(newVal) {
+            this.myMap.setCenter(newVal, this.zoom);
+        }
+    },
+    beforeMount: function beforeMount() {
         var _this = this;
 
         if (!this.$ymapEventBus) {
-            this.$ymapEventBus = new Vue$3({
+            Vue$3.prototype.$ymapEventBus = new Vue$3({
                 data: {
                     ymapReady: false,
                     scriptIsNotAttached: true
@@ -6814,11 +6829,10 @@ var YMapPlugin = { render: function render() {
             return false;
         }
     },
-    created: function created() {
+    mounted: function mounted() {
         var _this2 = this;
 
         window.addEventListener('DOMContentLoaded', function () {
-            var myMap = void 0;
             var markers = [];
 
             if (_this2.$ymapEventBus.ymapReady) {
@@ -6830,7 +6844,7 @@ var YMapPlugin = { render: function render() {
             }
 
             function init() {
-                myMap = new ymaps.Map(this.ymapId, {
+                this.myMap = new ymaps.Map(this.ymapId, {
                     center: this.coordinates,
                     zoom: +this.zoom
                 });
@@ -6839,6 +6853,7 @@ var YMapPlugin = { render: function render() {
                     var props = marker.componentOptions && marker.componentOptions.propsData;
                     if (!props) return;
                     return {
+                        markerId: props.markerId,
                         markerType: props.markerType,
                         coords: setCoordsToNumeric(props.coords),
                         hintContent: props.hintContent,
@@ -6876,14 +6891,15 @@ var YMapPlugin = { render: function render() {
                         myMarkers[i].coords = [myMarkers[i].coords, myMarkers[i].circleRadius];
                     }
                     var marker = new ymaps[markerType](myMarkers[i].coords, properties, options);
+                    marker.id = myMarkers[i].markerId;
                     marker.clusterName = myMarkers[i].clusterName;
                     markers.push(marker);
-                    myMap.geoObjects.add(marker);
+                    this.myMap.geoObjects.add(marker);
                 }
-                createClusters(markers, this.clusterOptions);
+                createClusters(markers, this.clusterOptions, this.myMap);
             }
 
-            function createClusters(markers, options) {
+            function createClusters(markers, options, map) {
                 var clusters = {};
                 var _iteratorNormalCompletion = true;
                 var _didIteratorError = false;
@@ -6915,7 +6931,7 @@ var YMapPlugin = { render: function render() {
                     var clusterOptions = options[clusterName] || {};
                     var clusterer = new ymaps.Clusterer(clusterOptions);
                     clusterer.add(clusters[clusterName]);
-                    myMap.geoObjects.add(clusterer);
+                    map.geoObjects.add(clusterer);
                 }
             }
 
@@ -6942,6 +6958,7 @@ var YMapPlugin = { render: function render() {
                 });
             }
         });
+        this.$ymapEventBus.$on('changeMarkerProps', this.changeMarkerProps);
     }
 };
 
@@ -6949,6 +6966,9 @@ var Marker = {
     props: {
         coords: {
             type: Array,
+            required: true
+        },
+        markerId: {
             required: true
         },
         hintContent: String,
@@ -6967,6 +6987,20 @@ var Marker = {
             },
 
             default: 1000
+        }
+    },
+    methods: {
+        emitChanges: function emitChanges(field, val) {
+            this.$ymapEventBus.$emit('changeMarkerProps', {
+                markerId: this.markerId,
+                changedField: field,
+                fieldValue: val
+            });
+        }
+    },
+    watch: {
+        coords: function coords(newVal) {
+            this.emitChanges('coords', newVal);
         }
     },
     render: function render() {}
