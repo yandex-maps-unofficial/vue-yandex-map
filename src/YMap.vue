@@ -53,7 +53,7 @@
         },
         beforeMount() {
             if (!this.$ymapEventBus) {
-                Vue.prototype.$ymapEventBus = new Vue({
+                this.$ymapEventBus = new Vue({
                     data: {
                         ymapReady: false,
                         scriptIsNotAttached: true

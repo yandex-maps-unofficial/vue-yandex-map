@@ -5,9 +5,6 @@
                 type: Array,
                 required: true
             },
-            markerId: {
-                required: true
-            },
             hintContent: String,
             icon: Object,
             balloon: Object,

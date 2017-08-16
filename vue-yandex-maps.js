@@ -6807,7 +6807,7 @@ var YMapPlugin = { render: function render() {
         var _this = this;
 
         if (!this.$ymapEventBus) {
-            Vue$3.prototype.$ymapEventBus = new Vue$3({
+            this.$ymapEventBus = new Vue$3({
                 data: {
                     ymapReady: false,
                     scriptIsNotAttached: true
