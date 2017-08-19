@@ -32,6 +32,21 @@
             clusterOptions: {
                 type: Object,
                 default: () => ({})
+            },
+            behaviors: {
+                type: Array,
+                default: () => ['default']
+            },
+            controls: {
+                type: Array,
+                default: () => ['default']
+            },
+            mapType: {
+                type: String,
+                default: 'map',
+                validator(val) {
+                    return ['map', 'satellite', 'hybrid'].includes(val)
+                }
             }
         },
         computed: {
@@ -48,7 +63,7 @@
         },
         watch: {
             coordinates(newVal) {
-                this.myMap.setCenter(newVal, this.zoom)
+                this.myMap.setCenter && this.myMap.setCenter(newVal, this.zoom)
             }
         },
         beforeMount() {
@@ -89,7 +104,10 @@
             function init() {
                 this.myMap = new ymaps.Map(this.ymapId, {
                     center: this.coordinates,
-                    zoom: +this.zoom
+                    zoom: +this.zoom,
+                    behaviors: this.behaviors,
+                    controls: this.controls,
+                    type: `yandex#${this.mapType}`
                 });
 
                 const myMarkers = this.$slots.default && this.$slots.default.map(marker => {

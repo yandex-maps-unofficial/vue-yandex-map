@@ -16,3 +16,5 @@ YMapPlugin.install = install;
 
 export const yandexMap = YMapPlugin;
 export const ymapMarker = Marker;
+
+export default YMapPlugin;

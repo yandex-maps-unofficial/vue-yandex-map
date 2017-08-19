@@ -14,11 +14,11 @@ You can use any build tool which supports `commonjs`:
 
 ```JavaScript
 // register globally
-var { yandexMap } =  require('vue-yandex-maps');
-Vue.use(yandexMap)
+const YmapPlugin =  require('vue-yandex-maps');
+Vue.use(YmapPlugin)
 
 // or for a single instance
-var { yandexMap, ymapMarker } = require('vue-yandex-maps');
+const { yandexMap, ymapMarker } = require('vue-yandex-maps');
 new Vue({
   components: { yandexMap, ymapMarker }
 })
@@ -29,8 +29,8 @@ Or in ES2015:
 
 ```JavaScript
 // register globally
-import { yandexMap } from 'vue-yandex-maps'
-Vue.use(yandexMap)
+import YmapPlugin from 'vue-yandex-maps'
+Vue.use(YmapPlugin)
 
 // or for a single instance
 import { yandexMap, ymapMarker } from 'vue-yandex-maps'
@@ -68,6 +68,9 @@ Type of marker in `marker-type` attribute can be:
   :cluster-options="{
     1: {clusterDisableClickZoom: true}
   }"
+  :behaviors="['ruler']"
+  :controls="['trafficControl']"
+  map-type="hybrid"
 >
 
     <ymap-marker 
@@ -110,6 +113,9 @@ Type of marker in `marker-type` attribute can be:
 | coords | Array [ latitude, longtitude ] | Coordinates of map center. Required |
 | zoom | Number | Zoom of map (from 0 to 19). Default value is 18. |
 | cluster-options | Object | Map, where key is a name of cluster and value is an object of cluster options. [Cluster option](https://tech.yandex.ru/maps/doc/jsapi/2.0/ref/reference/Cluster-docpage/#param-options) |
+| behaviors | Array | Array of enabled map behaviors. All another will be disabled. [Behaviors](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/map.behavior.Manager-docpage/#param-behaviors) |
+| controls | Array | Array of enabled map controls. All another will be disabled. [Controls](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/control.Manager-docpage/#add-param-control) |
+| map-type | String | Map type. Possible types: map, satellite, hybrid. Default value is map. |
 
 ## Marker attributes
 
