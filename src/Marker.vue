@@ -24,20 +24,6 @@
             onClick: Function,
             data: Object
         },
-        methods: {
-            emitChanges(field, val) {
-                this.$ymapEventBus.$emit('changeMarkerProps', {
-                    markerId: this.markerId,
-                    changedField: field,
-                    fieldValue: val
-                })
-            }
-        },
-        watch: {
-            coords(newVal) {
-                this.emitChanges('coords', newVal);
-            }
-        },
         render() {
         }
     }
