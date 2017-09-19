@@ -136,7 +136,7 @@ export default {
                     clusterName: props.clusterName
                 };
 
-                if (props.icon.layout === 'default#image') {
+                if (props.icon && props.icon.layout === 'default#image') {
                     marker.iconLayout = props.icon.layout;
                     marker.iconImageHref = props.icon.imageHref;
                     marker.iconImageSize = props.icon.imageSize;
@@ -203,8 +203,8 @@ export default {
                     let yplacemark =
                         new ymaps.Placemark(
                             placemark.coordinates,
-                            placemark.properties,
-                            placemark.options
+                            placemark.properties || {},
+                            placemark.options || {}
                         );
 
                     myGeoObjects.add(yplacemark);
