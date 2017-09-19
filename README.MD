@@ -51,7 +51,9 @@ You can use the CDN: https://unpkg.com/vue-yandex-maps, `yandexMap` is exposed t
 ## Usage
 
 Use `<yandex-map>` tag to enable the map instance and use attributes to define map options.
-Use `<ymap-marker>` tag to enable the instance of map-marker.
+
+You may define placemarks on your map by using `<ymap-marker>` tag or set an array of objects with placemark options through `<yandex-map>` attribute `placemarks`. You also can use both methods together.
+
 Type of marker in `marker-type` attribute can be:
 
 * Placemark
@@ -70,6 +72,13 @@ Type of marker in `marker-type` attribute can be:
   }"
   :behaviors="['ruler']"
   :controls="['trafficControl']"
+  :placemarks="[
+    {
+      coords: [54.8, 39.8],
+      properties: {}, // define properties here
+      options: {} // define options here
+    }
+  ]"
   map-type="hybrid"
 >
 
@@ -116,6 +125,8 @@ Type of marker in `marker-type` attribute can be:
 | behaviors | Array | Array of enabled map behaviors. All another will be disabled. [Behaviors](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/map.behavior.Manager-docpage/#param-behaviors) |
 | controls | Array | Array of enabled map controls. All another will be disabled. [Controls](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/control.Manager-docpage/#add-param-control) |
 | map-type | String | Map type. Possible types: map, satellite, hybrid. Default value is map. |
+| scroll-zoom | Boolean | Set to false to disable zoom map on scroll page |
+| zoom-control  | Object | Configs for zoomControl of the map. [More](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/control.ZoomControl-docpage/) |
 
 ## Marker attributes
 
@@ -127,11 +138,30 @@ Type of marker in `marker-type` attribute can be:
 | coords | Array of two arrays of coordinates arrays (first for outer contour, second for inner) [ [[latitude, longtitude], [...]], [[...], [...]] ] | Coordinates of shape corners. Required | Polygon |
 | hint-content | String | Tooltip content | All |
 | balloon | Object | Balloon content object with three properties: header, body, footer | All |
-| icon | Object | Icon object with three properties: color (default value is 'blue'), content, glyph. Glyph property have higher priority than content. [List of colors and icons](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/option.presetStorage-docpage/) | Placemark |
+| icon | Object | [About icons](#icons) | Placemark |
 | marker-fill | Object | Fill properties object with two properties: enabled, color, opacity | Polygon, Rectangle, Circle |
 | marker-stroke | Object | Stroke properties object with four properties: color, opacity, width, style | Polygon, Rectangle, Circle, Polyline |
 | circle-radius | Number | Radius of circle in meters. Default value is 1000. | Circle |
 | cluster-name | String | Attribute for grouping markers in clusters | All |
+| on-click | Function | Callback function with target placemark as an argument | All |
+
+# Icons
+
+You may define icon attribute as object with three properties: color (default value is 'blue'), content, glyph. Glyph property have higher priority than content. [List of colors and icons](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/option.presetStorage-docpage/). In this way you get classic placemark.
+
+Or you may define it as a placemark with custom icon. In this case you need to set the object of the following form: 
+
+```JavaScript
+{
+  layout: 'default#image',
+  imageHref: markerIcon,
+  imageSize: [43, 55],
+  imageOffset: [-22, -55]
+}
+
+```
+
+where `markerIcon`: data or computed path to image or data:image/svg+xml;base64, `imageSize`: size of icon in px, `imageOffset`: icon offset in px
 
 # License
 

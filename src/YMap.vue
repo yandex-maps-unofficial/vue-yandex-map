@@ -117,7 +117,8 @@ export default {
                 type: `yandex#${this.mapType}`
             });
             if (this.zoomControl) {
-                this.myMap.controls.add(new ymaps.control.ZoomControl(this.zoomControl), this.zoomControlPosition);
+                this.myMap.controls.remove('zoomControl');
+                this.myMap.controls.add(new ymaps.control.ZoomControl(this.zoomControl));
             }
             if (this.scrollZoom === false) {
                 this.myMap.behaviors.disable('scrollZoom');
@@ -202,7 +203,7 @@ export default {
                 this.placemarks.forEach(function(placemark) {
                     let yplacemark =
                         new ymaps.Placemark(
-                            placemark.coordinates,
+                            placemark.coords,
                             placemark.properties || {},
                             placemark.options || {}
                         );
