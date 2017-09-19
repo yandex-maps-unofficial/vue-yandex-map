@@ -20,7 +20,9 @@
                     return !isNaN(val)
                 },
                 default: 1000
-            }
+            },
+            onClick: Function,
+            data: Object
         },
         methods: {
             emitChanges(field, val) {
@@ -36,6 +38,7 @@
                 this.emitChanges('coords', newVal);
             }
         },
-        render() {}
+        render() {
+        }
     }
 </script>

@@ -5,7 +5,7 @@
     </section>
 </template>
 
-<script> 
+<script>
     import Vue from 'vue';
 
     export default {
@@ -40,6 +40,17 @@
             controls: {
                 type: Array,
                 default: () => ['default']
+            },
+            scrollZoom: {
+                type: Boolean
+            },
+            zoomControl: {
+                type: Object,
+//              default: () => ({})
+            },
+            zoomControlPosition: {
+                type: Object,
+                default: () => ({})
             },
             mapType: {
                 type: String,
@@ -90,7 +101,7 @@
                 return false;
             }
         },
-        mounted() {	        
+        mounted() {
             let markers = [];
 
             if (this.$ymapEventBus.ymapReady) {
@@ -109,23 +120,45 @@
                     controls: this.controls,
                     type: `yandex#${this.mapType}`
                 });
+                if (this.zoomControl) {
+                    this.myMap.controls.add(new ymaps.control.ZoomControl(this.zoomControl), this.zoomControlPosition);
+                }
+                if (this.scrollZoom === false) {
+                    this.myMap.behaviors.disable('scrollZoom');
+                }
+                const myMarkers = this.$slots.default && this.$slots.default.map(m => {
+                        const props = m.componentOptions && m.componentOptions.propsData;
+                        if (!props) return;
 
-                const myMarkers = this.$slots.default && this.$slots.default.map(marker => {
-                    const props = marker.componentOptions && marker.componentOptions.propsData;
-                    if (!props) return;
-                    return {
-                        markerId: props.markerId,
-                        markerType: props.markerType,
-                        coords: setCoordsToNumeric(props.coords),
-                        hintContent: props.hintContent,
-                        icon: props.icon,
-                        balloon: props.balloon,
-                        markerStroke: props.markerStroke,
-                        markerFill: props.markerFill,
-                        circleRadius: +props.circleRadius,
-                        clusterName: props.clusterName
-                    }
-                }).filter(marker => marker && marker.markerType) || [];
+                        let marker = {
+                            markerId: props.markerId,
+                            markerType: props.markerType,
+                            coords: setCoordsToNumeric(props.coords),
+                            hintContent: props.hintContent,
+                            markerFill: props.markerFill,
+                            circleRadius: +props.circleRadius,
+                            clusterName: props.clusterName
+                        };
+
+                        if (props.icon.layout === 'default#image') {
+                            marker.iconLayout = props.icon.layout;
+                            marker.iconImageHref = props.icon.imageHref;
+                            marker.iconImageSize = props.icon.imageSize;
+                            marker.iconImageOffset = props.icon.imageOffset;
+//                        marker.balloonLayout = "default#imageWithContent";
+                        } else {
+                            marker.icon = props.icon;
+                            marker.balloon = props.balloon;
+                            marker.markerStroke = props.markerStroke;
+                        }
+                        if (props.onClick) {
+                            marker.onClick = props.onClick
+                        }
+                        if (props.data) {
+                            marker.data = props.data
+                        }
+                        return marker
+                    }).filter(marker => marker && marker.markerType) || [];
 
                 for (let i = 0; i < myMarkers.length; i++) {
                     const markerType = setFirstLetterToUppercase(myMarkers[i].markerType);
@@ -136,25 +169,46 @@
                         balloonContentFooter: myMarkers[i].balloon && myMarkers[i].balloon.footer,
                         iconContent: myMarkers[i].icon && myMarkers[i].icon.content,
                     };
-                    const options = {
-                        preset: myMarkers[i].icon && `islands#${getIconPreset(myMarkers[i])}Icon`,
-                        strokeColor: myMarkers[i].markerStroke && myMarkers[i].markerStroke.color || "0066ffff",
-                        strokeOpacity: myMarkers[i].markerStroke && myMarkers[i].markerStroke.opacity || 1,
-                        strokeStyle: myMarkers[i].markerStroke && myMarkers[i].markerStroke.style,
-                        strokeWidth: myMarkers[i].markerStroke && myMarkers[i].markerStroke.width || 1,
-                        fill: myMarkers[i].markerFill && myMarkers[i].markerFill.enabled || true,
-                        fillColor: myMarkers[i].markerFill && myMarkers[i].markerFill.color || "0066ff99",
-                        fillOpacity: myMarkers[i].markerFill && myMarkers[i].markerFill.opacity || 1
-                    };
+                    let options;
+                    if (myMarkers[i].iconLayout) {
+                        options = {
+                            iconLayout: myMarkers[i].iconLayout,
+                            iconImageHref: myMarkers[i].iconImageHref,
+                            iconImageSize: myMarkers[i].iconImageSize,
+                            iconImageOffset: myMarkers[i].iconImageOffset,
+                        }
+                    } else {
+                        options = {
+                            preset: myMarkers[i].icon && `islands#${getIconPreset(myMarkers[i])}Icon`,
+                            strokeColor: myMarkers[i].markerStroke && myMarkers[i].markerStroke.color || "0066ffff",
+                            strokeOpacity: myMarkers[i].markerStroke && myMarkers[i].markerStroke.opacity || 1,
+                            strokeStyle: myMarkers[i].markerStroke && myMarkers[i].markerStroke.style,
+                            strokeWidth: myMarkers[i].markerStroke && myMarkers[i].markerStroke.width || 1,
+                            fill: myMarkers[i].markerFill && myMarkers[i].markerFill.enabled || true,
+                            fillColor: myMarkers[i].markerFill && myMarkers[i].markerFill.color || "0066ff99",
+                            fillOpacity: myMarkers[i].markerFill && myMarkers[i].markerFill.opacity || 1
+                        };
+                    }
+
                     if (markerType === 'Circle') {
                         myMarkers[i].coords = [myMarkers[i].coords, myMarkers[i].circleRadius];
                     }
                     let marker = new ymaps[markerType](myMarkers[i].coords, properties, options);
                     marker.id = myMarkers[i].markerId;
                     marker.clusterName = myMarkers[i].clusterName;
+                    marker.properties.set('markerId', i);
+
                     markers.push(marker);
                     this.myMap.geoObjects.add(marker);
                 }
+
+                this.myMap.geoObjects.events.add('click', function (e) {
+                    const i = e.get('target').properties.get('markerId');
+                    if (myMarkers[i].onClick) {
+                        myMarkers[i].onClick(myMarkers[i]);
+                    }
+                });
+
                 createClusters(markers, this.clusterOptions, this.myMap);
             }
 
@@ -194,7 +248,7 @@
                     return Array.isArray(item) ? setCoordsToNumeric(item) : +item;
                 })
             }
-            
+
             this.$ymapEventBus.$on('changeMarkerProps', this.changeMarkerProps)
         }
     }
