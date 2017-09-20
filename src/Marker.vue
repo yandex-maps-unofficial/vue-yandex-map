@@ -8,6 +8,7 @@
             hintContent: String,
             icon: Object,
             balloon: Object,
+            markerId: String,
             markerType: {
                 type: String,
                 required: true

@@ -7077,7 +7077,7 @@ var YMapPlugin$1 = { render: function render() {
             this.myMap.geoObjects.events.add('click', function (e) {
                 var i = e.get('target').properties.get('markerId');
                 if (myMarkers[i].onClick) {
-                    myMarkers[i].onClick(myMarkers[i]);
+                    myMarkers[i].onClick(myMarkers[i], markers);
                 }
             });
 
@@ -7156,6 +7156,7 @@ var Marker = {
         hintContent: String,
         icon: Object,
         balloon: Object,
+        markerId: String,
         markerType: {
             type: String,
             required: true
