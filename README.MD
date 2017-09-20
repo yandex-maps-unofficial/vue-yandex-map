@@ -127,6 +127,7 @@ Type of marker in `marker-type` attribute can be:
 | map-type | String | Map type. Possible types: map, satellite, hybrid. Default value is map. |
 | scroll-zoom | Boolean | Set to false to disable zoom map on scroll page |
 | zoom-control  | Object | Configs for zoomControl of the map. [More](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/control.ZoomControl-docpage/) |
+| placemarks  | Array of Objects | Array of config objects with fields: coordinates ([lat, lon]), properties, options. [More](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Placemark-docpage/) |
 
 ## Marker attributes
 
