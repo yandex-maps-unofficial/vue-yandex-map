@@ -144,7 +144,7 @@ Type of marker in `marker-type` attribute can be:
 | marker-stroke | Object | Stroke properties object with four properties: color, opacity, width, style | Polygon, Rectangle, Circle, Polyline |
 | circle-radius | Number | Radius of circle in meters. Default value is 1000. | Circle |
 | cluster-name | String | Attribute for grouping markers in clusters | All |
-| on-click | Function | Callback function with target placemark as an argument | All |
+| callbacks | Object | Object, where key is an event name and value is a callback function, e.g. { click: function() {...}, contextmenu: anotherFunction }. [Events list](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#events-summary) | All |
 
 # Icons
 

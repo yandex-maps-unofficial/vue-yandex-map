@@ -134,7 +134,9 @@ export default {
                     hintContent: props.hintContent,
                     markerFill: props.markerFill,
                     circleRadius: +props.circleRadius,
-                    clusterName: props.clusterName
+                    clusterName: props.clusterName,
+                    markerStroke: props.markerStroke,
+                    balloon: props.balloon
                 };
 
                 if (props.icon && props.icon.layout === 'default#image') {
@@ -145,11 +147,9 @@ export default {
                     //                        marker.balloonLayout = "default#imageWithContent";
                 } else {
                     marker.icon = props.icon;
-                    marker.balloon = props.balloon;
-                    marker.markerStroke = props.markerStroke;
                 }
-                if (props.onClick) {
-                    marker.onClick = props.onClick
+                if (props.callbacks) {
+                    marker.callbacks = props.callbacks
                 }
                 if (props.data) {
                     marker.data = props.data
@@ -191,6 +191,11 @@ export default {
                     myMarkers[i].coords = [myMarkers[i].coords, myMarkers[i].circleRadius];
                 }
                 let marker = new ymaps[markerType](myMarkers[i].coords, properties, options);
+                if (myMarkers[i].callbacks && typeof myMarkers[i].callbacks === 'object') {
+                    for (let key in myMarkers[i].callbacks) {
+                        marker.events.add(key, myMarkers[i].callbacks[key]);
+                    }
+                }
                 marker.id = myMarkers[i].markerId;
                 marker.clusterName = myMarkers[i].clusterName;
                 marker.properties.set('markerId', i);
@@ -213,12 +218,6 @@ export default {
             }
 
             this.myMap.geoObjects.add(myGeoObjects);
-            this.myMap.geoObjects.events.add('click', function(e) {
-                const i = e.get('target').properties.get('markerId');
-                if (myMarkers[i].onClick) {
-                    myMarkers[i].onClick(myMarkers[i]);
-                }
-            });
 
             createClusters(markers, this.clusterOptions, this.myMap);
         }

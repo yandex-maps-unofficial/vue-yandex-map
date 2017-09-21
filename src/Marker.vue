@@ -21,7 +21,7 @@
                 },
                 default: 1000
             },
-            onClick: Function,
+            callbacks: Object,
             data: Object
         },
         render() {

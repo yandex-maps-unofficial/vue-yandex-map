@@ -6920,21 +6920,13 @@ var YMapPlugin$1 = { render: function render() {
             validator: function validator(val) {
                 return ['map', 'satellite', 'hybrid'].includes(val);
             }
-        }
+        },
+        placemarks: Array
     },
     computed: {
         coordinates: function coordinates() {
             return this.coords.map(function (item) {
                 return +item;
-            });
-        }
-    },
-    methods: {
-        changeMarkerProps: function changeMarkerProps(options) {
-            this.myMap.geoObjects && this.myMap.geoObjects.each(function (geoObject) {
-                console.log(geoObject.getOverlay().then(function (x) {
-                    return x;
-                }));
             });
         }
     },
@@ -6983,6 +6975,8 @@ var YMapPlugin$1 = { render: function render() {
         }
 
         function init() {
+            var myGeoObjects = new ymaps.GeoObjectCollection();
+
             this.myMap = new ymaps.Map(this.ymapId, {
                 center: this.coordinates,
                 zoom: +this.zoom,
@@ -6991,7 +6985,8 @@ var YMapPlugin$1 = { render: function render() {
                 type: 'yandex#' + this.mapType
             });
             if (this.zoomControl) {
-                this.myMap.controls.add(new ymaps.control.ZoomControl(this.zoomControl), this.zoomControlPosition);
+                this.myMap.controls.remove('zoomControl');
+                this.myMap.controls.add(new ymaps.control.ZoomControl(this.zoomControl));
             }
             if (this.scrollZoom === false) {
                 this.myMap.behaviors.disable('scrollZoom');
@@ -7010,7 +7005,7 @@ var YMapPlugin$1 = { render: function render() {
                     clusterName: props.clusterName
                 };
 
-                if (props.icon.layout === 'default#image') {
+                if (props.icon && props.icon.layout === 'default#image') {
                     marker.iconLayout = props.icon.layout;
                     marker.iconImageHref = props.icon.imageHref;
                     marker.iconImageSize = props.icon.imageSize;
@@ -7071,9 +7066,18 @@ var YMapPlugin$1 = { render: function render() {
                 marker.properties.set('markerId', i);
 
                 markers.push(marker);
-                this.myMap.geoObjects.add(marker);
+                myGeoObjects.add(marker);
             }
 
+            if (this.placemarks) {
+                this.placemarks.forEach(function (placemark) {
+                    var yplacemark = new ymaps.Placemark(placemark.coords, placemark.properties || {}, placemark.options || {});
+
+                    myGeoObjects.add(yplacemark);
+                });
+            }
+
+            this.myMap.geoObjects.add(myGeoObjects);
             this.myMap.geoObjects.events.add('click', function (e) {
                 var i = e.get('target').properties.get('markerId');
                 if (myMarkers[i].onClick) {
@@ -7142,8 +7146,6 @@ var YMapPlugin$1 = { render: function render() {
                 return Array.isArray(item) ? setCoordsToNumeric(item) : +item;
             });
         }
-
-        this.$ymapEventBus.$on('changeMarkerProps', this.changeMarkerProps);
     }
 };
 
@@ -7172,20 +7174,6 @@ var Marker = {
         },
         onClick: Function,
         data: Object
-    },
-    methods: {
-        emitChanges: function emitChanges(field, val) {
-            this.$ymapEventBus.$emit('changeMarkerProps', {
-                markerId: this.markerId,
-                changedField: field,
-                fieldValue: val
-            });
-        }
-    },
-    watch: {
-        coords: function coords(newVal) {
-            this.emitChanges('coords', newVal);
-        }
     },
     render: function render() {}
 };
