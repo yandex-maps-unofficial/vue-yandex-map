@@ -191,11 +191,7 @@ export default {
                     myMarkers[i].coords = [myMarkers[i].coords, myMarkers[i].circleRadius];
                 }
                 let marker = new ymaps[markerType](myMarkers[i].coords, properties, options);
-                if (myMarkers[i].callbacks && typeof myMarkers[i].callbacks === 'object') {
-                    for (let key in myMarkers[i].callbacks) {
-                        marker.events.add(key, myMarkers[i].callbacks[key]);
-                    }
-                }
+                createCallbacks(myMarkers[i], marker);
                 marker.id = myMarkers[i].markerId;
                 marker.clusterName = myMarkers[i].clusterName;
                 marker.properties.set('markerId', i);
@@ -206,13 +202,19 @@ export default {
 
             if (this.placemarks) {
                 this.placemarks.forEach(function(placemark) {
-                    let yplacemark =
-                        new ymaps.Placemark(
-                            placemark.coords,
-                            placemark.properties || {},
-                            placemark.options || {}
-                        );
+                    let yplacemark = new ymaps.Placemark (
+                        placemark.coords,
+                        placemark.properties || {},
+                        placemark.options || {}
+                    );
 
+                    createCallbacks(placemark, yplacemark);
+
+                    if (placemark.clusterName) { 
+                        yplacemark.clusterName = placemark.clusterName;
+                        markers.push(yplacemark);
+                    }
+                    
                     myGeoObjects.add(yplacemark);
                 })
             }
@@ -220,6 +222,14 @@ export default {
             this.myMap.geoObjects.add(myGeoObjects);
 
             createClusters(markers, this.clusterOptions, this.myMap);
+        }
+
+        function createCallbacks(marker, placemark) {
+            if (marker.callbacks && typeof marker.callbacks === 'object') {
+                for (let key in marker.callbacks) {
+                    placemark.events.add(key, marker.callbacks[key]);
+                }
+            }
         }
 
         function createClusters(markers, options, map) {

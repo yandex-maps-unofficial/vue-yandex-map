@@ -4,7 +4,7 @@
 	(factory((global.vueYandexMaps = global.vueYandexMaps || {})));
 }(this, (function (exports) { 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof$1 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /*!
  * Vue.js v2.4.4
@@ -44,7 +44,7 @@ function isPrimitive(value) {
  * is a JSON-compliant type.
  */
 function isObject(obj) {
-  return obj !== null && (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object';
+  return obj !== null && (typeof obj === 'undefined' ? 'undefined' : _typeof$1(obj)) === 'object';
 }
 
 var _toString = Object.prototype.toString;
@@ -73,7 +73,7 @@ function isValidArrayIndex(val) {
  * Convert a value to a string that is actually rendered.
  */
 function toString(val) {
-  return val == null ? '' : (typeof val === 'undefined' ? 'undefined' : _typeof(val)) === 'object' ? JSON.stringify(val, null, 2) : String(val);
+  return val == null ? '' : (typeof val === 'undefined' ? 'undefined' : _typeof$1(val)) === 'object' ? JSON.stringify(val, null, 2) : String(val);
 }
 
 /**
@@ -1440,7 +1440,7 @@ function assertType(value, type) {
   var valid;
   var expectedType = getType(type);
   if (simpleCheckRE.test(expectedType)) {
-    var t = typeof value === 'undefined' ? 'undefined' : _typeof(value);
+    var t = typeof value === 'undefined' ? 'undefined' : _typeof$1(value);
     valid = t === expectedType.toLowerCase();
     // for primitive wrapper objects
     if (!valid && t === 'object') {
@@ -5833,7 +5833,7 @@ function resolveTransition(def$$1) {
     return;
   }
   /* istanbul ignore else */
-  if ((typeof def$$1 === 'undefined' ? 'undefined' : _typeof(def$$1)) === 'object') {
+  if ((typeof def$$1 === 'undefined' ? 'undefined' : _typeof$1(def$$1)) === 'object') {
     var res = {};
     if (def$$1.css !== false) {
       extend(res, autoCssTransition(def$$1.name || 'v'));
@@ -6853,10 +6853,12 @@ setTimeout(function () {
   }
 }, 0);
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var YMapPlugin$1 = { render: function render() {
-        var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('section', { staticClass: "ymap-container" }, [_c('div', { style: { width: '100%', height: '100%' }, attrs: { "id": _vm.ymapId } }), _vm._t("default")], 2);
+        var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('section', { staticClass: "ymap-container" }, [_c('div', { style: { width: '100%', height: '100%' }, attrs: { "id": _vm.ymapId } }), _vm._v(" "), _vm._t("default")], 2);
     }, staticRenderFns: [],
     data: function data() {
         return {
@@ -7002,7 +7004,9 @@ var YMapPlugin$1 = { render: function render() {
                     hintContent: props.hintContent,
                     markerFill: props.markerFill,
                     circleRadius: +props.circleRadius,
-                    clusterName: props.clusterName
+                    clusterName: props.clusterName,
+                    markerStroke: props.markerStroke,
+                    balloon: props.balloon
                 };
 
                 if (props.icon && props.icon.layout === 'default#image') {
@@ -7013,11 +7017,9 @@ var YMapPlugin$1 = { render: function render() {
                     //                        marker.balloonLayout = "default#imageWithContent";
                 } else {
                     marker.icon = props.icon;
-                    marker.balloon = props.balloon;
-                    marker.markerStroke = props.markerStroke;
                 }
-                if (props.onClick) {
-                    marker.onClick = props.onClick;
+                if (props.callbacks) {
+                    marker.callbacks = props.callbacks;
                 }
                 if (props.data) {
                     marker.data = props.data;
@@ -7061,6 +7063,7 @@ var YMapPlugin$1 = { render: function render() {
                     myMarkers[i].coords = [myMarkers[i].coords, myMarkers[i].circleRadius];
                 }
                 var marker = new ymaps[markerType](myMarkers[i].coords, properties, options);
+                createCallbacks(myMarkers[i], marker);
                 marker.id = myMarkers[i].markerId;
                 marker.clusterName = myMarkers[i].clusterName;
                 marker.properties.set('markerId', i);
@@ -7073,19 +7076,28 @@ var YMapPlugin$1 = { render: function render() {
                 this.placemarks.forEach(function (placemark) {
                     var yplacemark = new ymaps.Placemark(placemark.coords, placemark.properties || {}, placemark.options || {});
 
+                    createCallbacks(placemark, yplacemark);
+
+                    if (placemark.clusterName) {
+                        yplacemark.clusterName = placemark.clusterName;
+                        markers.push(yplacemark);
+                    }
+
                     myGeoObjects.add(yplacemark);
                 });
             }
 
             this.myMap.geoObjects.add(myGeoObjects);
-            this.myMap.geoObjects.events.add('click', function (e) {
-                var i = e.get('target').properties.get('markerId');
-                if (myMarkers[i].onClick) {
-                    myMarkers[i].onClick(myMarkers[i]);
-                }
-            });
 
             createClusters(markers, this.clusterOptions, this.myMap);
+        }
+
+        function createCallbacks(marker, placemark) {
+            if (marker.callbacks && _typeof(marker.callbacks) === 'object') {
+                for (var key in marker.callbacks) {
+                    placemark.events.add(key, marker.callbacks[key]);
+                }
+            }
         }
 
         function createClusters(markers, options, map) {
@@ -7172,7 +7184,7 @@ var Marker = {
 
             default: 1000
         },
-        onClick: Function,
+        callbacks: Object,
         data: Object
     },
     render: function render() {}

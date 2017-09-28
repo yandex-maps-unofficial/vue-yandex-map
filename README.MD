@@ -72,13 +72,7 @@ Type of marker in `marker-type` attribute can be:
   }"
   :behaviors="['ruler']"
   :controls="['trafficControl']"
-  :placemarks="[
-    {
-      coords: [54.8, 39.8],
-      properties: {}, // define properties here
-      options: {} // define options here
-    }
-  ]"
+  :placemarks="placemarks" // 
   map-type="hybrid"
 >
 
@@ -111,6 +105,24 @@ Type of marker in `marker-type` attribute can be:
     ></ymap-marker>
 
 </yandex-map>
+```
+
+```JavaScript
+
+data() {
+  return {
+    placemarks: [
+      {
+        coords: [54.8, 39.8],
+        properties: {}, // define properties here
+        options: {}, // define options here
+        clusterName: "1",
+        callbacks: { click: function() {} }
+      }
+    ]
+  }
+}
+
 ```
 
 # Attributes
