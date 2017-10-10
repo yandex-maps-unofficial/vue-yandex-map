@@ -7,6 +7,7 @@
 
 <script>
 import Vue from 'vue';
+import * as utils from './utils'
 
 export default {
     data() {
@@ -66,47 +67,9 @@ export default {
             return this.coords.map(item => +item)
         }
     },
-    watch: {
-        coordinates(newVal) {
-            this.myMap.setCenter && this.myMap.setCenter(newVal, this.zoom)
-        }
-    },
-    beforeMount() {
-        if (!this.$ymapEventBus) {
-            this.$ymapEventBus = new Vue({
-                data: {
-                    ymapReady: false,
-                    scriptIsNotAttached: true
-                }
-            });
-        }
-        if (this.$ymapEventBus.scriptIsNotAttached) {
-            const yandexMapScript = document.createElement('SCRIPT');
-            yandexMapScript.setAttribute('src', 'https://api-maps.yandex.ru/2.1/?lang=ru_RU');
-            yandexMapScript.setAttribute('async', '');
-            yandexMapScript.setAttribute('defer', '');
-            document.body.appendChild(yandexMapScript);
-            this.$ymapEventBus.scriptIsNotAttached = false;
-            yandexMapScript.onload = () => {
-                this.$ymapEventBus.ymapReady = true;
-                this.$ymapEventBus.$emit('scriptIsLoaded');
-            }
-        } else {
-            return false;
-        }
-    },
-    mounted() {
-        let markers = [];
-
-        if (this.$ymapEventBus.ymapReady) {
-            ymaps.ready(init.bind(this));
-        } else {
-            this.$ymapEventBus.$on('scriptIsLoaded', () => {
-                ymaps.ready(init.bind(this));
-            })
-        }
-
-        function init() {
+    methods: {
+        init() {
+            let markers = [];
             let myGeoObjects = new ymaps.GeoObjectCollection();
 
             this.myMap = new ymaps.Map(this.ymapId, {
@@ -130,7 +93,7 @@ export default {
                 let marker = {
                     markerId: props.markerId,
                     markerType: props.markerType,
-                    coords: setCoordsToNumeric(props.coords),
+                    coords: utils.setCoordsToNumeric(props.coords),
                     hintContent: props.hintContent,
                     markerFill: props.markerFill,
                     circleRadius: +props.circleRadius,
@@ -158,7 +121,7 @@ export default {
             }).filter(marker => marker && marker.markerType) || [];
 
             for (let i = 0; i < myMarkers.length; i++) {
-                const markerType = setFirstLetterToUppercase(myMarkers[i].markerType);
+                const markerType = utils.setFirstLetterToUppercase(myMarkers[i].markerType);
                 const properties = {
                     hintContent: myMarkers[i].hintContent,
                     balloonContentHeader: myMarkers[i].balloon && myMarkers[i].balloon.header,
@@ -176,7 +139,7 @@ export default {
                     }
                 } else {
                     options = {
-                        preset: myMarkers[i].icon && `islands#${getIconPreset(myMarkers[i])}Icon`,
+                        preset: myMarkers[i].icon && `islands#${utils.getIconPreset(myMarkers[i])}Icon`,
                         strokeColor: myMarkers[i].markerStroke && myMarkers[i].markerStroke.color || "0066ffff",
                         strokeOpacity: myMarkers[i].markerStroke && myMarkers[i].markerStroke.opacity || 1,
                         strokeStyle: myMarkers[i].markerStroke && myMarkers[i].markerStroke.style,
@@ -191,7 +154,7 @@ export default {
                     myMarkers[i].coords = [myMarkers[i].coords, myMarkers[i].circleRadius];
                 }
                 let marker = new ymaps[markerType](myMarkers[i].coords, properties, options);
-                createCallbacks(myMarkers[i], marker);
+                utils.createCallbacks(myMarkers[i], marker);
                 marker.id = myMarkers[i].markerId;
                 marker.clusterName = myMarkers[i].clusterName;
                 marker.properties.set('markerId', i);
@@ -208,7 +171,7 @@ export default {
                         placemark.options || {}
                     );
 
-                    createCallbacks(placemark, yplacemark);
+                    utils.createCallbacks(placemark, yplacemark);
 
                     if (placemark.clusterName) { 
                         yplacemark.clusterName = placemark.clusterName;
@@ -221,51 +184,48 @@ export default {
 
             this.myMap.geoObjects.add(myGeoObjects);
 
-            createClusters(markers, this.clusterOptions, this.myMap);
+            utils.createClusters(markers, this.clusterOptions, this.myMap);
         }
-
-        function createCallbacks(marker, placemark) {
-            if (marker.callbacks && typeof marker.callbacks === 'object') {
-                for (let key in marker.callbacks) {
-                    placemark.events.add(key, marker.callbacks[key]);
+    },
+    watch: {
+        coordinates(newVal) {
+            this.myMap.setCenter && this.myMap.setCenter(newVal, this.zoom)
+        },
+        placemarks() {
+            this.myMap.destroy();
+            this.init();
+        }
+    },
+    beforeMount() {
+        if (!this.$ymapEventBus) {
+            this.$ymapEventBus = new Vue({
+                data: {
+                    ymapReady: false,
+                    scriptIsNotAttached: true
                 }
-            }
+            });
         }
-
-        function createClusters(markers, options, map) {
-            let clusters = {};
-            for (let marker of markers) {
-                if (!marker.clusterName) continue;
-                clusters[marker.clusterName] = clusters[marker.clusterName] ? [...clusters[marker.clusterName], marker] : [marker];
+        if (this.$ymapEventBus.scriptIsNotAttached) {
+            const yandexMapScript = document.createElement('SCRIPT');
+            yandexMapScript.setAttribute('src', 'https://api-maps.yandex.ru/2.1/?lang=ru_RU');
+            yandexMapScript.setAttribute('async', '');
+            yandexMapScript.setAttribute('defer', '');
+            document.body.appendChild(yandexMapScript);
+            this.$ymapEventBus.scriptIsNotAttached = false;
+            yandexMapScript.onload = () => {
+                this.$ymapEventBus.ymapReady = true;
+                this.$ymapEventBus.$emit('scriptIsLoaded');
             }
-            for (let clusterName in clusters) {
-                const clusterOptions = options[clusterName] || {};
-                const clusterer = new ymaps.Clusterer(clusterOptions);
-                clusterer.add(clusters[clusterName]);
-                map.geoObjects.add(clusterer);
-            }
+        } else {
+            return false;
         }
-
-        function getIconPreset(marker) {
-            let firstPart = marker.icon.color || 'blue',
-                secondPart;
-            if (marker.icon.glyph) {
-                secondPart = setFirstLetterToUppercase(marker.icon.glyph);
-            } else if (marker.icon.content) {
-                secondPart = 'Stretchy'
-            } else {
-                secondPart = ''
-            }
-            return firstPart + secondPart
-        }
-
-        function setFirstLetterToUppercase(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        }
-
-        function setCoordsToNumeric(arr) {
-            return arr.map(item => {
-                return Array.isArray(item) ? setCoordsToNumeric(item) : +item;
+    },
+    mounted() {
+        if (this.$ymapEventBus.ymapReady) {
+            ymaps.ready(this.init);
+        } else {
+            this.$ymapEventBus.$on('scriptIsLoaded', () => {
+                ymaps.ready(this.init);
             })
         }
     }
