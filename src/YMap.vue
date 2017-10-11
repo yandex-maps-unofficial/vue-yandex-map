@@ -225,6 +225,10 @@ export default {
             ymaps.ready(this.init);
         } else {
             this.$ymapEventBus.$on('scriptIsLoaded', () => {
+                this.$ymapEventBus.initMap = () => {
+                    this.myMap.destroy();
+                    this.init();
+                };
                 ymaps.ready(this.init);
             })
         }

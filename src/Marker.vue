@@ -25,6 +25,11 @@
             data: Object
         },
         render() {
+        },
+        watch: {
+            coords() {
+                this.$ymapEventBus.initMap();
+            }
         }
     }
 </script>
