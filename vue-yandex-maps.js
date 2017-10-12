@@ -4,7 +4,7 @@
 	(factory((global.vueYandexMaps = global.vueYandexMaps || {})));
 }(this, (function (exports) { 'use strict';
 
-var _typeof$1 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /*!
  * Vue.js v2.4.4
@@ -44,7 +44,7 @@ function isPrimitive(value) {
  * is a JSON-compliant type.
  */
 function isObject(obj) {
-  return obj !== null && (typeof obj === 'undefined' ? 'undefined' : _typeof$1(obj)) === 'object';
+  return obj !== null && (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object';
 }
 
 var _toString = Object.prototype.toString;
@@ -73,7 +73,7 @@ function isValidArrayIndex(val) {
  * Convert a value to a string that is actually rendered.
  */
 function toString(val) {
-  return val == null ? '' : (typeof val === 'undefined' ? 'undefined' : _typeof$1(val)) === 'object' ? JSON.stringify(val, null, 2) : String(val);
+  return val == null ? '' : (typeof val === 'undefined' ? 'undefined' : _typeof(val)) === 'object' ? JSON.stringify(val, null, 2) : String(val);
 }
 
 /**
@@ -1440,7 +1440,7 @@ function assertType(value, type) {
   var valid;
   var expectedType = getType(type);
   if (simpleCheckRE.test(expectedType)) {
-    var t = typeof value === 'undefined' ? 'undefined' : _typeof$1(value);
+    var t = typeof value === 'undefined' ? 'undefined' : _typeof(value);
     valid = t === expectedType.toLowerCase();
     // for primitive wrapper objects
     if (!valid && t === 'object') {
@@ -5833,7 +5833,7 @@ function resolveTransition(def$$1) {
     return;
   }
   /* istanbul ignore else */
-  if ((typeof def$$1 === 'undefined' ? 'undefined' : _typeof$1(def$$1)) === 'object') {
+  if ((typeof def$$1 === 'undefined' ? 'undefined' : _typeof(def$$1)) === 'object') {
     var res = {};
     if (def$$1.css !== false) {
       extend(res, autoCssTransition(def$$1.name || 'v'));
@@ -6853,9 +6853,76 @@ setTimeout(function () {
   }
 }, 0);
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof$1 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function createCallbacks(marker, placemark) {
+    if (marker.callbacks && _typeof$1(marker.callbacks) === 'object') {
+        for (var key in marker.callbacks) {
+            placemark.events.add(key, marker.callbacks[key]);
+        }
+    }
+}
+
+function createClusters(markers, options, map) {
+    var clusters = {};
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = markers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var marker = _step.value;
+
+            if (!marker.clusterName) continue;
+            clusters[marker.clusterName] = clusters[marker.clusterName] ? [].concat(_toConsumableArray(clusters[marker.clusterName]), [marker]) : [marker];
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
+
+    for (var clusterName in clusters) {
+        var clusterOptions = options[clusterName] || {};
+        var clusterer = new ymaps.Clusterer(clusterOptions);
+        clusterer.add(clusters[clusterName]);
+        map.geoObjects.add(clusterer);
+    }
+}
+
+function getIconPreset(marker) {
+    var firstPart = marker.icon.color || 'blue',
+        secondPart = void 0;
+    if (marker.icon.glyph) {
+        secondPart = setFirstLetterToUppercase(marker.icon.glyph);
+    } else if (marker.icon.content) {
+        secondPart = 'Stretchy';
+    } else {
+        secondPart = '';
+    }
+    return firstPart + secondPart;
+}
+
+function setFirstLetterToUppercase(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function setCoordsToNumeric(arr) {
+    return arr.map(function (item) {
+        return Array.isArray(item) ? setCoordsToNumeric(item) : +item;
+    });
+}
 
 var YMapPlugin$1 = { render: function render() {
         var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('section', { staticClass: "ymap-container" }, [_c('div', { style: { width: '100%', height: '100%' }, attrs: { "id": _vm.ymapId } }), _vm._v(" "), _vm._t("default")], 2);
@@ -6932,51 +6999,9 @@ var YMapPlugin$1 = { render: function render() {
             });
         }
     },
-    watch: {
-        coordinates: function coordinates(newVal) {
-            this.myMap.setCenter && this.myMap.setCenter(newVal, this.zoom);
-        }
-    },
-    beforeMount: function beforeMount() {
-        var _this = this;
-
-        if (!this.$ymapEventBus) {
-            this.$ymapEventBus = new Vue$3({
-                data: {
-                    ymapReady: false,
-                    scriptIsNotAttached: true
-                }
-            });
-        }
-        if (this.$ymapEventBus.scriptIsNotAttached) {
-            var yandexMapScript = document.createElement('SCRIPT');
-            yandexMapScript.setAttribute('src', 'https://api-maps.yandex.ru/2.1/?lang=ru_RU');
-            yandexMapScript.setAttribute('async', '');
-            yandexMapScript.setAttribute('defer', '');
-            document.body.appendChild(yandexMapScript);
-            this.$ymapEventBus.scriptIsNotAttached = false;
-            yandexMapScript.onload = function () {
-                _this.$ymapEventBus.ymapReady = true;
-                _this.$ymapEventBus.$emit('scriptIsLoaded');
-            };
-        } else {
-            return false;
-        }
-    },
-    mounted: function mounted() {
-        var _this2 = this;
-
-        var markers = [];
-
-        if (this.$ymapEventBus.ymapReady) {
-            ymaps.ready(init.bind(this));
-        } else {
-            this.$ymapEventBus.$on('scriptIsLoaded', function () {
-                ymaps.ready(init.bind(_this2));
-            });
-        }
-
-        function init() {
+    methods: {
+        init: function init() {
+            var markers = [];
             var myGeoObjects = new ymaps.GeoObjectCollection();
 
             this.myMap = new ymaps.Map(this.ymapId, {
@@ -7091,71 +7116,54 @@ var YMapPlugin$1 = { render: function render() {
 
             createClusters(markers, this.clusterOptions, this.myMap);
         }
+    },
+    watch: {
+        coordinates: function coordinates(newVal) {
+            this.myMap.setCenter && this.myMap.setCenter(newVal, this.zoom);
+        },
+        placemarks: function placemarks() {
+            this.myMap.destroy();
+            this.init();
+        }
+    },
+    beforeMount: function beforeMount() {
+        var _this = this;
 
-        function createCallbacks(marker, placemark) {
-            if (marker.callbacks && _typeof(marker.callbacks) === 'object') {
-                for (var key in marker.callbacks) {
-                    placemark.events.add(key, marker.callbacks[key]);
+        if (!this.$ymapEventBus) {
+            this.$ymapEventBus = new Vue$3({
+                data: {
+                    ymapReady: false,
+                    scriptIsNotAttached: true
                 }
-            }
+            });
         }
-
-        function createClusters(markers, options, map) {
-            var clusters = {};
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = markers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var marker = _step.value;
-
-                    if (!marker.clusterName) continue;
-                    clusters[marker.clusterName] = clusters[marker.clusterName] ? [].concat(_toConsumableArray(clusters[marker.clusterName]), [marker]) : [marker];
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
-
-            for (var clusterName in clusters) {
-                var clusterOptions = options[clusterName] || {};
-                var clusterer = new ymaps.Clusterer(clusterOptions);
-                clusterer.add(clusters[clusterName]);
-                map.geoObjects.add(clusterer);
-            }
+        if (this.$ymapEventBus.scriptIsNotAttached) {
+            var yandexMapScript = document.createElement('SCRIPT');
+            yandexMapScript.setAttribute('src', 'https://api-maps.yandex.ru/2.1/?lang=ru_RU');
+            yandexMapScript.setAttribute('async', '');
+            yandexMapScript.setAttribute('defer', '');
+            document.body.appendChild(yandexMapScript);
+            this.$ymapEventBus.scriptIsNotAttached = false;
+            yandexMapScript.onload = function () {
+                _this.$ymapEventBus.ymapReady = true;
+                _this.$ymapEventBus.$emit('scriptIsLoaded');
+            };
+        } else {
+            return false;
         }
+    },
+    mounted: function mounted() {
+        var _this2 = this;
 
-        function getIconPreset(marker) {
-            var firstPart = marker.icon.color || 'blue',
-                secondPart = void 0;
-            if (marker.icon.glyph) {
-                secondPart = setFirstLetterToUppercase(marker.icon.glyph);
-            } else if (marker.icon.content) {
-                secondPart = 'Stretchy';
-            } else {
-                secondPart = '';
-            }
-            return firstPart + secondPart;
-        }
-
-        function setFirstLetterToUppercase(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        }
-
-        function setCoordsToNumeric(arr) {
-            return arr.map(function (item) {
-                return Array.isArray(item) ? setCoordsToNumeric(item) : +item;
+        if (this.$ymapEventBus.ymapReady) {
+            ymaps.ready(this.init);
+        } else {
+            this.$ymapEventBus.$on('scriptIsLoaded', function () {
+                _this2.$ymapEventBus.initMap = function () {
+                    _this2.myMap.destroy();
+                    _this2.init();
+                };
+                ymaps.ready(_this2.init);
             });
         }
     }
@@ -7187,7 +7195,13 @@ var Marker = {
         callbacks: Object,
         data: Object
     },
-    render: function render() {}
+    render: function render() {},
+
+    watch: {
+        coords: function coords() {
+            this.$ymapEventBus.initMap();
+        }
+    }
 };
 
 var install = function install(Vue) {
