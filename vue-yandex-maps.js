@@ -7075,12 +7075,12 @@ var YMapPlugin$1 = { render: function render() {
                     options = {
                         preset: myMarkers[i].icon && 'islands#' + getIconPreset(myMarkers[i]) + 'Icon',
                         strokeColor: myMarkers[i].markerStroke && myMarkers[i].markerStroke.color || "0066ffff",
-                        strokeOpacity: myMarkers[i].markerStroke && parseFloat(myMarkers[i].markerStroke.opacity) >= 0 || 1,
+                        strokeOpacity: myMarkers[i].markerStroke && parseFloat(myMarkers[i].markerStroke.opacity) >= 0 && parseFloat(myMarkers[i].markerStroke.opacity) || 1,
                         strokeStyle: myMarkers[i].markerStroke && myMarkers[i].markerStroke.style,
-                        strokeWidth: myMarkers[i].markerStroke && parseFloat(myMarkers[i].markerStroke.width) >= 0 || 1,
+                        strokeWidth: myMarkers[i].markerStroke && parseFloat(myMarkers[i].markerStroke.width) >= 0 && parseFloat(myMarkers[i].markerStroke.width) || 1,
                         fill: myMarkers[i].markerFill && myMarkers[i].markerFill.enabled || true,
                         fillColor: myMarkers[i].markerFill && myMarkers[i].markerFill.color || "0066ff99",
-                        fillOpacity: myMarkers[i].markerFill && parseFloat(myMarkers[i].markerFill.opacity) >= 0 || 1,
+                        fillOpacity: myMarkers[i].markerFill && parseFloat(myMarkers[i].markerFill.opacity) >= 0 && parseFloat(myMarkers[i].markerFill.opacity) || 1,
                         fillImageHref: myMarkers[i].markerFill && myMarkers[i].markerFill.imageHref || ''
                     };
                 }
