@@ -141,12 +141,13 @@ export default {
                     options = {
                         preset: myMarkers[i].icon && `islands#${utils.getIconPreset(myMarkers[i])}Icon`,
                         strokeColor: myMarkers[i].markerStroke && myMarkers[i].markerStroke.color || "0066ffff",
-                        strokeOpacity: myMarkers[i].markerStroke && myMarkers[i].markerStroke.opacity || 1,
+                        strokeOpacity: myMarkers[i].markerStroke && parseFloat(myMarkers[i].markerStroke.opacity) >= 0 || 1,
                         strokeStyle: myMarkers[i].markerStroke && myMarkers[i].markerStroke.style,
-                        strokeWidth: myMarkers[i].markerStroke && myMarkers[i].markerStroke.width || 1,
+                        strokeWidth: myMarkers[i].markerStroke && parseFloat(myMarkers[i].markerStroke.width) >= 0 || 1,
                         fill: myMarkers[i].markerFill && myMarkers[i].markerFill.enabled || true,
                         fillColor: myMarkers[i].markerFill && myMarkers[i].markerFill.color || "0066ff99",
-                        fillOpacity: myMarkers[i].markerFill && myMarkers[i].markerFill.opacity || 1
+                        fillOpacity: myMarkers[i].markerFill && parseFloat(myMarkers[i].markerFill.opacity) >= 0 || 1,
+                        fillImageHref: myMarkers[i].markerFill && myMarkers[i].markerFill.imageHref || ''
                     };
                 }
 
@@ -192,8 +193,10 @@ export default {
             this.myMap.setCenter && this.myMap.setCenter(newVal, this.zoom)
         },
         placemarks() {
-            this.myMap.destroy();
-            this.init();
+            if (window.ymaps) {
+                this.myMap.destroy && this.myMap.destroy();
+                this.init();
+            }
         }
     },
     beforeMount() {

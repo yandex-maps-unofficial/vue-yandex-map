@@ -28,7 +28,7 @@
         },
         watch: {
             coords() {
-                this.$ymapEventBus.initMap();
+                this.$ymapEventBus.initMap && this.$ymapEventBus.initMap();
             }
         }
     }
