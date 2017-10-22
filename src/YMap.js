@@ -1,11 +1,3 @@
-<template>
-    <section class="ymap-container">
-        <div :id="ymapId" :style="{ width: '100%', height: '100%' }"></div>
-        <slot></slot>
-    </section>
-</template>
-
-<script>
 import Vue from 'vue';
 import * as utils from './utils'
 
@@ -199,6 +191,24 @@ export default {
             }
         }
     },
+    render(h) {
+        return h(
+            'section', 
+            { class: 'ymap-container' },
+            [
+                h(
+                    'div', 
+                    {
+                        attrs: {
+                            id: this.ymapId
+                        },
+                        style: { width: '100%', height: '100%' }
+                    } 
+                ),
+                this.$slots.default 
+            ]
+        )
+    },
     beforeMount() {
         if (!this.$ymapEventBus) {
             this.$ymapEventBus = new Vue({
@@ -237,4 +247,3 @@ export default {
         }
     }
 }
-</script>

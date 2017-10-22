@@ -153,7 +153,7 @@ data() {
 | hint-content | String | Tooltip content | All |
 | balloon | Object | Balloon content object with three properties: header, body, footer | All |
 | icon | Object | [About icons](#icons) | Placemark |
-| marker-fill | Object | Fill properties object with two properties: enabled, color, opacity | Polygon, Rectangle, Circle |
+| marker-fill | Object | Fill properties object with four properties: enabled, color, opacity, imageHref | Polygon, Rectangle, Circle |
 | marker-stroke | Object | Stroke properties object with four properties: color, opacity, width, style | Polygon, Rectangle, Circle, Polyline |
 | circle-radius | Number | Radius of circle in meters. Default value is 1000. | Circle |
 | cluster-name | String | Attribute for grouping markers in clusters | All |

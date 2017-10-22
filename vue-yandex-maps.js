@@ -6924,9 +6924,7 @@ function setCoordsToNumeric(arr) {
     });
 }
 
-var YMapPlugin$1 = { render: function render() {
-        var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('section', { staticClass: "ymap-container" }, [_c('div', { style: { width: '100%', height: '100%' }, attrs: { "id": _vm.ymapId } }), _vm._t("default")], 2);
-    }, staticRenderFns: [],
+var YMapPlugin$1 = {
     data: function data() {
         return {
             ymapId: 'yandexMap' + Math.round(Math.random() * 100000),
@@ -7075,12 +7073,12 @@ var YMapPlugin$1 = { render: function render() {
                     options = {
                         preset: myMarkers[i].icon && 'islands#' + getIconPreset(myMarkers[i]) + 'Icon',
                         strokeColor: myMarkers[i].markerStroke && myMarkers[i].markerStroke.color || "0066ffff",
-                        strokeOpacity: myMarkers[i].markerStroke && parseFloat(myMarkers[i].markerStroke.opacity) >= 0 && parseFloat(myMarkers[i].markerStroke.opacity) || 1,
+                        strokeOpacity: myMarkers[i].markerStroke && parseFloat(myMarkers[i].markerStroke.opacity) >= 0 ? parseFloat(myMarkers[i].markerStroke.opacity) : 1,
                         strokeStyle: myMarkers[i].markerStroke && myMarkers[i].markerStroke.style,
-                        strokeWidth: myMarkers[i].markerStroke && parseFloat(myMarkers[i].markerStroke.width) >= 0 && parseFloat(myMarkers[i].markerStroke.width) || 1,
+                        strokeWidth: myMarkers[i].markerStroke && parseFloat(myMarkers[i].markerStroke.width) >= 0 ? parseFloat(myMarkers[i].markerStroke.width) : 1,
                         fill: myMarkers[i].markerFill && myMarkers[i].markerFill.enabled || true,
                         fillColor: myMarkers[i].markerFill && myMarkers[i].markerFill.color || "0066ff99",
-                        fillOpacity: myMarkers[i].markerFill && parseFloat(myMarkers[i].markerFill.opacity) >= 0 && parseFloat(myMarkers[i].markerFill.opacity) || 1,
+                        fillOpacity: myMarkers[i].markerFill && parseFloat(myMarkers[i].markerFill.opacity) >= 0 ? parseFloat(myMarkers[i].markerFill.opacity) : 1,
                         fillImageHref: myMarkers[i].markerFill && myMarkers[i].markerFill.imageHref || ''
                     };
                 }
@@ -7129,6 +7127,12 @@ var YMapPlugin$1 = { render: function render() {
             }
         }
     },
+    render: function render(h) {
+        return h('section', { 'class': 'ymap-container' }, [h('div', {
+            'id': this.ymapId,
+            'style': { width: '100%', height: '100%' }
+        })]);
+    },
     beforeMount: function beforeMount() {
         var _this = this;
 
@@ -7173,6 +7177,7 @@ var YMapPlugin$1 = { render: function render() {
 };
 
 var Marker = {
+    functional: true,
     props: {
         coords: {
             type: Array,

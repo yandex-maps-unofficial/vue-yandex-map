@@ -1,5 +1,5 @@
-import YMapPlugin from './YMap.vue';
-import Marker from './Marker.vue';
+import YMapPlugin from './YMap';
+import Marker from './Marker';
 
 const install = function(Vue) {
   Vue.component('yandex-map', YMapPlugin);
