@@ -75,6 +75,7 @@ Type of marker in `marker-type` attribute can be:
   :controls="['trafficControl']"
   :placemarks="placemarks" // 
   map-type="hybrid"
+  @map-was-initialized="initHandler"
 >
 
     <ymap-marker 
@@ -125,6 +126,14 @@ data() {
 }
 
 ```
+
+# Events
+
+## Map events
+
+| Event name | Payload |
+| ----- | ----- |
+| 'map-was-initialized' | Link to map instance |
 
 # Attributes
 
