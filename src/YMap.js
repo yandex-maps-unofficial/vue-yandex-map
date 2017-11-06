@@ -177,7 +177,8 @@ export default {
 
             this.myMap.geoObjects.add(myGeoObjects);
 
-            utils.createClusters(markers, this.clusterOptions, this.myMap);
+            utils.createClusters(markers, this.clusterOptions, this.myMap)
+                .then(() => this.$emit('map-is-initialized', this.myMap));
         }
     },
     watch: {
