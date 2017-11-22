@@ -185,7 +185,8 @@ export default {
         coordinates(newVal) {
             this.myMap.setCenter && this.myMap.setCenter(newVal, this.zoom)
         },
-        placemarks() {
+        placemarks(newVal, oldVal) {
+            if (utils.objectComparison(newVal, oldVal)) { return; } 
             if (window.ymaps) {
                 this.myMap.destroy && this.myMap.destroy();
                 this.init();

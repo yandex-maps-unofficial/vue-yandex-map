@@ -6899,6 +6899,7 @@ function createClusters(markers, options, map) {
         clusterer.add(clusters[clusterName]);
         map.geoObjects.add(clusterer);
     }
+    return Promise.resolve();
 }
 
 function getIconPreset(marker) {
@@ -6999,6 +7000,8 @@ var YMapPlugin$1 = {
     },
     methods: {
         init: function init() {
+            var _this = this;
+
             var markers = [];
             var myGeoObjects = new ymaps.GeoObjectCollection();
 
@@ -7113,7 +7116,9 @@ var YMapPlugin$1 = {
 
             this.myMap.geoObjects.add(myGeoObjects);
 
-            createClusters(markers, this.clusterOptions, this.myMap);
+            createClusters(markers, this.clusterOptions, this.myMap).then(function () {
+                return _this.$emit('map-was-initialized', _this.myMap);
+            });
         }
     },
     watch: {
@@ -7128,13 +7133,15 @@ var YMapPlugin$1 = {
         }
     },
     render: function render(h) {
-        return h('section', { 'class': 'ymap-container' }, [h('div', {
-            'id': this.ymapId,
-            'style': { width: '100%', height: '100%' }
-        })]);
+        return h('section', { class: 'ymap-container' }, [h('div', {
+            attrs: {
+                id: this.ymapId
+            },
+            style: { width: '100%', height: '100%' }
+        }), this.$slots.default]);
     },
     beforeMount: function beforeMount() {
-        var _this = this;
+        var _this2 = this;
 
         if (!this.$ymapEventBus) {
             this.$ymapEventBus = new Vue$3({
@@ -7152,32 +7159,31 @@ var YMapPlugin$1 = {
             document.body.appendChild(yandexMapScript);
             this.$ymapEventBus.scriptIsNotAttached = false;
             yandexMapScript.onload = function () {
-                _this.$ymapEventBus.ymapReady = true;
-                _this.$ymapEventBus.$emit('scriptIsLoaded');
+                _this2.$ymapEventBus.ymapReady = true;
+                _this2.$ymapEventBus.$emit('scriptIsLoaded');
             };
         } else {
             return false;
         }
     },
     mounted: function mounted() {
-        var _this2 = this;
+        var _this3 = this;
 
         if (this.$ymapEventBus.ymapReady) {
             ymaps.ready(this.init);
         } else {
             this.$ymapEventBus.$on('scriptIsLoaded', function () {
-                _this2.$ymapEventBus.initMap = function () {
-                    _this2.myMap.destroy();
-                    _this2.init();
+                _this3.$ymapEventBus.initMap = function () {
+                    _this3.myMap.destroy();
+                    _this3.init();
                 };
-                ymaps.ready(_this2.init);
+                ymaps.ready(_this3.init);
             });
         }
     }
 };
 
 var Marker = {
-    functional: true,
     props: {
         coords: {
             type: Array,
