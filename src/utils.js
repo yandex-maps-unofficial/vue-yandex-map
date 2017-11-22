@@ -18,7 +18,6 @@ export function createClusters(markers, options, map) {
         clusterer.add(clusters[clusterName]);
         map.geoObjects.add(clusterer);
     }
-    return Promise.resolve();
 }
 
 export function getIconPreset(marker) {

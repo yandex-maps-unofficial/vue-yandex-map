@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import * as utils from './utils'
+import * as utils from './utils';
 
 export default {
     data() {
@@ -52,7 +52,12 @@ export default {
                 return ['map', 'satellite', 'hybrid'].includes(val)
             }
         },
-        placemarks: Array
+        placemarks: {
+            type: Array,
+            default() {
+                return [];
+            }
+        }
     },
     computed: {
         coordinates() {
@@ -178,7 +183,8 @@ export default {
             this.myMap.geoObjects.add(myGeoObjects);
 
             utils.createClusters(markers, this.clusterOptions, this.myMap)
-                .then(() => this.$emit('map-was-initialized', this.myMap));
+
+            this.$emit('map-is-initialized', this.myMap)
         }
     },
     watch: {

@@ -1,3 +1,5 @@
+import * as utils from './utils';
+
 export default {
     props: {
         coords: {
@@ -26,7 +28,8 @@ export default {
     render() {
     },
     watch: {
-        coords() {
+        coords(newVal, oldVal) {
+            if (utils.objectComparison(newVal, oldVal)) { return; } 
             this.$ymapEventBus.initMap && this.$ymapEventBus.initMap();
         }
     }
