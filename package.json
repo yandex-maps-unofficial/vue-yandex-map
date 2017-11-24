@@ -1,6 +1,6 @@
 {
   "name": "vue-yandex-maps",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "Yandex Maps component for VueJS.",
   "main": "vue-yandex-maps.js",
   "jsnext:main": "./src/index.js",
