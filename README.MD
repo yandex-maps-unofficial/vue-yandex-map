@@ -52,8 +52,9 @@ You can use the CDN: https://unpkg.com/vue-yandex-maps, `yandexMap` is exposed t
 
 Use `<yandex-map>` tag to enable the map instance and use attributes to define map options.
 
-You may define placemarks on your map by using `<ymap-marker>` tag or set an array of objects with placemark options through `<yandex-map>` attribute `placemarks`. You also can use both methods together.
-The Map instance rerender when changed link on array with markers in `placemarks` property or marker coordinates if marker is a component. 
+You may define placemarks on your map by using `<ymap-marker>` tag or set an array of objects with placemark options through `<yandex-map>` attribute `placemarks`. You also can use both methods together.<br>
+The Map instance rerender when changed array with markers in `placemarks` property or marker properties if marker is a component.<br>
+Also map watch property `coords` and react without rerender, when it changed. 
 
 Type of marker in `marker-type` attribute can be:
 
@@ -167,6 +168,7 @@ data() {
 | circle-radius | Number | Radius of circle in meters. Default value is 1000. | Circle |
 | cluster-name | String | Attribute for grouping markers in clusters | All |
 | callbacks | Object | Object, where key is an event name and value is a callback function, e.g. { click: function() {...}, contextmenu: anotherFunction }. [Events list](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#events-summary) | All |
+| [balloonTemplate](#balloonTemplate) | String | HTML Template for balloon | All |
 
 # Icons
 
@@ -185,6 +187,42 @@ Or you may define it as a placemark with custom icon. In this case you need to s
 ```
 
 where `markerIcon`: data or computed path to image or data:image/svg+xml;base64, `imageSize`: size of icon in px, `imageOffset`: icon offset in px
+
+# Balloon Template
+
+You can define your own template for balloon.
+
+```HTML
+<yandex-map 
+  :coords="[54.62896654088406, 39.731893822753904]"
+>
+  <ymap-marker 
+      marker-type="placemark"
+      :balloonTemplate = "balloonTemplate"
+    ></ymap-marker>
+</yandex-map>
+
+```
+
+```JavaScript
+computed: {
+  balloonTemplate() {
+    return `
+      <h1 class="red">Hi, everyone!</h1>
+      <p>I am here: ${this.coords}</p>
+      <img src="http://via.placeholder.com/350x150">
+    `
+  }
+}
+
+```
+
+```CSS
+.red {
+  color: red;
+}
+
+```
 
 # License
 
