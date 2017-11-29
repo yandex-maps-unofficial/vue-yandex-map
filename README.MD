@@ -198,6 +198,7 @@ You can define your own template for balloon.
 >
   <ymap-marker 
       marker-type="placemark"
+      :coords="[54.7, 39.7]"
       :balloonTemplate = "balloonTemplate"
     ></ymap-marker>
 </yandex-map>
