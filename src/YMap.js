@@ -39,7 +39,7 @@ export default {
         },
         zoomControl: {
             type: Object,
-            //              default: () => ({})
+            default: () => ({})
         },
         zoomControlPosition: {
             type: Object,
@@ -86,6 +86,12 @@ export default {
             const myMarkers = this.$slots.default && this.$slots.default.map(m => {
                 const props = m.componentOptions && m.componentOptions.propsData;
                 if (!props) return;
+                let balloonOptions = {};
+
+                if (props.balloonTemplate) {
+                    const BalloonContentLayoutClass = ymaps.templateLayoutFactory.createClass(props.balloonTemplate);
+                    balloonOptions = { balloonContentLayout: BalloonContentLayoutClass }
+                }
 
                 let marker = {
                     markerId: props.markerId,
@@ -96,7 +102,8 @@ export default {
                     circleRadius: +props.circleRadius,
                     clusterName: props.clusterName,
                     markerStroke: props.markerStroke,
-                    balloon: props.balloon
+                    balloon: props.balloon, 
+                    balloonOptions
                 };
 
                 if (props.icon && props.icon.layout === 'default#image') {
@@ -118,43 +125,51 @@ export default {
             }).filter(marker => marker && marker.markerType) || [];
 
             for (let i = 0; i < myMarkers.length; i++) {
-                const markerType = utils.setFirstLetterToUppercase(myMarkers[i].markerType);
-                const properties = {
-                    hintContent: myMarkers[i].hintContent,
-                    balloonContentHeader: myMarkers[i].balloon && myMarkers[i].balloon.header,
-                    balloonContentBody: myMarkers[i].balloon && myMarkers[i].balloon.body,
-                    balloonContentFooter: myMarkers[i].balloon && myMarkers[i].balloon.footer,
-                    iconContent: myMarkers[i].icon && myMarkers[i].icon.content,
+                const m = myMarkers[i];
+                const markerType = utils.setFirstLetterToUppercase(m.markerType);
+                let properties = {
+                    hintContent: m.hintContent,
+                    iconContent: m.icon && m.icon.content,
                 };
-                let options;
-                if (myMarkers[i].iconLayout) {
-                    options = {
-                        iconLayout: myMarkers[i].iconLayout,
-                        iconImageHref: myMarkers[i].iconImageHref,
-                        iconImageSize: myMarkers[i].iconImageSize,
-                        iconImageOffset: myMarkers[i].iconImageOffset,
-                    }
-                } else {
-                    options = {
-                        preset: myMarkers[i].icon && `islands#${utils.getIconPreset(myMarkers[i])}Icon`,
-                        strokeColor: myMarkers[i].markerStroke && myMarkers[i].markerStroke.color || "0066ffff",
-                        strokeOpacity: myMarkers[i].markerStroke && parseFloat(myMarkers[i].markerStroke.opacity) >= 0 ? parseFloat(myMarkers[i].markerStroke.opacity) : 1,
-                        strokeStyle: myMarkers[i].markerStroke && myMarkers[i].markerStroke.style,
-                        strokeWidth: myMarkers[i].markerStroke && parseFloat(myMarkers[i].markerStroke.width) >= 0 ? parseFloat(myMarkers[i].markerStroke.width) : 1,
-                        fill: myMarkers[i].markerFill && myMarkers[i].markerFill.enabled || true,
-                        fillColor: myMarkers[i].markerFill && myMarkers[i].markerFill.color || "0066ff99",
-                        fillOpacity: myMarkers[i].markerFill && parseFloat(myMarkers[i].markerFill.opacity) >= 0 ? parseFloat(myMarkers[i].markerFill.opacity) : 1,
-                        fillImageHref: myMarkers[i].markerFill && myMarkers[i].markerFill.imageHref || ''
-                    };
-                }
+
+                const balloonProps = m.balloon ? {
+                    balloonContentHeader: m.balloon.header,
+                    balloonContentBody: m.balloon.body,
+                    balloonContentFooter: m.balloon.footer,
+                } : {};
+
+                properties = Object.assign(properties, balloonProps);
+
+                let options = m.iconLayout ? {
+                    iconLayout: m.iconLayout,
+                    iconImageHref: m.iconImageHref,
+                    iconImageSize: m.iconImageSize,
+                    iconImageOffset: m.iconImageOffset
+                } : { preset: m.icon && `islands#${utils.getIconPreset(m)}Icon` };                
+
+                const strokeOptions = m.markerStroke ? {
+                    strokeColor: m.markerStroke.color || "0066ffff",
+                    strokeOpacity: parseFloat(m.markerStroke.opacity) >= 0 ? parseFloat(m.markerStroke.opacity) : 1,
+                    strokeStyle: m.markerStroke.style,
+                    strokeWidth: parseFloat(m.markerStroke.width) >= 0 ? parseFloat(m.markerStroke.width) : 1
+                } : {};
+
+                const fillOptions = m.markerFill ? {
+                    fill: m.markerFill.enabled || true,
+                    fillColor: m.markerFill.color || "0066ff99",
+                    fillOpacity: parseFloat(m.markerFill.opacity) >= 0 ? parseFloat(m.markerFill.opacity) : 1,
+                    fillImageHref: m.markerFill.imageHref || ''
+                } : {};
+
+                options = Object.assign(options, strokeOptions, fillOptions, m.balloonOptions);
 
                 if (markerType === 'Circle') {
-                    myMarkers[i].coords = [myMarkers[i].coords, myMarkers[i].circleRadius];
+                    m.coords = [m.coords, m.circleRadius];
                 }
-                let marker = new ymaps[markerType](myMarkers[i].coords, properties, options);
-                utils.createCallbacks(myMarkers[i], marker);
-                marker.id = myMarkers[i].markerId;
-                marker.clusterName = myMarkers[i].clusterName;
+                let marker = new ymaps[markerType](m.coords, properties, options);
+                utils.createCallbacks(m, marker);
+                marker.id = m.markerId;
+                marker.clusterName = m.clusterName;
                 marker.properties.set('markerId', i);
 
                 markers.push(marker);

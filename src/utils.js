@@ -69,4 +69,10 @@ export function objectComparison( first, second ){
 		return true
 	}(first, second)
 }
+
+export function compareValues (newVal, oldVal, bus) {
+    if (objectComparison(newVal, oldVal)) { return; } 
+    if (bus.rerender) { clearTimeout(bus.rerender); }
+    bus.rerender = setTimeout(() => bus.initMap && bus.initMap(), 10);
+}
     

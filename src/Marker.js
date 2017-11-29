@@ -23,14 +23,14 @@ export default {
             default: 1000
         },
         callbacks: Object,
-        data: Object
+        data: Object,
+        balloonTemplate: String
     },
     render() {
     },
-    watch: {
-        coords(newVal, oldVal) {
-            if (utils.objectComparison(newVal, oldVal)) { return; } 
-            this.$ymapEventBus.initMap && this.$ymapEventBus.initMap();
+    mounted() {
+        for (let prop in this.$props) {
+            this.$watch(prop, (newVal, oldVal) => utils.compareValues(newVal, oldVal, this.$ymapEventBus));    
         }
     }
 }
