@@ -52,6 +52,8 @@ You can use the CDN: https://unpkg.com/vue-yandex-maps, `yandexMap` is exposed t
 
 Use `<yandex-map>` tag to enable the map instance and use attributes to define map options.
 
+`<yandex-map>` has a class `ymap-container` and child element with class `ymap-body`, where rendering map instance.
+
 You may define placemarks on your map by using `<ymap-marker>` tag or set an array of objects with placemark options through `<yandex-map>` attribute `placemarks` ([interface description](https://tech.yandex.ru/maps/doc/jsapi/2.0/ref/reference/GeoObject-docpage/)). You also can use both methods together.<br>
 The Map instance rerender when changed array with markers in `placemarks` property or marker properties if marker is a component.<br>
 Also map watch property `coords` and react without rerender, when it changed. 
