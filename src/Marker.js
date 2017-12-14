@@ -24,7 +24,8 @@ export default {
         },
         callbacks: Object,
         data: Object,
-        balloonTemplate: String
+        balloonTemplate: String,
+        markerId: [String, Number]
     },
     render() {
     },

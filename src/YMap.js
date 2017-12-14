@@ -168,9 +168,9 @@ export default {
                 }
                 let marker = new ymaps[markerType](m.coords, properties, options);
                 utils.createCallbacks(m, marker);
-                marker.id = m.markerId;
                 marker.clusterName = m.clusterName;
-                marker.properties.set('markerId', i);
+
+                marker.properties.set('markerId', m.markerId);
 
                 markers.push(marker);
                 myGeoObjects.add(marker);
