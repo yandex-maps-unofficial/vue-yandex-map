@@ -234,7 +234,7 @@ export default {
             this.$ymapEventBus = new Vue({
                 data: {
                     ymapReady: !!window && !!window.ymaps,
-                    scriptIsNotAttached: window && !window.ymaps || true
+                    scriptIsNotAttached: window && !window.ymaps
                 }
             });
         }
