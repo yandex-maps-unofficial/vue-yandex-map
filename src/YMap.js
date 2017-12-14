@@ -220,9 +220,9 @@ export default {
                     'div', 
                     {
                         attrs: {
-                            id: this.ymapId
-                        },
-                        style: { width: '100%', height: '100%' }
+                            id: this.ymapId,
+                            class: 'ymap-body'
+                        }
                     } 
                 ),
                 this.$slots.default 
@@ -233,8 +233,8 @@ export default {
         if (!this.$ymapEventBus) {
             this.$ymapEventBus = new Vue({
                 data: {
-                    ymapReady: false,
-                    scriptIsNotAttached: true
+                    ymapReady: !!window && !!window.ymaps,
+                    scriptIsNotAttached: window && !window.ymaps || true
                 }
             });
         }
@@ -249,8 +249,6 @@ export default {
                 this.$ymapEventBus.ymapReady = true;
                 this.$ymapEventBus.$emit('scriptIsLoaded');
             }
-        } else {
-            return false;
         }
     },
     mounted() {
