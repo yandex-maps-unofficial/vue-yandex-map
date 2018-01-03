@@ -4,14 +4,17 @@ import resolve from 'rollup-plugin-node-resolve';
 import uglify from 'rollup-plugin-uglify';
 
 export default {
-  entry: './src/index.js',
-  dest: 'vue-yandex-maps.js',
+  input: './src/index.js',
+  output: {
+    exports: 'named',
+    file: 'vue-yandex-maps.js',
+    format: 'umd',
+    name: 'vueYandexMaps'
+  },
   plugins: [
     resolve(),
     vue({compileTemplate: true}),
     babel(),
     uglify()
-  ],
-  format: 'umd',
-  moduleName: 'vueYandexMaps'
+  ]
 };
