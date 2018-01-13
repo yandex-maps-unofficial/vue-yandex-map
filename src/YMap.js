@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import * as utils from './utils';
 
 export default {
@@ -231,6 +230,7 @@ export default {
     },
     beforeMount() {
         if (!this.$ymapEventBus) {
+            const Vue = this.$root.constructor;
             this.$ymapEventBus = new Vue({
                 data: {
                     ymapReady: !!window && !!window.ymaps,

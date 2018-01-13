@@ -14,7 +14,10 @@ export default {
   plugins: [
     resolve(),
     vue({compileTemplate: true}),
-    babel(),
+    babel({
+      exclude: 'node_modules/**',
+      plugins: ['external-helpers']
+    }),
     uglify()
   ]
 };
