@@ -3,6 +3,7 @@ import * as utils from './utils';
 export default {
     data() {
         return {
+            ymapEventBus: utils.emitter,
             ymapId: 'yandexMap' + Math.round(Math.random() * 100000),
             myMap: {}
         }
@@ -228,35 +229,24 @@ export default {
             ]
         )
     },
-    beforeMount() {
-        if (!this.$ymapEventBus) {
-            const Vue = this.$root.constructor;
-            this.$ymapEventBus = new Vue({
-                data: {
-                    ymapReady: !!window && !!window.ymaps,
-                    scriptIsNotAttached: window && !window.ymaps
-                }
-            });
-        }
-        if (this.$ymapEventBus.scriptIsNotAttached) {
+    mounted() {
+        if (this.ymapEventBus.scriptIsNotAttached) {
             const yandexMapScript = document.createElement('SCRIPT');
             yandexMapScript.setAttribute('src', 'https://api-maps.yandex.ru/2.1/?lang=ru_RU');
             yandexMapScript.setAttribute('async', '');
             yandexMapScript.setAttribute('defer', '');
             document.body.appendChild(yandexMapScript);
-            this.$ymapEventBus.scriptIsNotAttached = false;
+            this.ymapEventBus.scriptIsNotAttached = false;
             yandexMapScript.onload = () => {
-                this.$ymapEventBus.ymapReady = true;
-                this.$ymapEventBus.$emit('scriptIsLoaded');
+                this.ymapEventBus.ymapReady = true;
+                this.ymapEventBus.$emit('scriptIsLoaded');
             }
         }
-    },
-    mounted() {
-        if (this.$ymapEventBus.ymapReady) {
+        if (this.ymapEventBus.ymapReady) {
             ymaps.ready(this.init);
         } else {
-            this.$ymapEventBus.$on('scriptIsLoaded', () => {
-                this.$ymapEventBus.initMap = () => {
+            this.ymapEventBus.$on('scriptIsLoaded', () => {
+                this.ymapEventBus.initMap = () => {
                     this.myMap.destroy();
                     this.init();
                 };

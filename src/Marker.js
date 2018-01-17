@@ -1,6 +1,9 @@
-import * as utils from './utils';
+import { compareValues, emitter } from './utils';
 
 export default {
+    data: () => ({
+        ymapEventBus: emitter
+    }),
     props: {
         coords: {
             type: Array,
@@ -31,7 +34,7 @@ export default {
     },
     mounted() {
         for (let prop in this.$props) {
-            this.$watch(prop, (newVal, oldVal) => utils.compareValues(newVal, oldVal, this.$ymapEventBus));    
+            this.$watch(prop, (newVal, oldVal) => compareValues(newVal, oldVal, this.ymapEventBus));    
         }
     }
 }
