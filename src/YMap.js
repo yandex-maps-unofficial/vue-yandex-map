@@ -69,6 +69,7 @@ export default {
     },
     methods: {
         init() {
+            if (!ymaps.GeoObjectCollection) return; // if ymap isn't initialized;
             let markers = [];
             let myGeoObjects = new ymaps.GeoObjectCollection();
 
