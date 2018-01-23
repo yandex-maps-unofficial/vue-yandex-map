@@ -32,19 +32,22 @@ export default {
         },
         controls: {
             type: Array,
-            default: () => ['default']
+            default: () => ['default'],
+            validator(val) {
+                return utils.controlsTypeValidator(val);
+            }
+        },
+        detailedControls: {
+            type: Object,
+            validator(val) {
+                const controls = Object.keys(val);
+                return utils.controlsTypeValidator(controls)
+            }
         },
         scrollZoom: {
             type: Boolean
         },
-        zoomControl: {
-            type: Object,
-            default: () => ({})
-        },
-        zoomControlPosition: {
-            type: Object,
-            default: () => ({})
-        },
+        zoomControl: Object,
         mapType: {
             type: String,
             default: 'map',
@@ -79,6 +82,14 @@ export default {
             if (this.zoomControl) {
                 this.myMap.controls.remove('zoomControl');
                 this.myMap.controls.add(new ymaps.control.ZoomControl(this.zoomControl));
+            }
+            if (this.detailedControls) {
+                const controls = Object.keys(this.detailedControls);
+                controls.forEach(controlName => {
+                    this.myMap.controls.remove(controlName);
+                    const constructor = ymaps.control.storage.get(controlName);
+                    this.myMap.controls.add(new constructor(this.detailedControls[controlName]));
+                })
             }
             if (this.scrollZoom === false) {
                 this.myMap.behaviors.disable('scrollZoom');

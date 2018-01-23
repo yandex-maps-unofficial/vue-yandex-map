@@ -104,4 +104,19 @@ class EventEmitter {
 }
 
 export const emitter = new EventEmitter();
+
+const CONTROL_TYPES = [
+    'fullscreenControl',
+    'geolocationControl',
+    'routeEditor',
+    'rulerControl',
+    'searchControl',
+    'trafficControl',
+    'typeSelector',
+    'zoomControl'
+];
+
+export function controlsTypeValidator(val) {
+    return val.filter(control => ![...CONTROL_TYPES, 'default'].includes(control)).length === 0
+} 
     
