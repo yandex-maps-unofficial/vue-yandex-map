@@ -6,7 +6,7 @@ export function createCallbacks(marker, placemark) {
     }
 }
 
-export function createClusters(markers, options, map) {
+export function createClusters(markers, { options, callbacks, map }) {
     let clusters = {};
     for (let marker of markers) {
         if (!marker.clusterName) continue;
@@ -14,7 +14,11 @@ export function createClusters(markers, options, map) {
     }
     for (let clusterName in clusters) {
         const clusterOptions = options[clusterName] || {};
+        const clusterCallbacks = callbacks[clusterName] || {};
         const clusterer = new ymaps.Clusterer(clusterOptions);
+        for (let key in clusterCallbacks) {
+            clusterer.events.add(key, clusterCallbacks[key]);
+        }
         clusterer.add(clusters[clusterName]);
         map.geoObjects.add(clusterer);
     }

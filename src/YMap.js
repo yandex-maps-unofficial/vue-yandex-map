@@ -26,6 +26,10 @@ export default {
             type: Object,
             default: () => ({})
         },
+        clusterCallbacks: {
+            type: Object,
+            default: () => ({})
+        },
         behaviors: {
             type: Array,
             default: () => ['default']
@@ -207,8 +211,15 @@ export default {
                 })
             }
 
+            this.myMap.markersSnapshot = myGeoObjects.toArray().map(go => go.geometry.getBounds()[0].join(' '));
+
             this.myMap.geoObjects.add(myGeoObjects);
-            utils.createClusters(markers, this.clusterOptions, this.myMap);
+            const config = {
+                options: this.clusterOptions,
+                callbacks: this.clusterCallbacks,
+                map: this.myMap
+            };
+            utils.createClusters(markers, config);
             this.$emit('map-was-initialized', this.myMap);
         }
     },
@@ -216,7 +227,7 @@ export default {
         coordinates(newVal) {
             this.myMap.setCenter && this.myMap.setCenter(newVal, this.zoom)
         },
-        placemarks(newVal, oldVal) {
+        placemarks() {
             if (window.ymaps) {
                 this.myMap.destroy && this.myMap.destroy();
                 this.init();
@@ -264,6 +275,16 @@ export default {
                 };
                 ymaps.ready(this.init);
             })
+        }
+    },
+    updated() {
+        if (this.$slots.default && this.myMap.geoObjects) {
+            const markers = this.$slots.default.map(m => {
+                const props = m.componentOptions && m.componentOptions.propsData;
+                if (!props) return '';
+                return utils.setCoordsToNumeric(props.coords).join(' ');
+            });
+            utils.compareValues(markers, this.myMap.markersSnapshot, this.ymapEventBus)
         }
     }
 }
