@@ -49,7 +49,8 @@ export default {
             }
         },
         scrollZoom: {
-            type: Boolean
+            type: Boolean,
+            default: true
         },
         zoomControl: Object,
         mapType: {

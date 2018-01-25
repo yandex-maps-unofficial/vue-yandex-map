@@ -15,6 +15,8 @@ export function createClusters(markers, { options, callbacks, map }) {
     for (let clusterName in clusters) {
         const clusterOptions = options[clusterName] || {};
         const clusterCallbacks = callbacks[clusterName] || {};
+        const layout = clusterOptions.layout;
+        clusterOptions.clusterBalloonItemContentLayout = ymaps.templateLayoutFactory.createClass(layout);
         const clusterer = new ymaps.Clusterer(clusterOptions);
         for (let key in clusterCallbacks) {
             clusterer.events.add(key, clusterCallbacks[key]);
