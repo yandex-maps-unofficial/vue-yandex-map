@@ -147,6 +147,7 @@ data() {
 | coords | Array [ latitude, longtitude ] | Coordinates of map center. Required |
 | zoom | Number | Zoom of map (from 0 to 19). Default value is 18. |
 | cluster-options | Object | Map, where key is a name of cluster and value is an object of cluster options. [Cluster option](https://tech.yandex.ru/maps/doc/jsapi/2.0/ref/reference/Cluster-docpage/#param-options) |
+| cluster-callbacks | Object | Object, where key is an event name and value is a callback function, e.g. { click: function() {...}, contextmenu: anotherFunction } |
 | behaviors | Array | Array of enabled map behaviors. All another will be disabled. [Behaviors](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/map.behavior.Manager-docpage/#param-behaviors) |
 | controls | Array | Array of enabled map controls. All another will be disabled. [Controls](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/control.Manager-docpage/#add-param-control) |
 | detailed-controls | Object | Map, where key is a name of control and value is an object of control options. |
