@@ -74,7 +74,7 @@ export default {
     },
     methods: {
         init() {
-            if (!ymaps.GeoObjectCollection) return; // if ymap isn't initialized;
+            if (!window.ymaps || !ymaps.GeoObjectCollection) return; // if ymap isn't initialized;
             let markers = [];
             let myGeoObjects = new ymaps.GeoObjectCollection();
 
@@ -249,11 +249,32 @@ export default {
                         }
                     } 
                 ),
-                this.$slots.default 
+                h(
+                    'div',
+                    {
+                        attrs: {
+                            class: 'ymap-markers'
+                        }
+                    },
+                    [
+                        this.$slots.default
+                    ]
+                ) 
             ]
         )
     },
     mounted() {
+        this.observer = new MutationObserver(function(mutations) {
+            this.myMap.destroy && this.myMap.destroy();
+            this.init();
+        }.bind(this));
+        
+        // Setup the observer
+        this.observer.observe(
+            document.querySelector('.ymap-markers'),
+            { attributes: true, childList: true, characterData: true, subtree: true }
+        );
+
         if (this.ymapEventBus.scriptIsNotAttached) {
             const yandexMapScript = document.createElement('SCRIPT');
             yandexMapScript.setAttribute('src', 'https://api-maps.yandex.ru/2.1/?lang=ru_RU');
@@ -278,14 +299,7 @@ export default {
             })
         }
     },
-    updated() {
-        if (this.$slots.default && this.myMap.geoObjects) {
-            const markers = this.$slots.default.map(m => {
-                const props = m.componentOptions && m.componentOptions.propsData;
-                if (!props) return '';
-                return utils.setCoordsToNumeric(props.coords).join(' ');
-            });
-            utils.compareValues(markers, this.myMap.markersSnapshot, this.ymapEventBus)
-        }
+    beforeDestroy() {
+        this.observer.disconnect();
     }
 }
