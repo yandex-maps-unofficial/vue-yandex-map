@@ -212,8 +212,6 @@ export default {
                 })
             }
 
-            this.myMap.markersSnapshot = myGeoObjects.toArray().map(go => go.geometry.getBounds()[0].join(' '));
-
             this.myMap.geoObjects.add(myGeoObjects);
             const config = {
                 options: this.clusterOptions,
