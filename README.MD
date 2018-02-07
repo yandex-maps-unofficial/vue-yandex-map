@@ -148,35 +148,36 @@ data() {
 | Attribute | Type | Description |
 | ----- | ----- | ----- |
 | coords | Array [ latitude, longtitude ] | Coordinates of map center. Required |
-| zoom | Number | Zoom of map (from 0 to 19). Default value is 18. |
+| zoom | Number | Zoom of map (from 0 to 19). Default: `18`. |
 | cluster-options | Object | Map, where key is a name of cluster and value is an object of cluster options. Also you may set field 'layout' (type `String`) in cluster options object with HTML Template for balloonItemContentLayout. [Cluster option](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/ClusterPlacemark-docpage/#param-options) |
 | cluster-callbacks | Object | Object, where key is an event name and value is a callback function, e.g. { click: function() {...}, contextmenu: anotherFunction } |
 | behaviors | Array | Array of enabled map behaviors. All another will be disabled. [Behaviors](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/map.behavior.Manager-docpage/#param-behaviors) |
 | controls | Array | Array of enabled map controls. All another will be disabled. [Controls](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/control.Manager-docpage/#add-param-control) |
 | detailed-controls | Object | Map, where key is a name of control and value is an object of control options. |
-| map-type | String | Map type. Possible types: map, satellite, hybrid. Default value is map. |
-| scroll-zoom | Boolean | Set to false to disable zoom map on scroll page |
+| map-type | String | Map type. Possible types: `map, satellite, hybrid`. Default: `map`. |
+| scroll-zoom | Boolean | Set to `false` to disable zoom map on scroll page. Default: `true` |
 | zoom-control  | Object | Configs for zoomControl of the map. [More](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/control.ZoomControl-docpage/) |
-| placemarks  | Array of Objects | Array of config objects with fields: coordinates ([lat, lon]), properties, options. [More](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Placemark-docpage/) |
-| use-object-manager  | Boolean | Defines using Object Mananger in map. Default: false |
-| object-manager-clusterize  | Boolean | Defines using clusterize in Object Mananger. Default: true |
-| ymap-class  | String | Defines class for element, where rendering map instance |
+| placemarks  | Array of Objects | Array of config objects with fields: coordinates ([lat, lng]), properties, options. [More](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Placemark-docpage/) |
+| use-object-manager  | Boolean | Set to `true` to use Object Mananger in map. Default: `false` |
+| object-manager-clusterize  | Boolean | Defines using clusterize in Object Mananger. Default: `true` |
+| ymap-class  | String | Defines class for element, where rendering map instance. If not defined - element use style: `width: 100%; height: 100%;` |
+| init-without-markers  | Boolean | Set to `false` to prevent map initialization if there is no markers. Default: `true` |
 
 ## Marker attributes
 
 | Attribute | Type | Description | Marker-types |
 | ----- | ----- | ----- | ----- |
-| marker-id | String, Number | Marker Id. Required ||
+| marker-id | String, Number | Marker Id. `Required` ||
 | marker-type | String | Type of marker ||
-| coords | Array [ latitude, longtitude ] | Coordinates of point or circle center. Required | Placemark, Circle |
-| coords | Array of arrays [ [latitude, longtitude], [...] ] | Coordinates of shape corners. Required | Rectangle, Polyline |
+| coords | Array [ latitude, longtitude ] | Coordinates of point or circle center. `Required` | Placemark, Circle |
+| coords | Array of arrays [ [latitude, longtitude], [...] ] | Coordinates of shape corners. `Required` | Rectangle, Polyline |
 | coords | Array of two arrays of coordinates arrays (first for outer contour, second for inner) [ [[latitude, longtitude], [...]], [[...], [...]] ] | Coordinates of shape corners. Required | Polygon |
 | hint-content | String | Tooltip content | All |
 | balloon | Object | Balloon content object with three properties: header, body, footer | All |
 | icon | Object | [About icons](#icons) | Placemark |
 | marker-fill | Object | Fill properties object with four properties: enabled, color, opacity, imageHref | Polygon, Rectangle, Circle |
 | marker-stroke | Object | Stroke properties object with four properties: color, opacity, width, style | Polygon, Rectangle, Circle, Polyline |
-| circle-radius | Number | Radius of circle in meters. Default value is 1000. | Circle |
+| circle-radius | Number | Radius of circle in meters. Default: `1000`. | Circle |
 | cluster-name | String | Attribute for grouping markers in clusters | All |
 | callbacks | Object | Object, where key is an event name and value is a callback function, e.g. { click: function() {...}, contextmenu: anotherFunction }. [Events list](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#events-summary) | All |
 | [balloonTemplate](#balloon-template) | String | HTML Template for balloon | All |

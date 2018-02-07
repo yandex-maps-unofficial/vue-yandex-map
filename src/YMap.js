@@ -75,7 +75,11 @@ export default {
             type: Boolean,
             default: true
         },
-        ymapClass: String
+        ymapClass: String,
+        initWithoutMarkers: {
+            type: Boolean,
+            default: true
+        }
     },
     computed: {
         coordinates() {
@@ -84,32 +88,12 @@ export default {
     },
     methods: {
         init() {
-            if (!window.ymaps || !ymaps.GeoObjectCollection) return; // if ymap isn't initialized;
+            // if ymap isn't initialized or have no markers;
+            if (!window.ymaps || !ymaps.GeoObjectCollection || (!this.initWithoutMarkers && !this.$slots.default && !this.placemarks.length)) return; 
+            
             this.$emit('map-initialization-started');
             let markers = [];
 
-            this.myMap = new ymaps.Map(this.ymapId, {
-                center: this.coordinates,
-                zoom: +this.zoom,
-                behaviors: this.behaviors,
-                controls: this.controls,
-                type: `yandex#${this.mapType}`
-            });
-            if (this.zoomControl) {
-                this.myMap.controls.remove('zoomControl');
-                this.myMap.controls.add(new ymaps.control.ZoomControl(this.zoomControl));
-            }
-            if (this.detailedControls) {
-                const controls = Object.keys(this.detailedControls);
-                controls.forEach(controlName => {
-                    this.myMap.controls.remove(controlName);
-                    const constructor = ymaps.control.storage.get(controlName);
-                    this.myMap.controls.add(new constructor(this.detailedControls[controlName]));
-                })
-            }
-            if (this.scrollZoom === false) {
-                this.myMap.behaviors.disable('scrollZoom');
-            }
             const myMarkers = this.$slots.default && this.$slots.default.map(m => {
                 const props = m.componentOptions && m.componentOptions.propsData;
                 if (!props) return;
@@ -212,6 +196,29 @@ export default {
                 })
             }
 
+            this.myMap = new ymaps.Map(this.ymapId, {
+                center: this.coordinates,
+                zoom: +this.zoom,
+                behaviors: this.behaviors,
+                controls: this.controls,
+                type: `yandex#${this.mapType}`
+            });
+            if (this.zoomControl) {
+                this.myMap.controls.remove('zoomControl');
+                this.myMap.controls.add(new ymaps.control.ZoomControl(this.zoomControl));
+            }
+            if (this.detailedControls) {
+                const controls = Object.keys(this.detailedControls);
+                controls.forEach(controlName => {
+                    this.myMap.controls.remove(controlName);
+                    const constructor = ymaps.control.storage.get(controlName);
+                    this.myMap.controls.add(new constructor(this.detailedControls[controlName]));
+                })
+            }
+            if (this.scrollZoom === false) {
+                this.myMap.behaviors.disable('scrollZoom');
+            }
+
             const config = {
                 options: this.clusterOptions,
                 callbacks: this.clusterCallbacks,
@@ -247,7 +254,7 @@ export default {
                             class: this.ymapClass,
                             style: this.style
                         }
-                    } 
+                    }
                 ),
                 h(
                     'div',
