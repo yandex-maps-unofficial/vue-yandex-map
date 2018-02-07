@@ -57,7 +57,8 @@ Use `<yandex-map>` tag to enable the map instance and use attributes to define m
 If you have a lot of markers on your map i strongly recommend you to use map attribute `useObjectManager`. But in this case you can't set callbacks to your markers through marker attribute `callbacks`.
 
 You may define placemarks on your map by using `<ymap-marker>` tag or set an array of objects with placemark options through `<yandex-map>` attribute `placemarks` ([interface description](https://tech.yandex.ru/maps/doc/jsapi/2.0/ref/reference/GeoObject-docpage/)). You also can use both methods together.<br>
-The Map instance rerender when changed array with markers in `placemarks` property or marker properties if marker is a component.<br>
+You must define `markerId` for every marker on your map in any case fo setting (through map attribute `placemarks` or using `ymap-marker` components).<br>
+The Map instance rerender when changed array with markers or marker properties if marker is a component.<br>
 Also map watch property `coords` and react without rerender, when it changed. 
 
 Type of marker in `marker-type` attribute can be:
@@ -165,6 +166,7 @@ data() {
 
 | Attribute | Type | Description | Marker-types |
 | ----- | ----- | ----- | ----- |
+| marker-id | String, Number | Marker Id. Required ||
 | marker-type | String | Type of marker ||
 | coords | Array [ latitude, longtitude ] | Coordinates of point or circle center. Required | Placemark, Circle |
 | coords | Array of arrays [ [latitude, longtitude], [...] ] | Coordinates of shape corners. Required | Rectangle, Polyline |

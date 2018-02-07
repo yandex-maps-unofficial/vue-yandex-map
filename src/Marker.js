@@ -29,7 +29,10 @@ export default {
         callbacks: Object,
         data: Object,
         balloonTemplate: String,
-        markerId: [String, Number]
+        markerId: {
+            type: [String, Number],
+            required: true
+        }
     },
     render() {
     },
