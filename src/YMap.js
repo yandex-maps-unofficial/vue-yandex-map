@@ -5,7 +5,8 @@ export default {
         return {
             ymapEventBus: utils.emitter,
             ymapId: 'yandexMap' + Math.round(Math.random() * 100000),
-            myMap: {}
+            myMap: {},
+            style: this.ymapClass ? '' : 'width: 100%; height: 100%;'
         }
     },
     props: {
@@ -65,7 +66,16 @@ export default {
             default() {
                 return [];
             }
-        }
+        },
+        useObjectManager: {
+            type: Boolean,
+            default: false
+        },
+        objectManagerClusterize: {
+            type: Boolean,
+            default: true
+        },
+        ymapClass: String
     },
     computed: {
         coordinates() {
@@ -75,8 +85,8 @@ export default {
     methods: {
         init() {
             if (!window.ymaps || !ymaps.GeoObjectCollection) return; // if ymap isn't initialized;
+            this.$emit('map-initialization-started');
             let markers = [];
-            let myGeoObjects = new ymaps.GeoObjectCollection();
 
             this.myMap = new ymaps.Map(this.ymapId, {
                 center: this.coordinates,
@@ -140,13 +150,14 @@ export default {
                 }
                 return marker
             }).filter(marker => marker && marker.markerType) || [];
-
+            
             for (let i = 0; i < myMarkers.length; i++) {
                 const m = myMarkers[i];
-                const markerType = utils.setFirstLetterToUppercase(m.markerType);
+                const markerType = utils.createMarkerType(m.markerType, this.useObjectManager);
                 let properties = {
                     hintContent: m.hintContent,
                     iconContent: m.icon && m.icon.content,
+                    markerId: m.markerId
                 };
 
                 const balloonProps = m.balloon ? {
@@ -183,42 +194,32 @@ export default {
                 if (markerType === 'Circle') {
                     m.coords = [m.coords, m.circleRadius];
                 }
-                let marker = new ymaps[markerType](m.coords, properties, options);
-                utils.createCallbacks(m, marker);
-                marker.clusterName = m.clusterName;
 
-                marker.properties.set('markerId', m.markerId);
+                const obj = { properties, options, markerType, coords: m.coords, clusterName: m.clusterName, callbacks: m.callbacks }
+                const marker = utils.createMarker(obj, this.useObjectManager);
 
                 markers.push(marker);
-                myGeoObjects.add(marker);
             }
 
             if (this.placemarks) {
-                this.placemarks.forEach(function(placemark) {
-                    let yplacemark = new ymaps.Placemark (
-                        placemark.coords,
-                        placemark.properties || {},
-                        placemark.options || {}
-                    );
-
-                    utils.createCallbacks(placemark, yplacemark);
-
-                    if (placemark.clusterName) { 
-                        yplacemark.clusterName = placemark.clusterName;
-                        markers.push(yplacemark);
-                    }
+                const markerType = this.useObjectManager ? 'Point' : 'Placemark';
+                this.placemarks.forEach(placemark => {
+                    const { properties, options, coords, clusterName, callbacks } = placemark;
+                    const obj = { properties, options, markerType, coords, clusterName, callbacks }
+                    let yplacemark = utils.createMarker(obj, this.useObjectManager);
                     
-                    myGeoObjects.add(yplacemark);
+                    markers.push(yplacemark);
                 })
             }
 
-            this.myMap.geoObjects.add(myGeoObjects);
             const config = {
                 options: this.clusterOptions,
                 callbacks: this.clusterCallbacks,
-                map: this.myMap
+                map: this.myMap,
+                useObjectManager: this.useObjectManager,
+                objectManagerClusterize: this.objectManagerClusterize
             };
-            utils.createClusters(markers, config);
+            utils.addToCart(markers, config);
             this.$emit('map-was-initialized', this.myMap);
         }
     },
@@ -243,7 +244,8 @@ export default {
                     {
                         attrs: {
                             id: this.ymapId,
-                            class: 'ymap-body'
+                            class: this.ymapClass,
+                            style: this.style
                         }
                     } 
                 ),
@@ -298,6 +300,7 @@ export default {
         }
     },
     beforeDestroy() {
+        this.myMap.GeoObjects && this.myMap.GeoObjects.removeAll();
         this.observer.disconnect();
     }
 }

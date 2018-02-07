@@ -52,7 +52,9 @@ You can use the CDN: https://unpkg.com/vue-yandex-maps, `yandexMap` is exposed t
 
 Use `<yandex-map>` tag to enable the map instance and use attributes to define map options.
 
-`<yandex-map>` has a class `ymap-container` and child element with class `ymap-body`, where rendering map instance.
+`<yandex-map>` has a class `ymap-container` and child element, where rendering map instance. Child class you may define through map attribute `ymap-class`. If you doesn't define this class - child element will have `style` attribute with `width: 100%; height: 100%;`
+
+If you have a lot of markers on your map i strongly recommend you to use map attribute `useObjectManager`. But in this case you can't set callbacks to your markers through marker attribute `callbacks`.
 
 You may define placemarks on your map by using `<ymap-marker>` tag or set an array of objects with placemark options through `<yandex-map>` attribute `placemarks` ([interface description](https://tech.yandex.ru/maps/doc/jsapi/2.0/ref/reference/GeoObject-docpage/)). You also can use both methods together.<br>
 The Map instance rerender when changed array with markers in `placemarks` property or marker properties if marker is a component.<br>
@@ -155,6 +157,9 @@ data() {
 | scroll-zoom | Boolean | Set to false to disable zoom map on scroll page |
 | zoom-control  | Object | Configs for zoomControl of the map. [More](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/control.ZoomControl-docpage/) |
 | placemarks  | Array of Objects | Array of config objects with fields: coordinates ([lat, lon]), properties, options. [More](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Placemark-docpage/) |
+| use-object-manager  | Boolean | Defines using Object Mananger in map. Default: false |
+| object-manager-clusterize  | Boolean | Defines using clusterize in Object Mananger. Default: true |
+| ymap-class  | String | Defines class for element, where rendering map instance |
 
 ## Marker attributes
 

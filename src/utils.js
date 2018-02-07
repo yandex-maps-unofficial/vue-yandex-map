@@ -1,15 +1,19 @@
-export function createCallbacks(marker, placemark) {
-    if (marker.callbacks && typeof marker.callbacks === 'object') {
-        for (let key in marker.callbacks) {
-            placemark.events.add(key, marker.callbacks[key]);
+export function createCallbacks(callbacks, placemark) {
+    if (callbacks && typeof callbacks === 'object') {
+        for (let key in callbacks) {
+            placemark.events.add(key, callbacks[key]);
         }
     }
 }
 
-export function createClusters(markers, { options, callbacks, map }) {
+export function addToCart(markers, { options, callbacks, map, useObjectManager, objectManagerClusterize }) {
     let clusters = {};
+    let unclastered = [];
     for (let marker of markers) {
-        if (!marker.clusterName) continue;
+        if (!marker.clusterName) {
+            unclastered.push(marker);
+            continue;
+        };
         clusters[marker.clusterName] = clusters[marker.clusterName] ? [...clusters[marker.clusterName], marker] : [marker];
     }
     for (let clusterName in clusters) {
@@ -17,12 +21,26 @@ export function createClusters(markers, { options, callbacks, map }) {
         const clusterCallbacks = callbacks[clusterName] || {};
         const layout = clusterOptions.layout;
         clusterOptions.clusterBalloonItemContentLayout = ymaps.templateLayoutFactory.createClass(layout);
-        const clusterer = new ymaps.Clusterer(clusterOptions);
-        for (let key in clusterCallbacks) {
-            clusterer.events.add(key, clusterCallbacks[key]);
+        if (useObjectManager) {
+            const ObjectManager = new ymaps.ObjectManager(Object.assign({ clusterize: objectManagerClusterize }, clusterOptions));
+            for (let key in clusterCallbacks) {
+                ObjectManager.clusters.events.add(key, clusterCallbacks[key]);
+            }
+            ObjectManager.add(clusters[clusterName]);
+            map.geoObjects.add(ObjectManager);
+        } else {
+            const clusterer = new ymaps.Clusterer(clusterOptions);
+            for (let key in clusterCallbacks) {
+                clusterer.events.add(key, clusterCallbacks[key]);
+            }
+            clusterer.add(clusters[clusterName]);
+            map.geoObjects.add(clusterer);
         }
-        clusterer.add(clusters[clusterName]);
-        map.geoObjects.add(clusterer);
+    }
+    if (unclastered.length) {
+        const unclasteredMarkers = useObjectManager ? new ymaps.ObjectManager({ clusterize: false }) : new ymaps.GeoObjectCollection();
+        unclasteredMarkers.add(unclastered);
+        map.geoObjects.add(unclasteredMarkers);
     }
 }
 
@@ -124,5 +142,36 @@ const CONTROL_TYPES = [
 
 export function controlsTypeValidator(val) {
     return val.filter(control => ![...CONTROL_TYPES, 'default'].includes(control)).length === 0
-} 
+}
+
+export function createMarkerType(val, useObjectManager) {
+    const type = setFirstLetterToUppercase(val);
+    if (!useObjectManager) return type;
+    switch(type) {
+        case 'Placemark': 
+            return 'Point';
+        case 'Polyline': 
+            return 'LineString';
+        default:
+            return type;
+    }
+}
+
+export function createMarker(object, useObjectManager) {
+    let marker = useObjectManager ? {
+        type: 'Feature',
+        id: object.properties.markerId,
+        geometry: {
+            type: object.markerType,
+            coordinates: object.coords
+        },
+        properties: object.properties,
+        options: object.options,
+        clusterName: object.clusterName
+    } : new ymaps[markerType](object.coords, object.properties, object.options);
+    
+    if (!useObjectManager) createCallbacks(object.callbacks, marker);
+
+    return marker;
+}
     

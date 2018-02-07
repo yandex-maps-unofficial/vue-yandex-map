@@ -2,7 +2,8 @@ import { compareValues, emitter } from './utils';
 
 export default {
     data: () => ({
-        ymapEventBus: emitter
+        ymapEventBus: emitter,
+        unwatchArr: []
     }),
     props: {
         coords: {
@@ -34,7 +35,10 @@ export default {
     },
     mounted() {
         for (let prop in this.$props) {
-            this.$watch(prop, (newVal, oldVal) => compareValues(newVal, oldVal, this.ymapEventBus));    
+            this.unwatchArr.push(this.$watch(prop, (newVal, oldVal) => compareValues(newVal, oldVal, this.ymapEventBus)));
         }
+    },
+    beforeDestroy() {
+        this.unwatchArr.forEach(f => f());
     }
 }
