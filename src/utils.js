@@ -39,7 +39,7 @@ export function addToCart(markers, { options, callbacks, map, useObjectManager, 
     }
     if (unclastered.length) {
         const unclasteredMarkers = useObjectManager ? new ymaps.ObjectManager({ clusterize: false }) : new ymaps.GeoObjectCollection();
-        unclasteredMarkers.add(unclastered);
+        unclastered.forEach(obj => unclasteredMarkers.add(obj))        
         map.geoObjects.add(unclasteredMarkers);
     }
 }
@@ -166,9 +166,10 @@ export function createMarker(object, useObjectManager) {
             coordinates: object.coords
         },
         properties: object.properties,
-        options: object.options,
-        clusterName: object.clusterName
-    } : new ymaps[markerType](object.coords, object.properties, object.options);
+        options: object.options
+    } : new ymaps[object.markerType](object.coords, object.properties, object.options);
+
+    marker.clusterName = object.clusterName;
     
     if (!useObjectManager) createCallbacks(object.callbacks, marker);
 
