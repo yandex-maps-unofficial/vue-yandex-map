@@ -284,7 +284,7 @@ export default {
 
         if (this.ymapEventBus.scriptIsNotAttached) {
             const yandexMapScript = document.createElement('SCRIPT');
-            yandexMapScript.setAttribute('src', 'https://api-maps.yandex.ru/2.1/?lang=ru_RU');
+            yandexMapScript.setAttribute('src', 'https://api-maps.yandex.ru/2.1/?lang=ru_RU&mode=debug');
             yandexMapScript.setAttribute('async', '');
             yandexMapScript.setAttribute('defer', '');
             document.body.appendChild(yandexMapScript);

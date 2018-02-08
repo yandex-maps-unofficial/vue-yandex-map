@@ -8,6 +8,10 @@ const install = function(Vue) {
 
 YMapPlugin.install = install;
 
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(YMapPlugin)
+}
+
 export const yandexMap = YMapPlugin;
 export const ymapMarker = Marker;
 
