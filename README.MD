@@ -125,6 +125,7 @@ data() {
         properties: {}, // define properties here
         options: {}, // define options here
         clusterName: "1",
+        balloonTemplate: '<div>"Your custom template"</div>'
         callbacks: { click: function() {} }
       }
     ]
