@@ -40,13 +40,9 @@ new Vue({
 
 ```
 
-<!-- ### Direct include
+### Direct include
 
-You can use the CDN: https://unpkg.com/vue-yandex-maps, `yandexMap` is exposed to `window` and will automatically install itself. Also you can use your local copy:
-
-```HTML
-<script src="../node_modules/vue-yandex-maps/vue-yandex-maps.js"></script>
-``` -->
+You can use the CDN: https://unpkg.com/vue-yandex-maps, `yandexMap` is exposed to `window` and will automatically install itself. It might be useful for [Code Pen](https://codepen.io/PNKBizz/pen/WMRwyM)
 
 ## Usage
 
