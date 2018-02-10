@@ -27,12 +27,13 @@ export default {
             default: 1000
         },
         callbacks: Object,
-        data: Object,
         balloonTemplate: String,
         markerId: {
             type: [String, Number],
             required: true
-        }
+        },
+        properties: Object,
+        options: Object
     },
     render() {
     },

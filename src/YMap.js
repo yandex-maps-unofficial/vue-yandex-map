@@ -113,7 +113,10 @@ export default {
                     circleRadius: +props.circleRadius,
                     clusterName: props.clusterName,
                     markerStroke: props.markerStroke,
-                    balloon: props.balloon, 
+                    balloon: props.balloon,
+                    callbacks: props.callbacks,
+                    properties: props.properties,
+                    options: props.options,
                     balloonOptions
                 };
 
@@ -122,23 +125,17 @@ export default {
                     marker.iconImageHref = props.icon.imageHref;
                     marker.iconImageSize = props.icon.imageSize;
                     marker.iconImageOffset = props.icon.imageOffset;
-                    //                        marker.balloonLayout = "default#imageWithContent";
                 } else {
                     marker.icon = props.icon;
                 }
-                if (props.callbacks) {
-                    marker.callbacks = props.callbacks
-                }
-                if (props.data) {
-                    marker.data = props.data
-                }
-                return marker
+
+                return marker;
             }).filter(marker => marker && marker.markerType) || [];
             
             for (let i = 0; i < myMarkers.length; i++) {
                 const m = myMarkers[i];
                 const markerType = utils.createMarkerType(m.markerType, this.useObjectManager);
-                let properties = {
+                const initialProps = {
                     hintContent: m.hintContent,
                     iconContent: m.icon && m.icon.content,
                     markerId: m.markerId
@@ -150,9 +147,9 @@ export default {
                     balloonContentFooter: m.balloon.footer,
                 } : {};
 
-                properties = Object.assign(properties, balloonProps);
+                const properties = Object.assign(initialProps, balloonProps, m.properties);
 
-                let options = m.iconLayout ? {
+                const iconOptions = m.iconLayout ? {
                     iconLayout: m.iconLayout,
                     iconImageHref: m.iconImageHref,
                     iconImageSize: m.iconImageSize,
@@ -173,7 +170,7 @@ export default {
                     fillImageHref: m.markerFill.imageHref || ''
                 } : {};
 
-                options = Object.assign(options, strokeOptions, fillOptions, m.balloonOptions);
+                const options = Object.assign(iconOptions, strokeOptions, fillOptions, m.balloonOptions, m.options);
 
                 if (markerType === 'Circle') {
                     m.coords = [m.coords, m.circleRadius];
