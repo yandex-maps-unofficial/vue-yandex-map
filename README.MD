@@ -75,7 +75,7 @@ Type of marker in `marker-type` attribute can be:
   }"
   :behaviors="['ruler']"
   :controls="['trafficControl']"
-  :placemarks="placemarks" // 
+  :placemarks="placemarks" 
   map-type="hybrid"
   @map-was-initialized="initHandler"
 >
@@ -178,7 +178,6 @@ data() {
 | cluster-name | String | Attribute for grouping markers in clusters | All |
 | properties | Object | Object with marker [properties](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#param-feature.properties) | All |
 | options | Object | Object with marker [options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#param-options) | All |
-| callbacks | Object | Object, where key is an event name and value is a callback function, e.g. { click: function() {...}, contextmenu: anotherFunction }. [Events list](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#events-summary) | All |
 | callbacks | Object | Object, where key is an event name and value is a callback function, e.g. { click: function() {...}, contextmenu: anotherFunction }. [Events list](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#events-summary) | All |
 | [balloonTemplate](#balloon-template) | String | HTML Template for balloon | All |
 
