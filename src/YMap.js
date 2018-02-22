@@ -212,8 +212,7 @@ export default {
                 const controls = Object.keys(this.detailedControls);
                 controls.forEach(controlName => {
                     this.myMap.controls.remove(controlName);
-                    const constructor = ymaps.control.storage.get(controlName);
-                    this.myMap.controls.add(new constructor(this.detailedControls[controlName]));
+                    this.myMap.controls.add(controlName, this.detailedControls[controlName]);
                 })
             }
             if (this.scrollZoom === false) {
