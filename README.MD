@@ -81,6 +81,7 @@ Type of marker in `marker-type` attribute can be:
 >
 
     <ymap-marker 
+      marker-id="1"
       marker-type="placemark"
       :coords="[54.7, 39.7]"
       hint-content="Hint content 1"
@@ -89,7 +90,8 @@ Type of marker in `marker-type` attribute can be:
       cluster-name="1"
     ></ymap-marker>
 
-    <ymap-marker 
+    <ymap-marker
+      marker-id="2"
       marker-type="placemark"
       :coords="[54.6, 39.8]"
       hint-content="Hint content 1"
@@ -98,7 +100,8 @@ Type of marker in `marker-type` attribute can be:
       cluster-name="1"
     ></ymap-marker>
 
-    <ymap-marker 
+    <ymap-marker
+      marker-id="3"
       marker-type="circle"
       :coords="[54.62896654088406, 39.731893822753904]"
       circle-radius="1600"
