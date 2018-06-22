@@ -85,7 +85,7 @@ export default {
     computed: {
         coordinates() {
             return this.coords.map(item => +item)
-        }
+        },
     },
     methods: {
         init() {
@@ -240,6 +240,9 @@ export default {
                 this.myMap.destroy && this.myMap.destroy();
                 this.init();
             }
+        },
+        zoom() {
+            this.myMap.setZoom(this.zoom);
         }
     },
     render(h) {
