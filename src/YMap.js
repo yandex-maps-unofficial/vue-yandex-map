@@ -312,7 +312,7 @@ export default {
         }
     },
     beforeDestroy() {
-        this.myMap.GeoObjects && this.myMap.GeoObjects.removeAll();
+        this.myMap.geoObjects && this.myMap.geoObjects.removeAll();
         this.observer.disconnect();
     }
 }
