@@ -1,3 +1,9 @@
+
+[![GitHub license](https://img.shields.io/github/license/PNKBizz/vue-yandex-map.svg)](https://github.com/PNKBizz/vue-yandex-map/blob/master/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/PNKBizz/vue-yandex-map.svg)](https://github.com/PNKBizz/vue-yandex-map/issues)
+[![GitHub closed issues](https://img.shields.io/github/issues-closed/PNKBizz/vue-yandex-map.svg)](https://github.com/PNKBizz/vue-yandex-map)
+[![GitHub stars](https://img.shields.io/github/stars/PNKBizz/vue-yandex-map.svg?style=social)](https://github.com/PNKBizz/vue-yandex-map/stargazers)
+
 # vue-yandex-maps
 
 vue-yandex-maps is a plugin for vue.js that adds yandex-map custom element.
