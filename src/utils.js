@@ -7,6 +7,11 @@ export function createCallbacks(callbacks, placemark) {
 }
 
 export function addToCart(markers, { options, callbacks, map, useObjectManager, objectManagerClusterize }) {
+    const defaultLayout = `
+      <div>{{ properties.balloonContentHeader }}</div>
+      <div>{{ properties.balloonContentBody }}</div>
+      <div>{{ properties.balloonContentFooter }}</div>
+    `;
     let clusters = {};
     let unclastered = [];
     for (let marker of markers) {
@@ -19,7 +24,7 @@ export function addToCart(markers, { options, callbacks, map, useObjectManager, 
     for (let clusterName in clusters) {
         const clusterOptions = options[clusterName] || {};
         const clusterCallbacks = callbacks[clusterName] || {};
-        const layout = clusterOptions.layout;
+        const layout = clusterOptions.layout || defaultLayout;
         clusterOptions.clusterBalloonItemContentLayout = ymaps.templateLayoutFactory.createClass(layout);
         if (useObjectManager) {
             const ObjectManager = new ymaps.ObjectManager(Object.assign({ clusterize: objectManagerClusterize }, clusterOptions));
