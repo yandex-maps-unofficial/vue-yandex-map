@@ -1,6 +1,7 @@
 import * as utils from './utils';
 
 export default {
+    pluginOptions: {},
     data() {
         return {
             ymapEventBus: utils.emitter,
@@ -90,8 +91,8 @@ export default {
     methods: {
         init() {
             // if ymap isn't initialized or have no markers;
-            if (!window.ymaps || !ymaps.GeoObjectCollection || (!this.initWithoutMarkers && !this.$slots.default && !this.placemarks.length)) return; 
-            
+            if (!window.ymaps || !ymaps.GeoObjectCollection || (!this.initWithoutMarkers && !this.$slots.default && !this.placemarks.length)) return;
+
             this.$emit('map-initialization-started');
             let markers = [];
 
@@ -132,7 +133,7 @@ export default {
 
                 return marker;
             }).filter(marker => marker && marker.markerType) || [];
-            
+
             for (let i = 0; i < myMarkers.length; i++) {
                 const m = myMarkers[i];
                 const markerType = utils.createMarkerType(m.markerType, this.useObjectManager);
@@ -155,7 +156,7 @@ export default {
                     iconImageHref: m.iconImageHref,
                     iconImageSize: m.iconImageSize,
                     iconImageOffset: m.iconImageOffset
-                } : { preset: m.icon && `islands#${utils.getIconPreset(m)}Icon` };                
+                } : { preset: m.icon && `islands#${utils.getIconPreset(m)}Icon` };
 
                 const strokeOptions = m.markerStroke ? {
                     strokeColor: m.markerStroke.color || "0066ffff",
@@ -193,7 +194,7 @@ export default {
                     }
                     const obj = { properties, options, markerType, coords, clusterName, callbacks }
                     let yplacemark = utils.createMarker(obj, this.useObjectManager);
-                    
+
                     markers.push(yplacemark);
                 })
             }
@@ -247,11 +248,11 @@ export default {
     },
     render(h) {
         return h(
-            'section', 
+            'section',
             { class: 'ymap-container' },
             [
                 h(
-                    'div', 
+                    'div',
                     {
                         attrs: {
                             id: this.ymapId,
@@ -270,7 +271,7 @@ export default {
                     [
                         this.$slots.default
                     ]
-                ) 
+                )
             ]
         )
     },
@@ -279,7 +280,7 @@ export default {
             this.myMap.destroy && this.myMap.destroy();
             this.init();
         }.bind(this));
-        
+
         // Setup the observer
         this.observer.observe(
             document.querySelector('.ymap-markers'),
@@ -288,7 +289,8 @@ export default {
 
         if (this.ymapEventBus.scriptIsNotAttached) {
             const yandexMapScript = document.createElement('SCRIPT');
-            const mapLink = this.mapLink || 'https://api-maps.yandex.ru/2.1/?lang=ru_RU';
+            const { apiKey, lang = 'ru_RU', version = '2.1' } = this.$options.pluginOptions;
+            const mapLink = this.mapLink || `https://api-maps.yandex.ru/${version}/?lang=${lang}${ apiKey && `apikey=${apiKey}` || '' }`;
             yandexMapScript.setAttribute('src', mapLink);
             yandexMapScript.setAttribute('async', '');
             yandexMapScript.setAttribute('defer', '');
