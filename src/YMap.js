@@ -89,14 +89,8 @@ export default {
         },
     },
     methods: {
-        init() {
-            // if ymap isn't initialized or have no markers;
-            if (!window.ymaps || !ymaps.GeoObjectCollection || (!this.initWithoutMarkers && !this.$slots.default && !this.placemarks.length)) return;
-
-            this.$emit('map-initialization-started');
-            let markers = [];
-
-            const myMarkers = this.$slots.default && this.$slots.default.map(m => {
+        getMarkersFromSlots() {
+            return this.$slots.default && this.$slots.default.map(m => {
                 const props = m.componentOptions && m.componentOptions.propsData;
                 if (!props) return;
                 let balloonOptions = {};
@@ -133,6 +127,10 @@ export default {
 
                 return marker;
             }).filter(marker => marker && marker.markerType) || [];
+        },
+        createMarkers() {
+            let markers = [];
+            const myMarkers = this.getMarkersFromSlots();
 
             for (let i = 0; i < myMarkers.length; i++) {
                 const m = myMarkers[i];
@@ -199,6 +197,24 @@ export default {
                 })
             }
 
+            return markers;
+        },
+        setMarkers() {
+            const config = {
+                options: this.clusterOptions,
+                callbacks: this.clusterCallbacks,
+                map: this.myMap,
+                useObjectManager: this.useObjectManager,
+                objectManagerClusterize: this.objectManagerClusterize
+            };
+            utils.addToCart(this.createMarkers(), config);
+        },
+        init() {
+            // if ymap isn't initialized or have no markers;
+            if (!window.ymaps || !ymaps.GeoObjectCollection || (!this.initWithoutMarkers && !this.$slots.default && !this.placemarks.length)) return;
+
+            this.$emit('map-initialization-started');
+
             this.myMap = new ymaps.Map(this.ymapId, {
                 center: this.coordinates,
                 zoom: +this.zoom,
@@ -221,14 +237,8 @@ export default {
                 this.myMap.behaviors.disable('scrollZoom');
             }
 
-            const config = {
-                options: this.clusterOptions,
-                callbacks: this.clusterCallbacks,
-                map: this.myMap,
-                useObjectManager: this.useObjectManager,
-                objectManagerClusterize: this.objectManagerClusterize
-            };
-            utils.addToCart(markers, config);
+            this.setMarkers();
+
             this.$emit('map-was-initialized', this.myMap);
         }
     },
@@ -238,8 +248,8 @@ export default {
         },
         placemarks() {
             if (window.ymaps) {
-                this.myMap.destroy && this.myMap.destroy();
-                this.init();
+                this.myMap.geoObjects && this.myMap.geoObjects.removeAll();
+                this.setMarkers();
             }
         },
         zoom() {
@@ -277,8 +287,8 @@ export default {
     },
     mounted() {
         this.observer = new MutationObserver(function(mutations) {
-            this.myMap.destroy && this.myMap.destroy();
-            this.init();
+            this.myMap.geoObjects && this.myMap.geoObjects.removeAll();
+            this.setMarkers();
         }.bind(this));
 
         // Setup the observer
