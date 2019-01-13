@@ -183,14 +183,14 @@ export default {
             }
 
             if (this.placemarks) {
-                const markerType = this.useObjectManager ? 'Point' : 'Placemark';
                 this.placemarks.forEach(placemark => {
-                    const { properties, options = {}, coords, clusterName, callbacks, balloonTemplate } = placemark;
+                    const { markerType = 'Placemark', properties, options = {}, coords, clusterName, callbacks, balloonTemplate } = placemark;
+                    const type = utils.createMarkerType(markerType, this.useObjectManager);
                     if (balloonTemplate) {
                         const BalloonContentLayoutClass = ymaps.templateLayoutFactory.createClass(balloonTemplate);
                         options.balloonContentLayout = BalloonContentLayoutClass;
                     }
-                    const obj = { properties, options, markerType, coords, clusterName, callbacks }
+                    const obj = { properties, options, markerType: type, coords, clusterName, callbacks }
                     let yplacemark = utils.createMarker(obj, this.useObjectManager);
 
                     markers.push(yplacemark);
