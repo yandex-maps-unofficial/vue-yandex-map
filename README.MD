@@ -16,29 +16,15 @@ vue-yandex-maps is a plugin for vue.js that adds yandex-map custom element.
 npm install vue-yandex-maps --save
 ```
 
-### CommonJS
-
-You can use any build tool which supports `commonjs`:
-
-```JavaScript
-// register globally
-const YmapPlugin =  require('vue-yandex-maps');
-Vue.use(YmapPlugin)
-
-// or for a single instance
-const { yandexMap, ymapMarker } = require('vue-yandex-maps');
-new Vue({
-  components: { yandexMap, ymapMarker }
-})
-
-```
-
-Or in ES2015:
-
 ```JavaScript
 // register globally
 import YmapPlugin from 'vue-yandex-maps'
-Vue.use(YmapPlugin)
+const options = { // you may define your apiKey, lang and version or skip this.
+  apiKey: 'xxx', // '' by default
+  lang: 'ru_RU', // 'ru_RU' by default
+  version: '2.1' // '2.1' by default
+}
+Vue.use(YmapPlugin, options)
 
 // or for a single instance
 import { yandexMap, ymapMarker } from 'vue-yandex-maps'
@@ -63,7 +49,7 @@ If you have a lot of markers on your map i strongly recommend you to use map att
 You may define placemarks on your map by using `<ymap-marker>` tag or set an array of objects with placemark options through `<yandex-map>` attribute `placemarks` ([interface description](https://tech.yandex.ru/maps/doc/jsapi/2.0/ref/reference/GeoObject-docpage/)). You also can use both methods together.<br>
 You must define `markerId` for every marker on your map in any case fo setting (through map attribute `placemarks` or using `ymap-marker` components).<br>
 The Map instance rerender when changed array with markers or marker properties if marker is a component.<br>
-Also map watch property `coords` and react without rerender, when it changed. 
+Also map watch property `coords` and react without rerender, when it changed.
 
 Type of marker in `marker-type` attribute can be:
 
@@ -74,7 +60,7 @@ Type of marker in `marker-type` attribute can be:
 * Circle
 
 ```HTML
-<yandex-map 
+<yandex-map
   :coords="[54.62896654088406, 39.731893822753904]"
   zoom="10"
   style="width: 600px; height: 600px;"
@@ -83,12 +69,12 @@ Type of marker in `marker-type` attribute can be:
   }"
   :behaviors="['ruler']"
   :controls="['trafficControl']"
-  :placemarks="placemarks" 
+  :placemarks="placemarks"
   map-type="hybrid"
   @map-was-initialized="initHandler"
 >
 
-    <ymap-marker 
+    <ymap-marker
       marker-id="1"
       marker-type="placemark"
       :coords="[54.7, 39.7]"
@@ -196,7 +182,7 @@ data() {
 
 You may define icon attribute as object with three properties: color (default value is 'blue'), content, glyph. Glyph property have higher priority than content. [List of colors and icons](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/option.presetStorage-docpage/). In this way you get classic placemark.
 
-Or you may define it as a placemark with custom icon. In this case you need to set the object of the following form: 
+Or you may define it as a placemark with custom icon. In this case you need to set the object of the following form:
 
 ```JavaScript
 {
@@ -215,10 +201,10 @@ where `markerIcon`: data or computed path to image or data:image/svg+xml;base64,
 You can define your own template for balloon.
 
 ```HTML
-<yandex-map 
+<yandex-map
   :coords="[54.62896654088406, 39.731893822753904]"
 >
-  <ymap-marker 
+  <ymap-marker
       marker-type="placemark"
       :coords="[54.7, 39.7]"
       :balloonTemplate = "balloonTemplate"
