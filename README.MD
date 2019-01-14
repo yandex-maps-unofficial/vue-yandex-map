@@ -34,6 +34,16 @@ new Vue({
 
 ```
 
+### Nuxt module
+
+Add `vue-yandex-maps/nuxt` to modules section of `nuxt.config.js`
+
+```JavaScript
+{
+  modules: ['vue-yandex-maps/nuxt', options]
+}
+```
+
 ### Direct include
 
 You can use the CDN: https://unpkg.com/vue-yandex-maps, `yandexMap` is exposed to `window` and will automatically install itself. It might be useful for [Code Pen](https://codepen.io/PNKBizz/pen/WMRwyM)
