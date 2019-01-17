@@ -315,9 +315,9 @@ export default {
             ymaps.ready(this.init);
         } else {
             this.ymapEventBus.$on('scriptIsLoaded', () => {
-                this.ymapEventBus.initMap = () => {
-                    this.myMap.destroy();
-                    this.init();
+                this.ymapEventBus.updateMap = () => {
+                  this.myMap.geoObjects && this.myMap.geoObjects.removeAll();
+                  this.setMarkers();
                 };
                 ymaps.ready(this.init);
             })

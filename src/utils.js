@@ -44,7 +44,7 @@ export function addToCart(markers, { options, callbacks, map, useObjectManager, 
     }
     if (unclastered.length) {
         const unclasteredMarkers = useObjectManager ? new ymaps.ObjectManager({ clusterize: false }) : new ymaps.GeoObjectCollection();
-        unclastered.forEach(obj => unclasteredMarkers.add(obj))        
+        unclastered.forEach(obj => unclasteredMarkers.add(obj))
         map.geoObjects.add(unclasteredMarkers);
     }
 }
@@ -73,36 +73,36 @@ export function setCoordsToNumeric(arr) {
 }
 
 export function objectComparison( first, second ){
-	
+
 	let cache = []; //кеш обьектов, для избежания рекурсии
-	
+
 	function inCache( first, second ){
 		var i = cache.length;
-		while(i--) if( 
-			( cache[i][0] === first || cache[i][0] === second) && (cache[i][1] === second  || cache[i][1] === first ) 
+		while(i--) if(
+			( cache[i][0] === first || cache[i][0] === second) && (cache[i][1] === second  || cache[i][1] === first )
 		) return true;
 		return false
 	}
-	
+
 	return function eq(f, s){
 		if ( f === s ) return true; //сравниваем обычным образом
 		if ( f instanceof Date && s instanceof Date ) return +f === +s; //время
 		if ( typeof f !== 'object' || typeof s !== 'object' ) return false; //если хотябы один из аргументов не объект (положительный случай для необъектов рассмотрен выше)
 		if( inCache(f, s) ) return true; //есть в кеше
 		cache.push( [f , s] ); //кешируем
-		
+
 		var keys = Object.keys(f), i = keys.length; //получаем ключи
 		if (Object.keys(s).length !== i ) return false; //если количество ключей не совпадает
 		while(i--) if( !eq(f[keys[i]], s[keys[i]]) ) return false; //рекурсивный вызов
-		
+
 		return true
 	}(first, second)
 }
 
 export function compareValues (newVal, oldVal, bus) {
-    if (objectComparison(newVal, oldVal)) { return; } 
+    if (objectComparison(newVal, oldVal)) { return; }
     if (bus.rerender) { clearTimeout(bus.rerender); }
-    bus.rerender = setTimeout(() => bus.initMap && bus.initMap(), 10);
+    bus.rerender = setTimeout(() => bus.updateMap && bus.updateMap(), 10);
 }
 
 class EventEmitter {
@@ -153,9 +153,9 @@ export function createMarkerType(val, useObjectManager) {
     const type = setFirstLetterToUppercase(val);
     if (!useObjectManager) return type;
     switch(type) {
-        case 'Placemark': 
+        case 'Placemark':
             return 'Point';
-        case 'Polyline': 
+        case 'Polyline':
             return 'LineString';
         default:
             return type;
@@ -175,9 +175,8 @@ export function createMarker(object, useObjectManager) {
     } : new ymaps[object.markerType](object.coords, object.properties, object.options);
 
     marker.clusterName = object.clusterName;
-    
+
     if (!useObjectManager) createCallbacks(object.callbacks, marker);
 
     return marker;
 }
-    
