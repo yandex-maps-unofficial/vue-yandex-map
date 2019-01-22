@@ -259,7 +259,10 @@ export default {
     render(h) {
         return h(
             'section',
-            { class: 'ymap-container' },
+            {
+                class: 'ymap-container',
+                ref: 'mapContainer'
+            },
             [
                 h(
                     'div',
@@ -274,6 +277,7 @@ export default {
                 h(
                     'div',
                     {
+                        ref: 'markersContainer',
                         attrs: {
                             class: 'ymap-markers'
                         }
@@ -286,15 +290,25 @@ export default {
         )
     },
     mounted() {
-        this.observer = new MutationObserver(function(mutations) {
+        this.markerObserver = new MutationObserver(function() {
             this.myMap.geoObjects && this.myMap.geoObjects.removeAll();
             this.setMarkers();
         }.bind(this));
 
+        this.mapObserver = new MutationObserver(function() {
+          this.myMap.container.fitToViewport();
+        }.bind(this));
+
         // Setup the observer
-        this.observer.observe(
-            document.querySelector('.ymap-markers'),
+        const { markersContainer, mapContainer } = this.$refs;
+        this.markerObserver.observe(
+            markersContainer,
             { attributes: true, childList: true, characterData: true, subtree: true }
+        );
+
+        this.mapObserver.observe(
+            mapContainer,
+            { attributes: true, childList: true, characterData: true, subtree: false }
         );
 
         if (this.ymapEventBus.scriptIsNotAttached) {
@@ -325,6 +339,6 @@ export default {
     },
     beforeDestroy() {
         this.myMap.geoObjects && this.myMap.geoObjects.removeAll();
-        this.observer.disconnect();
+        this.markerObserver.disconnect();
     }
 }
