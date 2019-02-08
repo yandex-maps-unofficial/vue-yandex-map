@@ -85,7 +85,7 @@ export default {
         debug: {
             type: Boolean,
             default: false
-        },
+        }
     },
     computed: {
         coordinates() {
