@@ -81,7 +81,11 @@ export default {
             type: Boolean,
             default: true
         },
-        mapLink: String
+        mapLink: String,
+        debug: {
+            type: Boolean,
+            default: false
+        },
     },
     computed: {
         coordinates() {
@@ -314,7 +318,8 @@ export default {
         if (this.ymapEventBus.scriptIsNotAttached) {
             const yandexMapScript = document.createElement('SCRIPT');
             const { apiKey = '', lang = 'ru_RU', version = '2.1' } = this.$options.pluginOptions;
-            const mapLink = this.mapLink || `https://api-maps.yandex.ru/${version}/?lang=${lang}${ apiKey && `&apikey=${apiKey}` }`;
+            const mode = this.debug ? 'debug' : 'release';
+            const mapLink = this.mapLink || `https://api-maps.yandex.ru/${version}/?lang=${lang}${ apiKey && `&apikey=${apiKey}` }&mode=${mode}`;
             yandexMapScript.setAttribute('src', mapLink);
             yandexMapScript.setAttribute('async', '');
             yandexMapScript.setAttribute('defer', '');
