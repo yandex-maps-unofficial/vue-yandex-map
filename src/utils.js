@@ -142,7 +142,8 @@ const CONTROL_TYPES = [
     'searchControl',
     'trafficControl',
     'typeSelector',
-    'zoomControl'
+    'zoomControl',
+    'routePanelControl'
 ];
 
 export function controlsTypeValidator(val) {
