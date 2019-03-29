@@ -30,6 +30,7 @@
     "rollup-plugin-vue": "^4.4.0"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.2.5"
+    "@babel/polyfill": "^7.2.5",
+    "vue-template-compiler": "^2.6.10"
   }
 }
