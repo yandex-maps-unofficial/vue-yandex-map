@@ -151,6 +151,7 @@ data() {
 
 | Attribute | Type | Description |
 | ----- | ----- | ----- |
+| options | Object | Map options. You may define your apiKey, lang and version or skip this. |
 | coords | Array [ latitude, longtitude ] | Coordinates of map center. Required |
 | zoom | Number | Zoom of map (from 0 to 19). Default: `18`. |
 | cluster-options | Object | Map, where key is a name of cluster and value is an object of cluster options. Also you may set field 'layout' (type `String`) in cluster options object with HTML Template for balloonItemContentLayout. [Cluster option](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/ClusterPlacemark-docpage/#param-options) |
