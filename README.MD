@@ -16,22 +16,39 @@ vue-yandex-maps is a plugin for vue.js that adds yandex-map custom element.
 npm install vue-yandex-maps --save
 ```
 
-```JavaScript
-// register globally
-import YmapPlugin from 'vue-yandex-maps'
-const options = { // you may define your apiKey, lang and version or skip this.
-  apiKey: 'xxx', // '' by default
-  lang: 'ru_RU', // 'ru_RU' by default
-  version: '2.1' // '2.1' by default
-}
-Vue.use(YmapPlugin, options)
+# Register component
 
-// or for a single instance
+You may define config for map:
+* apiKey: String // '' by default [Documentation](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/load-docpage/)
+* lang: String // 'ru_RU' by default [Available langs](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/localization-docpage/)
+* version: String // '2.1' by default
+
+```JavaScript
+const options = { // you may define your apiKey, lang and version or skip this.
+  apiKey: 'xxx',
+  lang: 'ru_RU',
+  version: '2.1'
+}
+```
+### Register globally
+```JavaScript
+import YmapPlugin from 'vue-yandex-maps'
+Vue.use(YmapPlugin, options)
+```
+### Or for a single instance
+```JavaScript
 import { yandexMap, ymapMarker } from 'vue-yandex-maps'
 new Vue({
   components: { yandexMap, ymapMarker }
 })
 
+```
+```HTML
+<yandex-map
+    :options="options"
+>
+    <!--Markers-->
+</yandex-map>
 ```
 
 ### Nuxt module
@@ -151,6 +168,7 @@ data() {
 
 | Attribute | Type | Description |
 | ----- | ----- | ----- |
+| options | Object | Map options. You may define your apiKey, lang and version or skip this. |
 | coords | Array [ latitude, longtitude ] | Coordinates of map center. Required |
 | zoom | Number | Zoom of map (from 0 to 19). Default: `18`. |
 | cluster-options | Object | Map, where key is a name of cluster and value is an object of cluster options. Also you may set field 'layout' (type `String`) in cluster options object with HTML Template for balloonItemContentLayout. [Cluster option](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/ClusterPlacemark-docpage/#param-options) |

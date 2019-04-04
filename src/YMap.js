@@ -85,6 +85,10 @@ export default {
         debug: {
             type: Boolean,
             default: false
+        },
+        options: {
+            type: Object,
+            default: () => ({})
         }
     },
     computed: {
@@ -317,7 +321,7 @@ export default {
 
         if (this.ymapEventBus.scriptIsNotAttached) {
             const yandexMapScript = document.createElement('SCRIPT');
-            const { apiKey = '', lang = 'ru_RU', version = '2.1' } = this.$options.pluginOptions;
+            const { apiKey = '', lang = 'ru_RU', version = '2.1' } = Object.assign({}, this.$options.pluginOptions, this.options);
             const mode = this.debug ? 'debug' : 'release';
             const mapLink = this.mapLink || `https://api-maps.yandex.ru/${version}/?lang=${lang}${ apiKey && `&apikey=${apiKey}` }&mode=${mode}`;
             yandexMapScript.setAttribute('src', mapLink);
