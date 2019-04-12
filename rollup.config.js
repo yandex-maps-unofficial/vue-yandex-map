@@ -1,20 +1,27 @@
-import vue from 'rollup-plugin-vue';
+import pkg from './package.json';
 import babel from 'rollup-plugin-babel';
 import { uglify } from 'rollup-plugin-uglify';
 
-export default {
-  input: './src/index.js',
-  output: {
-    exports: 'named',
-    file: 'vue-yandex-maps.js',
-    format: 'umd',
-    name: 'vueYandexMaps'
+export default [
+  {
+    input: 'src/index.js',
+    output: {
+      name: 'vue-yandex-maps',
+      file: pkg.main,
+      format: 'umd',
+    },
+    plugins: [
+      babel({
+        exclude: 'node_modules/**'
+      }),
+      uglify()
+    ]
   },
-  plugins: [
-    vue({compileTemplate: true}),
-    babel({
-      exclude: 'node_modules/**'
-    }),
-    uglify()
-  ]
-};
+
+  {
+    input: 'src/index.js',
+    output: [
+      { file: pkg.module, format: 'es' },
+    ],
+  },
+];

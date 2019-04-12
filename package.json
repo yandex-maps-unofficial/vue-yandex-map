@@ -2,8 +2,8 @@
   "name": "vue-yandex-maps",
   "version": "0.8.4",
   "description": "Yandex Maps component for VueJS.",
-  "main": "vue-yandex-maps.js",
-  "jsnext:main": "./src/index.js",
+  "main": "dist/vue-yandex-maps.js",
+  "module": "dist/vue-yandex-maps.esm.js",
   "scripts": {
     "build": "rollup -c",
     "prepublish": "npm run build"
