@@ -1,6 +1,6 @@
 import pkg from './package.json';
 import babel from 'rollup-plugin-babel';
-import { uglify } from 'rollup-plugin-uglify';
+import { terser } from "rollup-plugin-terser";
 
 export default [
   {
@@ -8,20 +8,13 @@ export default [
     output: {
       name: 'vue-yandex-maps',
       file: pkg.main,
-      format: 'umd',
+      format: 'es',
     },
     plugins: [
       babel({
         exclude: 'node_modules/**'
       }),
-      uglify()
+      terser()
     ]
-  },
-
-  {
-    input: 'src/index.js',
-    output: [
-      { file: pkg.module, format: 'es' },
-    ],
   },
 ];
