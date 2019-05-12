@@ -6,3 +6,4 @@ yarn-error.log
 .idea/
 vue-yandex-maps.js
 .vscode/
+package-lock.json

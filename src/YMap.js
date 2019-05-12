@@ -230,6 +230,7 @@ export default {
                 controls: this.controls,
                 type: `yandex#${this.mapType}`
             });
+            this.myMap.events.add('click', e => this.$emit('click', e))
             if (this.zoomControl) {
                 this.myMap.controls.remove('zoomControl');
                 this.myMap.controls.add(new ymaps.control.ZoomControl(this.zoomControl));

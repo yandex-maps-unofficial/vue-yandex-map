@@ -3,7 +3,6 @@
   "version": "0.8.4",
   "description": "Yandex Maps component for VueJS.",
   "main": "dist/vue-yandex-maps.js",
-  "module": "dist/vue-yandex-maps.esm.js",
   "scripts": {
     "build": "rollup -c",
     "prepublish": "npm run build"
@@ -26,9 +25,6 @@
     "@babel/preset-env": "^7.2.3",
     "rollup": "^1.1.0",
     "rollup-plugin-babel": "^4.3.0",
-    "rollup-plugin-node-resolve": "^3.4.0",
-    "rollup-plugin-terser": "^4.0.4",
-    "rollup-plugin-uglify": "^6.0.1",
-    "rollup-plugin-vue": "^4.4.0"
+    "rollup-plugin-terser": "^4.0.4"
   }
 }
