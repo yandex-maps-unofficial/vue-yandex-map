@@ -1,0 +1,21 @@
+{
+  "name": "nuxt",
+  "version": "1.0.0",
+  "description": "Yandex Maps Nuxt example",
+  "author": "Pavel Galkin",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "cross-env": "^5.2.0",
+    "nuxt": "^2.4.0",
+    "vue-yandex-maps": "^0.8.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}
