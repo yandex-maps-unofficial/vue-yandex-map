@@ -19,12 +19,12 @@ npm install vue-yandex-maps --save
 # Register component
 
 You may define config for map:
-* apiKey: String // '' by default [Documentation](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/load-docpage/)
-* lang: String // 'ru_RU' by default [Available langs](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/localization-docpage/)
-* version: String // '2.1' by default
+* `apiKey: String` // '' by default [Documentation](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/load-docpage/)
+* `lang: String` // 'ru_RU' by default [Available langs](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/localization-docpage/)
+* `version: String` // '2.1' by default
 
 ```JavaScript
-const options = { // you may define your apiKey, lang and version or skip this.
+const settings = { // you may define your apiKey, lang and version or skip this.
   apiKey: 'xxx',
   lang: 'ru_RU',
   version: '2.1'
@@ -33,7 +33,7 @@ const options = { // you may define your apiKey, lang and version or skip this.
 ### Register globally
 ```JavaScript
 import YmapPlugin from 'vue-yandex-maps'
-Vue.use(YmapPlugin, options)
+Vue.use(YmapPlugin, settings)
 ```
 ### Or for a single instance
 ```JavaScript
@@ -45,7 +45,7 @@ new Vue({
 ```
 ```HTML
 <yandex-map
-    :options="options"
+    :settings="settings"
 >
     <!--Markers-->
 </yandex-map>
@@ -57,7 +57,9 @@ Add `vue-yandex-maps/nuxt` to modules section of `nuxt.config.js`
 
 ```JavaScript
 {
-  modules: ['vue-yandex-maps/nuxt', options]
+  modules: [
+    ['vue-yandex-maps/nuxt', settings]
+  ]
 }
 ```
 
