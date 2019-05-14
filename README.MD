@@ -162,6 +162,7 @@ data() {
 
 | Event name | Payload |
 | ----- | ----- |
+| 'click' | [map event](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/events-docpage/) |
 | 'map-was-initialized' | Link to map instance |
 
 # Attributes
