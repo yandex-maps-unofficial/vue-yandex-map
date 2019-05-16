@@ -89,6 +89,10 @@ export default {
         settings: {
             type: Object,
             default: () => ({})
+        },
+        options: {
+            type: Object,
+            default: () => ({})
         }
     },
     computed: {
@@ -229,7 +233,7 @@ export default {
                 behaviors: this.behaviors,
                 controls: this.controls,
                 type: `yandex#${this.mapType}`
-            });
+            }, this.options);
             this.myMap.events.add('click', e => this.$emit('click', e))
             if (this.zoomControl) {
                 this.myMap.controls.remove('zoomControl');

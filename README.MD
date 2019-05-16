@@ -187,6 +187,7 @@ data() {
 | object-manager-clusterize  | Boolean | Defines using clusterize in Object Mananger. Default: `true` |
 | ymap-class  | String | Defines class for element, where rendering map instance. If not defined - element use style: `width: 100%; height: 100%;` |
 | init-without-markers  | Boolean | Set to `false` to prevent map initialization if there is no markers. Default: `true` |
+| options  | Object | [Map options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/#Map__param-options) |
 
 ## Marker attributes
 
