@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <yandex-map :coords="coords" class="map" @click="onClick">
-      <ymap-marker markerId="123" marker-type="placemark" hint-content="element.hint" :coords="coords"></ymap-marker>
+      <ymap-marker markerId="123" hint-content="element.hint" :coords="coords"></ymap-marker>
     </yandex-map>
   </div>
 </template>
 
 <script>
-import { yandexMap, ymapMarker } from 'vue-yandex-maps';
+import { yandexMap, ymapMarker } from '../../../dist/vue-yandex-maps';
 
 export default {
   name: 'app',

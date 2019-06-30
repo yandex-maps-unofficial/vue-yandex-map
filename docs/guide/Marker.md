@@ -18,7 +18,7 @@
 | Attribute | Type | Description | Marker-types |
 | ----- | ----- | ----- | ----- |
 | marker-id | String, Number | Id маркера. `Required` ||
-| marker-type | String | Тип маркера ||
+| marker-type | String | Тип маркера. Default: `Placemark` ||
 | coords | Array [ latitude, longitude ] | Координаты маркера или центр круга. `Required` | Placemark, Circle |
 | coords | Array of arrays [ [latitude, longitude], [...] ] | Координаты вершин. `Required` | Rectangle, Polyline |
 | coords | Array of two arrays of coordinates arrays (first for outer contour, second for inner) [ [[latitude, longitude], [...]], [[...], [...]] ] | Координаты вершин. `Required` | Polygon |

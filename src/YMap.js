@@ -114,7 +114,7 @@ export default {
 
                 let marker = {
                     markerId: props.markerId,
-                    markerType: props.markerType,
+                    markerType: props.markerType || 'placemark',
                     coords: utils.setCoordsToNumeric(props.coords),
                     hintContent: props.hintContent,
                     markerFill: props.markerFill,
