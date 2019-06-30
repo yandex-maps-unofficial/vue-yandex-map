@@ -1,5 +1,13 @@
 import { compareValues, emitter } from './utils';
 
+const MARKER_TYPES = [
+    'placemark',
+    'polyline',
+    'rectangle',
+    'polygon',
+    'circle',
+]
+
 export default {
     data: () => ({
         ymapEventBus: emitter,
@@ -8,14 +16,20 @@ export default {
     props: {
         coords: {
             type: Array,
-            required: true
+            required: true,
+            validator(val) {
+                return !val.filter(item => isNaN(item)).length
+            },
         },
         hintContent: String,
         icon: Object,
         balloon: Object,
         markerType: {
             type: String,
-            required: true
+            validator(val) {
+                return MARKER_TYPES.includes(val.toLowerCase())
+            },
+            default: 'placemark',
         },
         markerFill: Object,
         markerStroke: Object,
