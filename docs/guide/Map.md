@@ -1,5 +1,5 @@
 # Карта
-После подключения плагина вы можете использовать компонент `<yandex-map>` для работы с картой. Параметры карты задаются через аттрибуты. Вы можете получить доступ к [инстансу карты](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/) для работы напрямую с АПИ Я.Карт, слушая событие `map-was-initialized`. Ссылка на инстанс будет передана как payload события.<br>
+После подключения плагина вы можете использовать компонент `<yandex-map>` для работы с картой. Параметры карты задаются через аттрибуты. Вы можете получить доступ к [инстансу карты](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/) для работы напрямую с [API Я.Карт](https://tech.yandex.ru/maps/doc/jsapi/2.1/quick-start/index-docpage/), слушая событие `map-was-initialized`. Ссылка на инстанс будет передана как payload события.<br>
 
 Вы можете задать класс элементу, в котором непосредственно находится карта через аттрибут `ymap-class`. Если этот аттрибут не задан - элементу присваивается аттрибут `style="width: 100%; height: 100%;"`.<br>
 
@@ -12,7 +12,7 @@
 | Event name | Payload |
 | ----- | ----- |
 | 'click' | [map event](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/events-docpage/) |
-| 'map-was-initialized' | Ссылка на инстанс карты |
+| 'map-was-initialized' | Ссылка на [инстанс карты](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/) |
 
 ## Attributes
 
