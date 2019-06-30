@@ -32,7 +32,7 @@
 | properties | Object | [Свойства маркера](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#param-feature.properties) | All |
 | options | Object | [Опции маркера](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#param-options) | All |
 | callbacks | Object | Объект, где ключом является имя события, а значением - callback-функция, напр. { click: function() {...}, contextmenu: anotherFunction }. [Список событий](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#events-summary) | All |
-| [balloonTemplate](#balloon-template) | String | HTML Template for balloon | All |
+| [balloonTemplate](/examples/#кастомный-темпnейт-баnуна) | String | HTML Template for balloon | All |
 
 # Icons
 
@@ -46,43 +46,6 @@
   imageHref: markerIcon, // адрес изображения или data:image/svg+xml;base64
   imageSize: [43, 55], // размер иконки в px
   imageOffset: [-22, -55] // оффсет в px
-}
-
-```
-
-# Balloon Template
-
-Вы можете задать свой собственный темплейт для балуна.
-
-```HTML
-<yandex-map
-  :coords="[54.62896654088406, 39.731893822753904]"
->
-  <ymap-marker
-      marker-type="placemark"
-      :coords="[54.7, 39.7]"
-      :balloonTemplate = "balloonTemplate"
-    ></ymap-marker>
-</yandex-map>
-
-```
-
-```JavaScript
-computed: {
-  balloonTemplate() {
-    return `
-      <h1 class="red">Hi, everyone!</h1>
-      <p>I am here: ${this.coords}</p>
-      <img src="http://via.placeholder.com/350x150">
-    `
-  }
-}
-
-```
-
-```CSS
-.red {
-  color: red;
 }
 
 ```
