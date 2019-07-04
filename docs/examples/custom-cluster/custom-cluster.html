@@ -1,0 +1,20 @@
+<template>
+    <yandex-map
+            :coords="coords"
+            :zoom="zoom"
+            :cluster-options="clusterOptions"
+    >
+        <ymap-marker
+                marker-id="1"
+                :coords="coords"
+                :balloon="{header: 'First'}"
+                cluster-name="1"
+        ></ymap-marker>
+        <ymap-marker
+                marker-id="2"
+                :coords="coords"
+                :balloon="{header: 'Second'}"
+                cluster-name="1"
+        ></ymap-marker>
+    </yandex-map>
+</template>
