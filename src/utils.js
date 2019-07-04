@@ -23,7 +23,7 @@ export function addToCart(markers, { options, callbacks, map, useObjectManager, 
         };
         clusters[marker.clusterName] = clusters[marker.clusterName] ? [...clusters[marker.clusterName], marker] : [marker];
     }
-    
+
     for (let clusterName in clusters) {
         const clusterOptions = options[clusterName] || {};
         const clusterCallbacks = callbacks[clusterName] || {};
@@ -32,8 +32,6 @@ export function addToCart(markers, { options, callbacks, map, useObjectManager, 
 
         const clusterLayout = clusterOptions.clusterLayout ? ymaps.templateLayoutFactory.createClass(clusterOptions.clusterLayout) :
             clusterOptions.clusterBalloonContentLayout || defaultClusterLayout;
-        console.log(clusterLayout);
-        console.log(clusterOptions.clusterLayout);
         clusterOptions.clusterBalloonContentLayout = clusterLayout;
 
         if (useObjectManager) {
