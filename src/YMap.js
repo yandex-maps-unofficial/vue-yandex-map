@@ -128,7 +128,7 @@ export default {
                     balloonOptions
                 };
 
-                if (props.icon && (props.icon.layout === 'default#image' || props.icon.layout === 'default#imageWithContent')) {
+                if (props.icon && ['default#image', 'default#imageWithContent'].includes(props.icon.layout)) {
                     marker.iconLayout = props.icon.layout;
                     marker.iconImageHref = props.icon.imageHref;
                     marker.iconImageSize = props.icon.imageSize;
