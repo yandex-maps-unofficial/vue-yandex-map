@@ -42,7 +42,7 @@
 
 ```JavaScript
 {
-  layout: 'default#image',
+  layout: 'default#image', // 'default#imageWithContent' для использования с контентом
   imageHref: markerIcon, // адрес изображения или data:image/svg+xml;base64
   imageSize: [43, 55], // размер иконки в px
   imageOffset: [-22, -55] // оффсет в px
