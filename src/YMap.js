@@ -129,6 +129,7 @@ export default {
                 };
 
                 if (props.icon && ['default#image', 'default#imageWithContent'].includes(props.icon.layout)) {
+                    marker.iconContent = props.icon.content;
                     marker.iconLayout = props.icon.layout;
                     marker.iconImageHref = props.icon.imageHref;
                     marker.iconImageSize = props.icon.imageSize;
