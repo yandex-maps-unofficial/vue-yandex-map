@@ -134,6 +134,10 @@ export default {
                     marker.iconImageHref = props.icon.imageHref;
                     marker.iconImageSize = props.icon.imageSize;
                     marker.iconImageOffset = props.icon.imageOffset;
+                    marker.iconContentOffset = props.icon.contentOffset;
+                    if (props.icon.contentLayout && typeof props.icon.contentLayout === 'string') {
+                        marker.iconContentLayout = ymaps.templateLayoutFactory.createClass(props.icon.contentLayout);
+                    }
                 } else {
                     marker.icon = props.icon;
                 }
@@ -150,7 +154,7 @@ export default {
                 const markerType = utils.createMarkerType(m.markerType, this.useObjectManager);
                 const initialProps = {
                     hintContent: m.hintContent,
-                    iconContent: m.icon && m.icon.content,
+                    iconContent: m.icon && m.icon.content || m.iconContent,
                     markerId: m.markerId
                 };
 
@@ -163,11 +167,12 @@ export default {
                 const properties = Object.assign(initialProps, balloonProps, m.properties);
 
                 const iconOptions = m.iconLayout ? {
-                    iconContent: m.iconContent,
                     iconLayout: m.iconLayout,
                     iconImageHref: m.iconImageHref,
                     iconImageSize: m.iconImageSize,
-                    iconImageOffset: m.iconImageOffset
+                    iconImageOffset: m.iconImageOffset,
+                    iconContentOffset: m.iconContentOffset,
+                    iconContentLayout: m.iconContentLayout,
                 } : { preset: m.icon && `islands#${utils.getIconPreset(m)}Icon` };
 
                 const strokeOptions = m.markerStroke ? {
