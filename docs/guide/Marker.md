@@ -34,7 +34,7 @@
 | callbacks | Object | Объект, где ключом является имя события, а значением - callback-функция, напр. { click: function() {...}, contextmenu: anotherFunction }. [Список событий](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#events-summary) | All |
 | [balloonTemplate](/examples/#кастомный-темпnейт-баnуна) | String | HTML Template for balloon | All |
 
-# Icons
+## Icons
 
 Вы можете задать настройки иконки маркера следующими полями: color (default: 'blue'), content, glyph. Свойство `glyph` имеет более высокий приоритете, чем `content`. [Список цветов и иконок](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/option.presetStorage-docpage/). В этом случае вы получаете классический вид маркера.
 
@@ -45,7 +45,13 @@
   layout: 'default#image', // 'default#imageWithContent' для использования с контентом
   imageHref: markerIcon, // адрес изображения или data:image/svg+xml;base64
   imageSize: [43, 55], // размер иконки в px
-  imageOffset: [-22, -55] // оффсет в px
+  imageOffset: [-22, -55], // смещение иконки в px,
+  /* Следующие поля актуальны для layout: 'default#imageWithContent' */
+  content: 'some content here', // содержимое контента
+  contentOffset: [-22, -55], // смещение контента в px,
+  contentLayout: '<div style="color: #FFFFFF; font-weight: bold;">$[properties.iconContent]</div>' // строковый HTML шаблон для контента
 }
 
 ```
+
+[Пример использования](/examples/#кастомная-иконка)
