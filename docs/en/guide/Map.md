@@ -1,5 +1,5 @@
 # Map
-After installation, registration and plugged the component you can use `<yandex-map>` and work with a map. All parameters of the map are set via attributes. You can use `map-was-initialized` (tag or event listener) to get an access to [map instance](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/) for work directly with [YandexMap API](https://tech.yandex.ru/maps/doc/jsapi/2.1/quick-start/index-docpage/). Link to the map instance will be transmitted as payload of event.<br>
+After installation, registration and plugged the component you can use `<yandex-map>` and work with a map. All parameters of the map are set via attributes. You can use `map-was-initialized` event to get an access to [map instance](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/) for work directly with [YandexMap API](https://tech.yandex.ru/maps/doc/jsapi/2.1/quick-start/index-docpage/). Link to the map instance will be transmitted as payload of event.<br>
 
 You can assign a class to parent element of map via attribute `ymap-class`. If this attribute is not specified the element will be assign an attribute `style="width: 100%; height: 100%;"`.<br>
 

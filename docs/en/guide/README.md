@@ -3,14 +3,15 @@
 You can easily plug Yandex map in your project with this custom component and you available minimal part of functionality right now from the "box". However If you want to use full functionality of [YandexMap API](https://tech.yandex.ru/maps/doc/jsapi/2.1/quick-start/index-docpage/), you need apply to [map instance](https://tech.yandex.ru/maps/doc/jsapi/2.1/quick-start/index-docpage/) directly.
  
 
-##  Install
+##  Installing
 
-You need use your package manager to install component in your app
+Using npm
 
 ```Bash
 npm install vue-yandex-maps
 ```
-or
+
+Using yarn
 ```Bash
 yarn add vue-yandex-maps
 ```
@@ -69,4 +70,4 @@ Add `vue-yandex-maps/nuxt` in modules section `nuxt.config.js`
 
 ### CDN
 
-You can plug plugin directly via link [https://unpkg.com/vue-yandex-maps](https://unpkg.com/vue-yandex-maps). The plugin will be install automatically if you use Vue JS. It could be useful when you use [Code Pen](https://codepen.io/PNKBizz/pen/WMRwyM)
+You can use plugin directly via link [https://unpkg.com/vue-yandex-maps](https://unpkg.com/vue-yandex-maps). The plugin will be install automatically if you use Vue JS. It could be useful when you use [Code Pen](https://codepen.io/PNKBizz/pen/WMRwyM)

@@ -1,6 +1,6 @@
 # Marker
 
-You can define markers for map by using component `<ymap-marker>` или передать их в качестве значения аттрибута карты `placemarks`. Во втором случае вы можете использовать только маркеры типа `Placemark`. [Interface description](https://tech.yandex.ru/maps/doc/jsapi/2.0/ref/reference/GeoObject-docpage/). You can use both these methods in parallel.
+You can define map markers by using component `<ymap-marker>` or using these markers like map attribute `placemarks`. In second time you can use only `Placemark` type markers. [Interface description](https://tech.yandex.ru/maps/doc/jsapi/2.0/ref/reference/GeoObject-docpage/). You can use both these methods in parallel.
 
 ::: tip Take a look,
 For each marker you need to add property `markerId` 
