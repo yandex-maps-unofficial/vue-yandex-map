@@ -14,6 +14,18 @@ module.exports = {
           'Map',
           'Marker'
       ]
-  }
+    }
+  },
+  locales: {
+    '/': {
+      lang: 'ru-RU',
+      title: 'Русский'
+      // description: ''
+    },
+    '/en/': {
+      lang: 'en-US',
+      title: 'English'
+      // description: ''
+    }
   }
 }
