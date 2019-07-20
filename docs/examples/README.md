@@ -13,9 +13,11 @@ sidebar: auto
 
 <<< @/docs/examples/custom-icon/custom-icon.html
 <<< @/docs/examples/custom-icon/custom-icon.js
+![img](/examples/custom-icon.jpg)
 
 ## Кастомный темплейт балуна
 
 <<< @/docs/examples/custom-balloon/custom-balloon.html
 <<< @/docs/examples/custom-balloon/custom-balloon.js
 <<< @/docs/examples/custom-balloon/custom-balloon.css
+![img](/examples/custom-balloon.jpg)
