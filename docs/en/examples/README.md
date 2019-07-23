@@ -2,20 +2,20 @@
 sidebar: auto
 ---
 
-# Примеры использования и настройки карты
+# Examples of using and setting the map
 
-## Перемещение маркера по клику
+## Move the marker by click
 
 <<< @/docs/examples/base/base.html
 <<< @/docs/examples/base/base.js
 
-## Кастомная иконка
+## Custom icon
 
 <<< @/docs/examples/custom-icon/custom-icon.html
 <<< @/docs/examples/custom-icon/custom-icon.js
 ![img](/examples/custom-icon.jpg)
 
-## Кастомный темплейт балуна
+## Custom balloon
 
 <<< @/docs/examples/custom-balloon/custom-balloon.html
 <<< @/docs/examples/custom-balloon/custom-balloon.js
