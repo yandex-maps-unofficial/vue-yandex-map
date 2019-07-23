@@ -1,6 +1,6 @@
 {
   "name": "vue-yandex-maps",
-  "version": "0.8.13",
+  "version": "0.8.14",
   "description": "Yandex Maps component for VueJS.",
   "main": "dist/vue-yandex-maps.js",
   "unpkg": "dist/vue-yandex-maps.umd.js",
