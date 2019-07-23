@@ -21,3 +21,8 @@ sidebar: auto
 <<< @/docs/examples/custom-balloon/custom-balloon.js
 <<< @/docs/examples/custom-balloon/custom-balloon.css
 ![img](/examples/custom-balloon.jpg)
+
+## Кастомный кластер
+
+<<< @/docs/examples/custom-cluster/custom-cluster.html
+<<< @/docs/examples/custom-cluster/custom-cluster.js

@@ -219,6 +219,8 @@ Or you may define it as a placemark with custom icon. In this case you need to s
 
 ```
 
+If you need to use it with content, just change the layout as `default#imageWithContent`
+
 where `markerIcon`: data or computed path to image or data:image/svg+xml;base64, `imageSize`: size of icon in px, `imageOffset`: icon offset in px
 
 # Balloon Template
