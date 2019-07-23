@@ -2,6 +2,7 @@ module.exports = {
   themeConfig: {
     locales: {
       '/': {
+        selectText: 'Язык',
         title: 'Vue-yandex-maps',
         description: 'Я.Карты для Vue JS',
         nav: [
@@ -19,6 +20,7 @@ module.exports = {
         }
       },
       '/en/': {
+        selectText: 'Language',
         title: 'Vue-yandex-maps',
         description: 'Yandex map component for Vue JS',
         nav: [
@@ -40,13 +42,13 @@ module.exports = {
   locales: {
     '/': {
       lang: 'ru-RU',
-      title: 'Русский',
-      description: 'Документация на русском языке'
+      title: 'Vue-yandex-maps',
+      description: 'Документация на русском'
     },
     '/en/': {
       lang: 'en-US',
-      title: 'English',
-      description: 'Documentation on english language'
+      title: 'Vue-yandex-maps',
+      description: 'Documentation on english'
     }
   }
 }

@@ -8,5 +8,4 @@
 
 # vue-yandex-maps
 
-[Documentation (RU)](https://vue-yandex-maps.github.io/)<br><br>
-[Old Documentation (EN)](./old-docs.md)
+Documentation: [RU](https://vue-yandex-maps.github.io/), [EN](https://vue-yandex-maps.github.io/en/)
