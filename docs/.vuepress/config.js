@@ -1,5 +1,8 @@
 module.exports = {
   themeConfig: {
+    repo: 'PNKBizz/vue-yandex-map',
+    docsDir: 'docs',
+    editLinks: true,
     locales: {
       '/': {
         selectText: 'Язык',
