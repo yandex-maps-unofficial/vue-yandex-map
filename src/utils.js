@@ -34,10 +34,8 @@ export function addToCart(markers, { options, callbacks, map, useObjectManager, 
             clusterOptions.clusterBalloonContentLayout || defaultClusterLayout;
         clusterOptions.clusterBalloonContentLayout = clusterLayout;
 
-        if (clusterOptions.clusterIconContentLayout) {
-            const clusterContentLayout = ymaps.templateLayoutFactory.createClass(clusterOptions.clusterIconContentLayout);
-            clusterOptions.clusterIconContentLayout = clusterContentLayout;
-        }
+        const { clusterIconContentLayout } = clusterOptions;
+        clusterOptions.clusterIconContentLayout = clusterIconContentLayout && ymaps.templateLayoutFactory.createClass(clusterIconContentLayout);
 
         if (useObjectManager) {
             const ObjectManager = new ymaps.ObjectManager(Object.assign({ clusterize: objectManagerClusterize }, clusterOptions));
