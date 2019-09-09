@@ -21,7 +21,7 @@ The attributes `coords`, `placemarks` и `zoom` are observable. The map is react
 | settings | Object | Settings of map. API Key, language and version. |
 | coords | Array | Map center coordinates. [ lat, lng ]. *Required* |
 | zoom | Number | Zoom map value (from 0 to 19). *Default: 18*. |
-| cluster-options | Object | An object where the keys are the names of the clusters, and the values are the objects of options these clusters. In options you can point field `layout` (тип `String`) with HTML template for `balloonItemContentLayout`. [Cluster option](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/ClusterPlacemark-docpage/#param-options) |
+| cluster-options | Object | An object where the keys are the names of the clusters, and the values are the objects of options these clusters. In options you can point field `clusterIconContentLayout` (type `String`) for HTML template of cluster icon, field `layout` (type `String`) and HTML template for `balloonItemContentLayout`. [Cluster option](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/ClusterPlacemark-docpage/#param-options) |
 | cluster-callbacks | Object | An object where the keys are the names of the clusters, and the values are the objects of events these clusters, e.g. `{ clusterName: { click: function() {...}, contextmenu: anotherFunction } }` |
 | behaviors | Array | Array of connected map behaviors. All other values are considered off. [Behaviors](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/map.behavior.Manager-docpage/#param-behaviors) |
 | controls | Array | Array of connected map controls. All other values are considered offth. [Controls](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/control.Manager-docpage/#add-param-control) |
