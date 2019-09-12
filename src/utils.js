@@ -46,6 +46,11 @@ export function addToCart(markers, { options, callbacks, map, useObjectManager, 
             for (let key in clusterCallbacks) {
                 clusterer.events.add(key, clusterCallbacks[key]);
             }
+
+            if (clusterOptions.createCluster) {
+                clusterer.createCluster = clusterOptions.createCluster;
+            }
+
             clusterer.add(clusters[clusterName]);
             map.geoObjects.add(clusterer);
         }
