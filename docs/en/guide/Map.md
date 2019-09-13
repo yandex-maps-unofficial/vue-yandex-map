@@ -21,18 +21,18 @@ The attributes `coords`, `placemarks` и `zoom` are observable. The map is react
 | settings | Object | Settings of map. API Key, language and version. |
 | coords | Array | Map center coordinates. [ lat, lng ]. *Required* |
 | zoom | Number | Zoom map value (from 0 to 19). *Default: 18*. |
-| cluster-options | Object | An object where the keys are the names of the clusters, and the values are the objects of options these clusters. In options you can point field `layout` (тип `String`) with HTML template for `balloonItemContentLayout`. [Cluster option](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/ClusterPlacemark-docpage/#param-options) |
+| [cluster-options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/ClusterPlacemark-docpage/#param-options) | Object | An object where the keys are the names of the clusters, and the values are the objects of options these clusters. In options you can point field `clusterIconContentLayout` (type `String`) for HTML template of cluster icon, field `layout` (type `String`) and HTML template for `balloonItemContentLayout`.|
 | cluster-callbacks | Object | An object where the keys are the names of the clusters, and the values are the objects of events these clusters, e.g. `{ clusterName: { click: function() {...}, contextmenu: anotherFunction } }` |
-| behaviors | Array | Array of connected map behaviors. All other values are considered off. [Behaviors](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/map.behavior.Manager-docpage/#param-behaviors) |
-| controls | Array | Array of connected map controls. All other values are considered offth. [Controls](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/control.Manager-docpage/#add-param-control) |
+| [behaviors](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/map.behavior.Manager-docpage/#param-behaviors) | Array | Array of connected map behaviors. All other values are considered off.|
+| [controls](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/control.Manager-docpage/#add-param-control) | Array | Array of connected map controls. All other values are considered offth.|
 | detailed-controls | Object | An object where the keys are the elements of map control, and the values are the objects of element settings. Designed for fine setting of control elements. |
 | map-type | String | Map type. Valid values: `map, satellite, hybrid`. *Default: map*. |
 | scroll-zoom | Boolean | Set `false` to disable map zoom on the page when you are scrolling. *Default: true* |
 | zoom-control  | Object | **Deprecated**. Use `detailed-controls` |
 | placemarks  | Array of Objects | Array of map labels. There are markers only type of `placemark`. Objects with fields: coordinates ([lat, lng]), properties, options. [More](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Placemark-docpage/) |
-| use-object-manager  | Boolean | Set `true` for use Object Mananger. Used if there is huge count of markers on the map. *Default: false* |
-| object-manager-clusterize  | Boolean | Clustering with Object Mananger. *Default: true* |
+| use-object-manager  | Boolean | Set `true` for use Object Manager. Used if there is huge count of markers on the map. *Default: false* |
+| object-manager-clusterize  | Boolean | Clustering with Object Manager. *Default: true* |
 | ymap-class  | String | Defines class for element, where rendering the map instance. If the attribute is not defined, the element uses style: `width: 100%; height: 100%;` |
 | init-without-markers  | Boolean | Set`false`for prevent init and render map if there are not markers on the map. Default: `true` |
-| options  | Object | [Map otions](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/#Map__param-options) |
+| [options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/#Map__param-options) | Object | Map options. |
 

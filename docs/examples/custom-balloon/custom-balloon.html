@@ -1,0 +1,9 @@
+<template>
+  <yandex-map :coords="coords" @click="onClick">
+    <ymap-marker 
+      marker-id="123" 
+      :coords="coords"
+      :balloon-template="balloonTemplate"
+    />
+  </yandex-map>
+</template>

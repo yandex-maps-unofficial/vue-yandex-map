@@ -21,10 +21,10 @@
 | settings | Object | Настройки карты. API Key, язык и версия. |
 | coords | Array | Координаты центра карты. [ lat, lng ]. *Required* |
 | zoom | Number | Значение зума карты (от 0 до 19). *Default: 18*. |
-| cluster-options | Object | Объект, где ключами являются имена кластеров, а значениями - объекты опций этих кластеров. Объект принимает поле `layout` (тип `String`) со строковым представлением HTML темплейта для `balloonItemContentLayout`. [Cluster option](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/ClusterPlacemark-docpage/#param-options), и поле `clusterLayout` (тип `String`) для кастомизации балуна кластера: [Custom Balloon example](https://tech.yandex.ru/maps/jsbox/2.1/cluster_custom_balloon_content_layout) |
+| [cluster-options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/ClusterPlacemark-docpage/#param-options) | Object | Объект, где ключами являются имена кластеров, а значениями - объекты опций этих кластеров. Объект принимает поле `layout` (тип `String`) со строковым представлением HTML темплейта для `balloonItemContentLayout`, поле `clusterIconContentLayout` (тип `String`) для кастомизации иконки кластера и поле `clusterLayout` (тип `String`) для кастомизации балуна кластера: [Custom Balloon example](https://tech.yandex.ru/maps/jsbox/2.1/cluster_custom_balloon_content_layout) |
 | cluster-callbacks | Object | Объект, где ключами являются имена кластеров, а значениями - объекты событий этих кластеров, напр. `{ clusterName: { click: function() {...}, contextmenu: anotherFunction } }` |
-| behaviors | Array | Массив подключенных поведений карты. Все остальные значения считаются выключенными. [Behaviors](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/map.behavior.Manager-docpage/#param-behaviors) |
-| controls | Array | Массив подключенных элементов управления картой. Все остальные значения считаются выключенными. [Controls](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/control.Manager-docpage/#add-param-control) |
+| [behaviors](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/map.behavior.Manager-docpage/#param-behaviors) | Array | Массив подключенных поведений карты. Все остальные значения считаются выключенными.|
+| [controls](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/control.Manager-docpage/#add-param-control) | Array | Массив подключенных элементов управления картой. Все остальные значения считаются выключенными.|
 | detailed-controls | Object | Объект, где ключами являются элементы управления картой, а значениями - объекты настроект элемента. Предназначен для тонкой настройки элементов управления. |
 | map-type | String | Тип карты. Допустимые значения: `map, satellite, hybrid`. *Default: map*. |
 | scroll-zoom | Boolean | Установите в значение `false`, чтобы при прокрутке страницы у карты не срабатывал зум. *Default: true* |
@@ -34,4 +34,4 @@
 | object-manager-clusterize  | Boolean | Кластеризация при использовании Object Mananger. *Default: true* |
 | ymap-class  | String | Определяет класс для элемента, где рендерится инстанс карты. Если аттрибут не определен - элемент использует стиль: `width: 100%; height: 100%;` |
 | init-without-markers  | Boolean | Установите значение в `false`, чтобы карта не отображалась при отсутствии маркеров. Default: `true` |
-| options  | Object | [Опции карты](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/#Map__param-options) |
+| [options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/#Map__param-options) | Object | Опции карты |
