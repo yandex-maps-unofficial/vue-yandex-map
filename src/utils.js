@@ -1,3 +1,7 @@
+import YMapLoad from './YMapLoad';
+
+export const yMapLoad = new YMapLoad();
+
 export function createCallbacks(callbacks, placemark) {
     if (callbacks && typeof callbacks === 'object') {
         for (let key in callbacks) {

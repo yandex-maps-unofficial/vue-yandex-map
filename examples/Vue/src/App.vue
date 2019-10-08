@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <yandex-map :coords="coords" @click="onClick">
-      <ymap-marker 
-        marker-id="123" 
+      <ymap-marker
+        marker-id="123"
         :coords="coords"
         :balloon-template="balloonTemplate"
       ></ymap-marker>
@@ -11,6 +11,7 @@
 </template>
 
 <script>
+
 export default {
   data: () => ({
     coords: [54, 39],
@@ -28,7 +29,9 @@ export default {
     onClick(e) {
       this.coords = e.get('coords');
     }
-  }  
+  },
+  mounted() {
+  }
 }
 </script>
 

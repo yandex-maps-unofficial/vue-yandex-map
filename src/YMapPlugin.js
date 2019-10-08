@@ -331,28 +331,21 @@ export default {
             { attributes: true, childList: true, characterData: true, subtree: false }
         );
 
-        if (this.ymapEventBus.scriptIsNotAttached) {
-            const yandexMapScript = document.createElement('SCRIPT');
-            const { 
-                apiKey = '', 
-                lang = 'ru_RU', 
-                version = '2.1', 
-                coordorder = 'latlong' 
-            } = { ...this.$options.pluginOptions, ...this.settings };
-            const mode = this.debug ? 'debug' : 'release';
-            const settings = `lang=${lang}${ apiKey && `&apikey=${apiKey}` }&mode=${mode}&coordorder=${coordorder}`
-            const mapLink = this.mapLink || `https://api-maps.yandex.ru/${version}/?${settings}`;
-            yandexMapScript.setAttribute('src', mapLink);
-            yandexMapScript.setAttribute('async', '');
-            yandexMapScript.setAttribute('defer', '');
-            document.body.appendChild(yandexMapScript);
-            this.ymapEventBus.scriptIsNotAttached = false;
-            yandexMapScript.onload = () => {
-                this.ymapEventBus.ymapReady = true;
-                this.ymapEventBus.$emit('scriptIsLoaded');
-            }
+        console.error(utils.yMapLoad)
+        if (utils.yMapLoad.scriptIsNotAttached) {
+          utils.yMapLoad.yMapLoad({
+            mapLink: this.mapLink,
+            debug: this.debug,
+            settings: this.settings
+          },
+            this.$options.pluginOptions)
+            .then(() => {
+              this.ymapEventBus.$emit('scriptIsLoaded');
+            })
         }
-        if (this.ymapEventBus.ymapReady) {
+
+        if (utils.yMapLoad.ymapReady) {
+            const ymaps = window.ymaps;
             ymaps.ready(this.init);
         } else {
             this.ymapEventBus.$on('scriptIsLoaded', () => {
@@ -360,6 +353,8 @@ export default {
                   this.myMap.geoObjects && this.myMap.geoObjects.removeAll();
                   this.setMarkers();
                 };
+
+                const ymaps = window.ymaps;
                 ymaps.ready(this.init);
             })
         }
@@ -367,5 +362,5 @@ export default {
     beforeDestroy() {
         this.myMap.geoObjects && this.myMap.geoObjects.removeAll();
         this.markerObserver.disconnect();
-    }
+    },
 }
