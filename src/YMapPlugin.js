@@ -81,7 +81,10 @@ export default {
             type: Boolean,
             default: true
         },
-        mapLink: String,
+        mapLink: {
+            type: String,
+            default: null,
+        },
         debug: {
             type: Boolean,
             default: false
@@ -109,7 +112,7 @@ export default {
 
                 if (props.balloonTemplate) {
                     const BalloonContentLayoutClass = ymaps.templateLayoutFactory.createClass(props.balloonTemplate);
-                    balloonOptions = { balloonContentLayout: BalloonContentLayoutClass }
+                    balloonOptions = {balloonContentLayout: BalloonContentLayoutClass}
                 }
 
                 let marker = {
@@ -173,7 +176,7 @@ export default {
                     iconImageOffset: m.iconImageOffset,
                     iconContentOffset: m.iconContentOffset,
                     iconContentLayout: m.iconContentLayout,
-                } : { preset: m.icon && `islands#${utils.getIconPreset(m)}Icon` };
+                } : {preset: m.icon && `islands#${utils.getIconPreset(m)}Icon`};
 
                 const strokeOptions = m.markerStroke ? {
                     strokeColor: m.markerStroke.color || "0066ffff",
@@ -195,7 +198,14 @@ export default {
                     m.coords = [m.coords, m.circleRadius];
                 }
 
-                const obj = { properties, options, markerType, coords: m.coords, clusterName: m.clusterName, callbacks: m.callbacks }
+                const obj = {
+                    properties,
+                    options,
+                    markerType,
+                    coords: m.coords,
+                    clusterName: m.clusterName,
+                    callbacks: m.callbacks
+                }
                 const marker = utils.createMarker(obj, this.useObjectManager);
 
                 markers.push(marker);
@@ -203,13 +213,20 @@ export default {
 
             if (this.placemarks) {
                 this.placemarks.forEach(placemark => {
-                    const { markerType = 'Placemark', properties, options = {}, coords, clusterName, callbacks, balloonTemplate } = placemark;
+                    const {markerType = 'Placemark', properties, options = {}, coords, clusterName, callbacks, balloonTemplate} = placemark;
                     const type = utils.createMarkerType(markerType, this.useObjectManager);
                     if (balloonTemplate) {
                         const BalloonContentLayoutClass = ymaps.templateLayoutFactory.createClass(balloonTemplate);
                         options.balloonContentLayout = BalloonContentLayoutClass;
                     }
-                    const obj = { properties, options, markerType: type, coords, clusterName, callbacks }
+                    const obj = {
+                        properties,
+                        options,
+                        markerType: type,
+                        coords,
+                        clusterName,
+                        callbacks
+                    }
                     let yplacemark = utils.createMarker(obj, this.useObjectManager);
 
                     markers.push(yplacemark);
@@ -310,48 +327,45 @@ export default {
         )
     },
     mounted() {
-        this.markerObserver = new MutationObserver(function() {
+        this.markerObserver = new MutationObserver(function () {
             this.myMap.geoObjects && this.myMap.geoObjects.removeAll();
             this.setMarkers();
         }.bind(this));
 
-        this.mapObserver = new MutationObserver(function() {
-          this.myMap.container.fitToViewport();
+        this.mapObserver = new MutationObserver(function () {
+            this.myMap.container.fitToViewport();
         }.bind(this));
 
         // Setup the observer
-        const { markersContainer, mapContainer } = this.$refs;
+        const {markersContainer, mapContainer} = this.$refs;
         this.markerObserver.observe(
             markersContainer,
-            { attributes: true, childList: true, characterData: true, subtree: true }
+            {attributes: true, childList: true, characterData: true, subtree: true}
         );
 
         this.mapObserver.observe(
             mapContainer,
-            { attributes: true, childList: true, characterData: true, subtree: false }
+            {attributes: true, childList: true, characterData: true, subtree: false}
         );
 
-        console.error(utils.yMapLoad)
-        if (utils.yMapLoad.scriptIsNotAttached) {
-          utils.yMapLoad.yMapLoad({
-            mapLink: this.mapLink,
-            debug: this.debug,
-            settings: this.settings
-          },
-            this.$options.pluginOptions)
-            .then(() => {
-              this.ymapEventBus.$emit('scriptIsLoaded');
-            })
+        if (utils.yMapLoad._scriptIsNotAttached) {
+            utils.yMapLoad._pluginOptions = this.$options.pluginOptions;
+            utils.yMapLoad._debug = this.debug;
+
+            utils.yMapLoad.yMapLoad(this.mapLink || this.settings)
+                .then(() => {
+                    this.ymapEventBus.$emit('scriptIsLoaded');
+                })
         }
 
-        if (utils.yMapLoad.ymapReady) {
+        if (utils.yMapLoad._ymapReady) {
             const ymaps = window.ymaps;
             ymaps.ready(this.init);
         } else {
             this.ymapEventBus.$on('scriptIsLoaded', () => {
                 this.ymapEventBus.updateMap = () => {
-                  this.myMap.geoObjects && this.myMap.geoObjects.removeAll();
-                  this.setMarkers();
+                    this.myMap.geoObjects && this.myMap.geoObjects.removeAll();
+                    this.setMarkers();
                 };
 
                 const ymaps = window.ymaps;
