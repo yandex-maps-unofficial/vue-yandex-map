@@ -81,7 +81,6 @@ export default {
       type: Boolean,
       default: true,
     },
-    mapLink: String,
     debug: {
       type: Boolean,
       default: false,
@@ -334,6 +333,7 @@ export default {
     );
   },
   mounted() {
+    if (this.$attrs['map-link'] || this.$attrs.mapLink) throw new Error('Vue-yandex-maps: Attribute mapLink is not supported. Use settings.');
     this.markerObserver = new MutationObserver((() => {
       if (this.myMap.geoObjects) this.myMap.geoObjects.removeAll();
       this.setMarkers();
@@ -360,25 +360,9 @@ export default {
     );
 
     if (this.ymapEventBus.scriptIsNotAttached) {
-      const yandexMapScript = document.createElement('SCRIPT');
-      const {
-        apiKey = '',
-        lang = 'ru_RU',
-        version = '2.1',
-        coordorder = 'latlong',
-      } = { ...this.$options.pluginOptions, ...this.settings };
-      const mode = this.debug ? 'debug' : 'release';
-      const settings = `lang=${lang}${apiKey && `&apikey=${apiKey}`}&mode=${mode}&coordorder=${coordorder}`;
-      const mapLink = this.mapLink || `https://api-maps.yandex.ru/${version}/?${settings}`;
-      yandexMapScript.setAttribute('src', mapLink);
-      yandexMapScript.setAttribute('async', '');
-      yandexMapScript.setAttribute('defer', '');
-      document.body.appendChild(yandexMapScript);
-      this.ymapEventBus.scriptIsNotAttached = false;
-      yandexMapScript.onload = () => {
-        this.ymapEventBus.ymapReady = true;
-        this.ymapEventBus.$emit('scriptIsLoaded');
-      };
+      const { debug } = this;
+      const settings = { ...this.$options.pluginOptions, ...this.settings, debug };
+      utils.ymapLoader(settings);
     }
     if (this.ymapEventBus.ymapReady) {
       ymaps.ready(this.init);

@@ -206,3 +206,30 @@ export function createMarker(object, useObjectManager) {
 
   return marker;
 }
+
+export function ymapLoader(settings = {}) {
+  return new Promise((res, rej) => {
+    const yandexMapScript = document.createElement('SCRIPT');
+    const {
+      apiKey = '',
+      lang = 'ru_RU',
+      version = '2.1',
+      coordorder = 'latlong',
+      debug = false,
+    } = settings;
+    const mode = debug ? 'debug' : 'release';
+    const settingsPart = `lang=${lang}${apiKey && `&apikey=${apiKey}`}&mode=${mode}&coordorder=${coordorder}`;
+    const link = `https://api-maps.yandex.ru/${version}/?${settingsPart}`;
+    yandexMapScript.setAttribute('src', link);
+    yandexMapScript.setAttribute('async', '');
+    yandexMapScript.setAttribute('defer', '');
+    document.body.appendChild(yandexMapScript);
+    emitter.scriptIsNotAttached = false;
+    yandexMapScript.onload = () => {
+      emitter.ymapReady = true;
+      emitter.$emit('scriptIsLoaded');
+      res();
+    };
+    yandexMapScript.onerror = rej;
+  });
+}
