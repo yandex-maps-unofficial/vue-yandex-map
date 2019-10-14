@@ -1,176 +1,181 @@
-import * as utils from './utils'
+import * as utils from './utils';
 
 export default {
   pluginOptions: {},
-  data () {
+  data() {
     return {
       ymapEventBus: utils.emitter,
-      ymapId: 'yandexMap' + Math.round(Math.random() * 100000),
+      ymapId: `yandexMap${Math.round(Math.random() * 100000)}`,
       myMap: {},
       markers: [],
-      style: this.ymapClass ? '' : 'width: 100%; height: 100%;'
-    }
+      style: this.ymapClass ? '' : 'width: 100%; height: 100%;',
+    };
   },
   props: {
     coords: {
       type: Array,
-      validator (val) {
-        return !val.filter(item => isNaN(item)).length
+      validator(val) {
+        return !val.filter(item => Number.isNaN(item)).length;
       },
-      required: true
+      required: true,
     },
     zoom: {
-      validator (val) {
-        return !isNaN(val)
+      validator(val) {
+        return !Number.isNaN(val);
       },
-      default: 18
+      default: 18,
     },
     clusterOptions: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     clusterCallbacks: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     behaviors: {
       type: Array,
-      default: () => ['default']
+      default: () => ['default'],
     },
     controls: {
       type: Array,
       default: () => ['default'],
-      validator (val) {
-        return utils.controlsTypeValidator(val)
-      }
+      validator(val) {
+        return utils.controlsTypeValidator(val);
+      },
     },
     detailedControls: {
       type: Object,
-      validator (val) {
-        const controls = Object.keys(val)
-        return utils.controlsTypeValidator(controls)
-      }
+      validator(val) {
+        const controls = Object.keys(val);
+        return utils.controlsTypeValidator(controls);
+      },
     },
     scrollZoom: {
       type: Boolean,
-      default: true
+      default: true,
     },
     zoomControl: Object,
     mapType: {
       type: String,
       default: 'map',
-      validator (val) {
-        return ['map', 'satellite', 'hybrid'].includes(val)
-      }
+      validator(val) {
+        return ['map', 'satellite', 'hybrid'].includes(val);
+      },
     },
     placemarks: {
       type: Array,
-      default () {
-        return []
-      }
+      default() {
+        return [];
+      },
     },
     useObjectManager: {
       type: Boolean,
-      default: false
+      default: false,
     },
     objectManagerClusterize: {
       type: Boolean,
-      default: true
+      default: true,
     },
     ymapClass: String,
     initWithoutMarkers: {
       type: Boolean,
-      default: true
+      default: true,
     },
     mapLink: String,
     debug: {
       type: Boolean,
-      default: false
+      default: false,
     },
     settings: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     options: {
       type: Object,
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
   computed: {
-    coordinates () {
-      return this.coords.map(item => +item)
-    }
+    coordinates() {
+      return this.coords.map(item => +item);
+    },
   },
   methods: {
-    deleteMarkers (arrayIds) {
-      let map = this.myMap
+    deleteMarkers(arrayIds) {
+      const map = this.myMap;
 
       if (arrayIds.length) {
-        arrayIds.forEach(value => {
-          let di = this.markers.indexOf(value)
+        arrayIds.forEach((value) => {
+          const di = this.markers.indexOf(value);
           if (di !== -1) {
-            this.markers.splice(di, 1)
+            this.markers.splice(di, 1);
           }
-        })
+        });
 
         if (map.geoObjects) {
-          map.geoObjects.each(function (collection) {
+          map.geoObjects.each((collection) => {
             if (collection) {
               if (collection.each) {
-                let remove = []
-                collection.each(function (item) {
+                const remove = [];
+                collection.each((item) => {
                   if (item && item.properties) {
-                    let id = item.properties.get('markerId')
+                    const id = item.properties.get('markerId');
                     if (id) {
                       if (arrayIds.indexOf(id) !== -1) {
-                        remove.push(item)
+                        remove.push(item);
                       }
                     }
                   }
-                })
+                });
                 if (collection.getLength() === 0 || collection.getLength() === remove.length) {
-                  map.geoObjects.remove(collection)
+                  map.geoObjects.remove(collection);
                 } else if (remove.length) {
-                  for (let i in remove) {
-                    collection.remove(remove[i])
+                  // eslint-disable-next-line no-restricted-syntax
+                  for (const i in remove) {
+                    if ({}.hasOwnProperty.call(remove, i)) {
+                      collection.remove(remove[i]);
+                    }
                   }
                 }
                 // TODO - Start
               } else if (collection.properties) {
-                // TODO этот код мною не тестировался. Нужен для удаления точек, которые не находятся в коллекциях
-                // TODO @PNKBizz Удали его если считаешь, что он лишний
-                let id = collection.properties.get('markerId')
+                // TODO этот код мною не тестировался.
+                //  Нужен для удаления точек, которые не находятся в коллекциях
+                //  @PNKBizz Удали его если считаешь, что он лишний
+                const id = collection.properties.get('markerId');
                 if (id) {
                   if (arrayIds.indexOf(id) !== -1) {
-                    map.geoObjects.remove(collection)
+                    map.geoObjects.remove(collection);
                   }
                 }
               }
               // TODO - End
             }
-          })
+          });
         }
       }
     },
-    updateMarkers () {
-      let { createMarkers, deleteMarkers } = this.getMarkers()
-      this.deleteMarkers(deleteMarkers)
+    updateMarkers() {
+      const { createMarkers, deleteMarkers } = this.getMarkers();
+      this.deleteMarkers(deleteMarkers);
       if (createMarkers.length) {
-        this.setMarkers(createMarkers)
+        this.setMarkers(createMarkers);
       }
     },
-    getMarkersFromSlots () {
-      return this.$slots.default && this.$slots.default.map(m => {
-        const props = m.componentOptions && m.componentOptions.propsData
-        if (!props) return
-        let balloonOptions = {}
+    getMarkersFromSlots() {
+      return this.$slots.default ? this.$slots.default.map((m) => {
+        const props = m.componentOptions && m.componentOptions.propsData;
+        if (!props) return;
+        let balloonOptions = {};
 
         if (props.balloonTemplate) {
-          const BalloonContentLayoutClass = ymaps.templateLayoutFactory.createClass(props.balloonTemplate)
-          balloonOptions = { balloonContentLayout: BalloonContentLayoutClass }
+          const BalloonContentLayoutClass = ymaps.templateLayoutFactory
+            .createClass(props.balloonTemplate);
+          balloonOptions = { balloonContentLayout: BalloonContentLayoutClass };
         }
 
-        let marker = {
+        const marker = {
           markerId: props.markerId,
           markerType: props.markerType || 'placemark',
           coords: utils.setCoordsToNumeric(props.coords),
@@ -183,57 +188,58 @@ export default {
           callbacks: props.callbacks,
           properties: props.properties,
           options: props.options,
-          balloonOptions
-        }
+          balloonOptions,
+        };
 
         if (props.icon && ['default#image', 'default#imageWithContent'].includes(props.icon.layout)) {
-          marker.iconContent = props.icon.content
-          marker.iconLayout = props.icon.layout
-          marker.iconImageHref = props.icon.imageHref
-          marker.iconImageSize = props.icon.imageSize
-          marker.iconImageOffset = props.icon.imageOffset
-          marker.iconContentOffset = props.icon.contentOffset
+          marker.iconContent = props.icon.content;
+          marker.iconLayout = props.icon.layout;
+          marker.iconImageHref = props.icon.imageHref;
+          marker.iconImageSize = props.icon.imageSize;
+          marker.iconImageOffset = props.icon.imageOffset;
+          marker.iconContentOffset = props.icon.contentOffset;
           if (props.icon.contentLayout && typeof props.icon.contentLayout === 'string') {
-            marker.iconContentLayout = ymaps.templateLayoutFactory.createClass(props.icon.contentLayout)
+            marker.iconContentLayout = ymaps.templateLayoutFactory
+              .createClass(props.icon.contentLayout);
           }
         } else {
-          marker.icon = props.icon
+          marker.icon = props.icon;
         }
 
-        return marker
-      }).filter(marker => marker && marker.markerType) || []
+        return marker;
+      }).filter(marker => marker && marker.markerType) : [];
     },
-    getMarkers () {
-      let markers = []
-      let deleteMarkers = [...this.markers]
+    getMarkers() {
+      const markers = [];
+      const deleteMarkers = [...this.markers];
 
-      const myMarkers = this.getMarkersFromSlots()
+      const myMarkers = this.getMarkersFromSlots();
 
       for (let i = 0; i < myMarkers.length; i++) {
-        const m = myMarkers[i]
+        const m = myMarkers[i];
 
-        let di = deleteMarkers.indexOf(m.markerId)
+        const di = deleteMarkers.indexOf(m.markerId);
         if (di > -1) {
-          deleteMarkers.splice(di, 1)
+          deleteMarkers.splice(di, 1);
         }
 
         if (this.markers.indexOf(m.markerId) === -1) {
-          this.markers.push(m.markerId)
+          this.markers.push(m.markerId);
 
-          const markerType = utils.createMarkerType(m.markerType, this.useObjectManager)
+          const markerType = utils.createMarkerType(m.markerType, this.useObjectManager);
           const initialProps = {
             hintContent: m.hintContent,
-            iconContent: m.icon && m.icon.content || m.iconContent,
-            markerId: m.markerId
-          }
+            iconContent: m.icon ? m.icon.content : m.iconContent,
+            markerId: m.markerId,
+          };
 
           const balloonProps = m.balloon ? {
             balloonContentHeader: m.balloon.header,
             balloonContentBody: m.balloon.body,
-            balloonContentFooter: m.balloon.footer
-          } : {}
+            balloonContentFooter: m.balloon.footer,
+          } : {};
 
-          const properties = Object.assign(initialProps, balloonProps, m.properties)
+          const properties = Object.assign(initialProps, balloonProps, m.properties);
 
           const iconOptions = m.iconLayout ? {
             iconLayout: m.iconLayout,
@@ -241,27 +247,36 @@ export default {
             iconImageSize: m.iconImageSize,
             iconImageOffset: m.iconImageOffset,
             iconContentOffset: m.iconContentOffset,
-            iconContentLayout: m.iconContentLayout
-          } : { preset: m.icon && `islands#${utils.getIconPreset(m)}Icon` }
+            iconContentLayout: m.iconContentLayout,
+          } : { preset: m.icon && `islands#${utils.getIconPreset(m)}Icon` };
 
           const strokeOptions = m.markerStroke ? {
             strokeColor: m.markerStroke.color || '0066ffff',
-            strokeOpacity: parseFloat(m.markerStroke.opacity) >= 0 ? parseFloat(m.markerStroke.opacity) : 1,
+            strokeOpacity: parseFloat(m.markerStroke.opacity) >= 0
+              ? parseFloat(m.markerStroke.opacity) : 1,
             strokeStyle: m.markerStroke.style,
-            strokeWidth: parseFloat(m.markerStroke.width) >= 0 ? parseFloat(m.markerStroke.width) : 1
-          } : {}
+            strokeWidth: parseFloat(m.markerStroke.width) >= 0
+              ? parseFloat(m.markerStroke.width) : 1,
+          } : {};
 
           const fillOptions = m.markerFill ? {
             fill: m.markerFill.enabled || true,
             fillColor: m.markerFill.color || '0066ff99',
-            fillOpacity: parseFloat(m.markerFill.opacity) >= 0 ? parseFloat(m.markerFill.opacity) : 1,
-            fillImageHref: m.markerFill.imageHref || ''
-          } : {}
+            fillOpacity: parseFloat(m.markerFill.opacity) >= 0
+              ? parseFloat(m.markerFill.opacity) : 1,
+            fillImageHref: m.markerFill.imageHref || '',
+          } : {};
 
-          const options = Object.assign(iconOptions, strokeOptions, fillOptions, m.balloonOptions, m.options)
+          const options = Object.assign(
+            iconOptions,
+            strokeOptions,
+            fillOptions,
+            m.balloonOptions,
+            m.options,
+          );
 
           if (markerType === 'Circle') {
-            m.coords = [m.coords, m.circleRadius]
+            m.coords = [m.coords, m.circleRadius];
           }
 
           const obj = {
@@ -270,63 +285,68 @@ export default {
             markerType,
             coords: m.coords,
             clusterName: m.clusterName,
-            callbacks: m.callbacks
-          }
-          const marker = utils.createMarker(obj, this.useObjectManager)
+            callbacks: m.callbacks,
+          };
+          const marker = utils.createMarker(obj, this.useObjectManager);
 
-          markers.push(marker)
+          markers.push(marker);
         }
       }
 
       if (this.placemarks) {
-        this.placemarks.forEach(placemark => {
-          let di = deleteMarkers.indexOf(placemark.markerId)
+        this.placemarks.forEach((placemark) => {
+          const di = deleteMarkers.indexOf(placemark.markerId);
           if (di !== -1) {
-            deleteMarkers.splice(di, 1)
+            deleteMarkers.splice(di, 1);
           }
 
           if (this.markers.indexOf(placemark.markerId) === -1) {
-            this.markers.push(placemark.markerId)
+            this.markers.push(placemark.markerId);
 
-            const { markerType = 'Placemark', properties, options = {}, coords, clusterName, callbacks, balloonTemplate } = placemark
-            const type = utils.createMarkerType(markerType, this.useObjectManager)
+            const {
+              markerType = 'Placemark', properties, options = {}, coords, clusterName, callbacks, balloonTemplate,
+            } = placemark;
+            const type = utils.createMarkerType(markerType, this.useObjectManager);
             if (balloonTemplate) {
-              const BalloonContentLayoutClass = ymaps.templateLayoutFactory.createClass(balloonTemplate)
-              options.balloonContentLayout = BalloonContentLayoutClass
+              const BalloonContentLayoutClass = ymaps.templateLayoutFactory
+                .createClass(balloonTemplate);
+              options.balloonContentLayout = BalloonContentLayoutClass;
             }
-            const obj = { properties, options, markerType: type, coords, clusterName, callbacks }
-            let yplacemark = utils.createMarker(obj, this.useObjectManager)
+            const obj = {
+              properties, options, markerType: type, coords, clusterName, callbacks,
+            };
+            const yplacemark = utils.createMarker(obj, this.useObjectManager);
 
-            markers.push(yplacemark)
+            markers.push(yplacemark);
           }
-        })
+        });
       }
 
       return {
         createMarkers: markers,
-        deleteMarkers
-      }
+        deleteMarkers,
+      };
     },
-    createMarkers () {
-      let markers = []
-      const myMarkers = this.getMarkersFromSlots()
+    createMarkers() {
+      const markers = [];
+      const myMarkers = this.getMarkersFromSlots();
 
       for (let i = 0; i < myMarkers.length; i++) {
-        const m = myMarkers[i]
-        const markerType = utils.createMarkerType(m.markerType, this.useObjectManager)
+        const m = myMarkers[i];
+        const markerType = utils.createMarkerType(m.markerType, this.useObjectManager);
         const initialProps = {
           hintContent: m.hintContent,
-          iconContent: m.icon && m.icon.content || m.iconContent,
-          markerId: m.markerId
-        }
+          iconContent: m.icon ? m.icon.content : m.iconContent,
+          markerId: m.markerId,
+        };
 
         const balloonProps = m.balloon ? {
           balloonContentHeader: m.balloon.header,
           balloonContentBody: m.balloon.body,
-          balloonContentFooter: m.balloon.footer
-        } : {}
+          balloonContentFooter: m.balloon.footer,
+        } : {};
 
-        const properties = Object.assign(initialProps, balloonProps, m.properties)
+        const properties = Object.assign(initialProps, balloonProps, m.properties);
 
         const iconOptions = m.iconLayout ? {
           iconLayout: m.iconLayout,
@@ -334,27 +354,34 @@ export default {
           iconImageSize: m.iconImageSize,
           iconImageOffset: m.iconImageOffset,
           iconContentOffset: m.iconContentOffset,
-          iconContentLayout: m.iconContentLayout
-        } : { preset: m.icon && `islands#${utils.getIconPreset(m)}Icon` }
+          iconContentLayout: m.iconContentLayout,
+        } : { preset: m.icon && `islands#${utils.getIconPreset(m)}Icon` };
 
         const strokeOptions = m.markerStroke ? {
           strokeColor: m.markerStroke.color || '0066ffff',
-          strokeOpacity: parseFloat(m.markerStroke.opacity) >= 0 ? parseFloat(m.markerStroke.opacity) : 1,
+          strokeOpacity: parseFloat(m.markerStroke.opacity) >= 0
+            ? parseFloat(m.markerStroke.opacity) : 1,
           strokeStyle: m.markerStroke.style,
-          strokeWidth: parseFloat(m.markerStroke.width) >= 0 ? parseFloat(m.markerStroke.width) : 1
-        } : {}
+          strokeWidth: parseFloat(m.markerStroke.width) >= 0 ? parseFloat(m.markerStroke.width) : 1,
+        } : {};
 
         const fillOptions = m.markerFill ? {
           fill: m.markerFill.enabled || true,
           fillColor: m.markerFill.color || '0066ff99',
           fillOpacity: parseFloat(m.markerFill.opacity) >= 0 ? parseFloat(m.markerFill.opacity) : 1,
-          fillImageHref: m.markerFill.imageHref || ''
-        } : {}
+          fillImageHref: m.markerFill.imageHref || '',
+        } : {};
 
-        const options = Object.assign(iconOptions, strokeOptions, fillOptions, m.balloonOptions, m.options)
+        const options = Object.assign(
+          iconOptions,
+          strokeOptions,
+          fillOptions,
+          m.balloonOptions,
+          m.options,
+        );
 
         if (markerType === 'Circle') {
-          m.coords = [m.coords, m.circleRadius]
+          m.coords = [m.coords, m.circleRadius];
         }
 
         const obj = {
@@ -363,93 +390,101 @@ export default {
           markerType,
           coords: m.coords,
           clusterName: m.clusterName,
-          callbacks: m.callbacks
-        }
-        const marker = utils.createMarker(obj, this.useObjectManager)
+          callbacks: m.callbacks,
+        };
+        const marker = utils.createMarker(obj, this.useObjectManager);
 
-        markers.push(marker)
+        markers.push(marker);
       }
 
       if (this.placemarks) {
-        this.placemarks.forEach(placemark => {
-          const { markerType = 'Placemark', properties, options = {}, coords, clusterName, callbacks, balloonTemplate } = placemark
-          const type = utils.createMarkerType(markerType, this.useObjectManager)
+        this.placemarks.forEach((placemark) => {
+          const {
+            markerType = 'Placemark', properties, options = {}, coords, clusterName, callbacks, balloonTemplate,
+          } = placemark;
+          const type = utils.createMarkerType(markerType, this.useObjectManager);
           if (balloonTemplate) {
-            const BalloonContentLayoutClass = ymaps.templateLayoutFactory.createClass(balloonTemplate)
-            options.balloonContentLayout = BalloonContentLayoutClass
+            const BalloonContentLayoutClass = ymaps.templateLayoutFactory
+              .createClass(balloonTemplate);
+            options.balloonContentLayout = BalloonContentLayoutClass;
           }
-          const obj = { properties, options, markerType: type, coords, clusterName, callbacks }
-          let yplacemark = utils.createMarker(obj, this.useObjectManager)
+          const obj = {
+            properties, options, markerType: type, coords, clusterName, callbacks,
+          };
+          const yplacemark = utils.createMarker(obj, this.useObjectManager);
 
-          markers.push(yplacemark)
-        })
+          markers.push(yplacemark);
+        });
       }
 
-      return markers
+      return markers;
     },
-    setMarkers (markers) {
+    setMarkers(markers) {
       const config = {
         options: this.clusterOptions,
         callbacks: this.clusterCallbacks,
         map: this.myMap,
         useObjectManager: this.useObjectManager,
-        objectManagerClusterize: this.objectManagerClusterize
-      }
-      utils.addToCart(markers, config)
+        objectManagerClusterize: this.objectManagerClusterize,
+      };
+      utils.addToCart(markers, config);
     },
-    init () {
+    init() {
       // if ymap isn't initialized or have no markers;
-      if (!window.ymaps || !ymaps.GeoObjectCollection || (!this.initWithoutMarkers && !this.$slots.default && !this.placemarks.length)) return
+      if (!window.ymaps || !ymaps.GeoObjectCollection
+          || (!this.initWithoutMarkers && !this.$slots.default && !this.placemarks.length)) return;
 
-      this.$emit('map-initialization-started')
+      this.$emit('map-initialization-started');
 
       this.myMap = new ymaps.Map(this.ymapId, {
         center: this.coordinates,
         zoom: +this.zoom,
         behaviors: this.behaviors,
         controls: this.controls,
-        type: `yandex#${this.mapType}`
-      }, this.options)
-      this.myMap.events.add('click', e => this.$emit('click', e))
+        type: `yandex#${this.mapType}`,
+      }, this.options);
+      this.myMap.events.add('click', e => this.$emit('click', e));
       if (this.zoomControl) {
-        this.myMap.controls.remove('zoomControl')
-        this.myMap.controls.add(new ymaps.control.ZoomControl(this.zoomControl))
+        this.myMap.controls.remove('zoomControl');
+        this.myMap.controls.add(new ymaps.control.ZoomControl(this.zoomControl));
       }
       if (this.detailedControls) {
-        const controls = Object.keys(this.detailedControls)
-        controls.forEach(controlName => {
-          this.myMap.controls.remove(controlName)
-          this.myMap.controls.add(controlName, this.detailedControls[controlName])
-        })
+        const controls = Object.keys(this.detailedControls);
+        controls.forEach((controlName) => {
+          this.myMap.controls.remove(controlName);
+          this.myMap.controls.add(controlName, this.detailedControls[controlName]);
+        });
       }
       if (this.scrollZoom === false) {
-        this.myMap.behaviors.disable('scrollZoom')
+        this.myMap.behaviors.disable('scrollZoom');
       }
 
-      this.updateMarkers()
+      this.updateMarkers();
 
-      this.$emit('map-was-initialized', this.myMap)
-    }
+      this.$emit('map-was-initialized', this.myMap);
+    },
   },
   watch: {
-    coordinates (newVal) {
-      this.myMap.panTo && this.myMap.panTo(newVal)
-    },
-    placemarks () {
-      if (window.ymaps) {
-        this.updateMarkers()
+    coordinates(newVal) {
+      if (this.myMap.panTo) {
+        this.myMap.panTo(newVal);
       }
     },
-    zoom () {
-      this.myMap.setZoom(this.zoom)
-    }
+    placemarks() {
+      if (window.ymaps) {
+        this.updateMarkers();
+      }
+    },
+    zoom() {
+      this.myMap.setZoom(this.zoom);
+    },
   },
-  render (h) {
+  render(h) {
     return h(
       'section',
       {
         class: 'ymap-container',
-        ref: 'mapContainer'
+        ref: 'mapContainer',
       },
       [
         h(
@@ -458,81 +493,87 @@ export default {
             attrs: {
               id: this.ymapId,
               class: this.ymapClass,
-              style: this.style
-            }
-          }
+              style: this.style,
+            },
+          },
         ),
         h(
           'div',
           {
             ref: 'markersContainer',
             attrs: {
-              class: 'ymap-markers'
-            }
+              class: 'ymap-markers',
+            },
           },
           [
-            this.$slots.default
-          ]
-        )
-      ]
-    )
+            this.$slots.default,
+          ],
+        ),
+      ],
+    );
   },
-  mounted () {
-    this.markerObserver = new MutationObserver(function () {
-      this.updateMarkers()
-    }.bind(this))
+  mounted() {
+    this.markerObserver = new MutationObserver((() => {
+      this.updateMarkers();
+    }));
 
-    this.mapObserver = new MutationObserver(function () {
-      this.myMap.container.fitToViewport()
-    }.bind(this))
+    this.mapObserver = new MutationObserver((() => {
+      this.myMap.container.fitToViewport();
+    }));
 
     // Setup the observer
-    const { markersContainer, mapContainer } = this.$refs
+    const { markersContainer, mapContainer } = this.$refs;
     this.markerObserver.observe(
       markersContainer,
-      { attributes: true, childList: true, characterData: true, subtree: true }
-    )
+      {
+        attributes: true, childList: true, characterData: true, subtree: true,
+      },
+    );
 
     this.mapObserver.observe(
       mapContainer,
-      { attributes: true, childList: true, characterData: true, subtree: false }
-    )
+      {
+        attributes: true, childList: true, characterData: true, subtree: false,
+      },
+    );
 
     if (this.ymapEventBus.scriptIsNotAttached) {
-      const yandexMapScript = document.createElement('SCRIPT')
+      const yandexMapScript = document.createElement('SCRIPT');
       const {
         apiKey = '',
         lang = 'ru_RU',
         version = '2.1',
-        coordorder = 'latlong'
-      } = { ...this.$options.pluginOptions, ...this.settings }
-      const mode = this.debug ? 'debug' : 'release'
-      const settings = `lang=${lang}${apiKey && `&apikey=${apiKey}`}&mode=${mode}&coordorder=${coordorder}`
-      const mapLink = this.mapLink || `https://api-maps.yandex.ru/${version}/?${settings}`
-      yandexMapScript.setAttribute('src', mapLink)
-      yandexMapScript.setAttribute('async', '')
-      yandexMapScript.setAttribute('defer', '')
-      document.body.appendChild(yandexMapScript)
-      this.ymapEventBus.scriptIsNotAttached = false
+        coordorder = 'latlong',
+      } = { ...this.$options.pluginOptions, ...this.settings };
+      const mode = this.debug ? 'debug' : 'release';
+      const settings = `lang=${lang}${apiKey && `&apikey=${apiKey}`}&mode=${mode}&coordorder=${coordorder}`;
+      const mapLink = this.mapLink || `https://api-maps.yandex.ru/${version}/?${settings}`;
+      yandexMapScript.setAttribute('src', mapLink);
+      yandexMapScript.setAttribute('async', '');
+      yandexMapScript.setAttribute('defer', '');
+      document.body.appendChild(yandexMapScript);
+      this.ymapEventBus.scriptIsNotAttached = false;
       yandexMapScript.onload = () => {
-        this.ymapEventBus.ymapReady = true
-        this.ymapEventBus.$emit('scriptIsLoaded')
-      }
+        this.ymapEventBus.ymapReady = true;
+        this.ymapEventBus.$emit('scriptIsLoaded');
+      };
     }
     if (this.ymapEventBus.ymapReady) {
-      ymaps.ready(this.init)
+      ymaps.ready(this.init);
     } else {
       this.ymapEventBus.$on('scriptIsLoaded', () => {
         this.ymapEventBus.updateMap = () => {
-          this.updateMarkers()
-        }
-        ymaps.ready(this.init)
-      })
+          this.updateMarkers();
+        };
+        ymaps.ready(this.init);
+      });
     }
   },
-  beforeDestroy () {
-    this.markers = []
-    this.myMap.geoObjects && this.myMap.geoObjects.removeAll()
-    this.markerObserver.disconnect()
-  }
-}
+  beforeDestroy() {
+    this.markers = [];
+    if (this.myMap.geoObjects) {
+      this.myMap.geoObjects.removeAll();
+    }
+    this.markerObserver.disconnect();
+  },
+};
