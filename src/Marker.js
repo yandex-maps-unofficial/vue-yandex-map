@@ -8,11 +8,9 @@ const MARKER_TYPES = [
   'circle',
 ];
 
+const unwatchArr = [];
+
 export default {
-  data: () => ({
-    ymapEventBus: emitter,
-    unwatchArr: [],
-  }),
   props: {
     coords: {
       type: Array,
@@ -53,13 +51,14 @@ export default {
   },
   mounted() {
     Object.keys(this.$props).forEach((prop) => {
-      this.unwatchArr.push(this.$watch(
+      unwatchArr.push(this.$watch(
         prop,
-        (newVal, oldVal) => compareValues(newVal, oldVal, this.ymapEventBus),
+        (newVal, oldVal) => compareValues(newVal, oldVal, this.markerId),
       ));
     });
   },
   beforeDestroy() {
-    this.unwatchArr.forEach(f => f());
+    unwatchArr.forEach(f => f());
+    emitter.deleteMarker(this.markerId);
   },
 };

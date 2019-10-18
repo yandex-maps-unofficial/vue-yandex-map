@@ -6,7 +6,7 @@ export function createCallbacks(callbacks, placemark) {
   }
 }
 
-export function addToCart(markers, {
+export function addToMap(markers, {
   options, callbacks, map, useObjectManager, objectManagerClusterize,
 }) {
   const defaultLayout = `
@@ -124,17 +124,12 @@ export function objectComparison(first, second) {
   }(first, second));
 }
 
-export function compareValues(newVal, oldVal, bus) {
-  if (objectComparison(newVal, oldVal)) { return; }
-  if (bus.rerender) { clearTimeout(bus.rerender); }
-  bus.rerender = setTimeout(() => bus.updateMap && bus.updateMap(), 10);
-}
-
 class EventEmitter {
   constructor() {
     this.events = {};
     this.ymapReady = false;
     this.scriptIsNotAttached = true;
+    this.deleteMarker = () => {};
   }
 
   $on(eventName, fn) {
@@ -158,6 +153,18 @@ class EventEmitter {
 }
 
 export const emitter = new EventEmitter();
+
+let changedMarkers = [];
+
+export function compareValues(newVal, oldVal, id) {
+  if (objectComparison(newVal, oldVal)) { return; }
+  changedMarkers.push(id);
+  if (emitter.rerender) { clearTimeout(emitter.rerender); }
+  emitter.rerender = setTimeout(() => {
+    emitter.updateMap(changedMarkers);
+    changedMarkers = [];
+  }, 10);
+}
 
 const CONTROL_TYPES = [
   'fullscreenControl',

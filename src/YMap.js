@@ -4,7 +4,6 @@ export default {
   pluginOptions: {},
   data() {
     return {
-      ymapEventBus: utils.emitter,
       ymapId: `yandexMap${Math.round(Math.random() * 100000)}`,
       myMap: {},
       style: this.ymapClass ? '' : 'width: 100%; height: 100%;',
@@ -100,10 +99,10 @@ export default {
     },
   },
   methods: {
-    getMarkersFromSlots() {
+    getMarkersFromSlots(changedMarkers) {
       return this.$slots.default ? this.$slots.default.map((m) => {
         const props = m.componentOptions && m.componentOptions.propsData;
-        if (!props) return;
+        if (!props || (changedMarkers && !changedMarkers.includes(props.markerId))) return;
         let balloonOptions = {};
 
         if (props.balloonTemplate) {
@@ -146,9 +145,10 @@ export default {
         return marker;
       }).filter(marker => marker && marker.markerType) : [];
     },
-    createMarkers() {
+    createMarkers(changedMarkers) {
       const markers = [];
-      const myMarkers = this.getMarkersFromSlots();
+      const myMarkers = this.getMarkersFromSlots(changedMarkers);
+      if (changedMarkers) this.deleteMarkers(changedMarkers);
 
       for (let i = 0; i < myMarkers.length; i++) {
         const m = myMarkers[i];
@@ -238,7 +238,7 @@ export default {
 
       return markers;
     },
-    setMarkers() {
+    setMarkers(changedMarkers) {
       const config = {
         options: this.clusterOptions,
         callbacks: this.clusterCallbacks,
@@ -246,7 +246,22 @@ export default {
         useObjectManager: this.useObjectManager,
         objectManagerClusterize: this.objectManagerClusterize,
       };
-      utils.addToCart(this.createMarkers(), config);
+      utils.addToMap(this.createMarkers(changedMarkers), config);
+    },
+    deleteMarkers(deletedMarkers) {
+      this.myMap.geoObjects.each((collection) => {
+        const removedMarkers = [];
+        collection.each((marker) => {
+          const markerId = marker.properties.get('markerId');
+          if (deletedMarkers.includes(markerId)) removedMarkers.push(marker);
+        });
+        const length = collection.getLength();
+        if (length === 0 || length === removedMarkers.length) {
+          this.myMap.geoObjects.remove(collection);
+        } else if (removedMarkers.length) {
+          removedMarkers.forEach(marker => collection.remove(marker));
+        }
+      });
     },
     init() {
       // if ymap isn't initialized or have no markers;
@@ -334,23 +349,14 @@ export default {
   },
   mounted() {
     if (this.$attrs['map-link'] || this.$attrs.mapLink) throw new Error('Vue-yandex-maps: Attribute mapLink is not supported. Use settings.');
-    this.markerObserver = new MutationObserver((() => {
-      if (this.myMap.geoObjects) this.myMap.geoObjects.removeAll();
-      this.setMarkers();
-    }));
+    const { emitter } = utils;
 
     this.mapObserver = new MutationObserver((() => {
       this.myMap.container.fitToViewport();
     }));
 
     // Setup the observer
-    const { markersContainer, mapContainer } = this.$refs;
-    this.markerObserver.observe(
-      markersContainer,
-      {
-        attributes: true, childList: true, characterData: true, subtree: true,
-      },
-    );
+    const { mapContainer } = this.$refs;
 
     this.mapObserver.observe(
       mapContainer,
@@ -359,18 +365,23 @@ export default {
       },
     );
 
-    if (this.ymapEventBus.scriptIsNotAttached) {
+    if (emitter.scriptIsNotAttached) {
       const { debug } = this;
       const settings = { ...this.$options.pluginOptions, ...this.settings, debug };
       utils.ymapLoader(settings);
     }
-    if (this.ymapEventBus.ymapReady) {
+    if (emitter.ymapReady) {
       ymaps.ready(this.init);
     } else {
-      this.ymapEventBus.$on('scriptIsLoaded', () => {
-        this.ymapEventBus.updateMap = () => {
-          if (this.myMap.geoObjects) this.myMap.geoObjects.removeAll();
-          this.setMarkers();
+      emitter.$on('scriptIsLoaded', () => {
+        let deleteMarkerWithTimeout;
+        const deletedMarkers = [];
+        emitter.updateMap = this.setMarkers;
+        emitter.deleteMarker = (id) => {
+          if (!this.myMap.geoObjects) return;
+          deletedMarkers.push(id);
+          if (deleteMarkerWithTimeout) clearTimeout(deleteMarkerWithTimeout);
+          deleteMarkerWithTimeout = setTimeout(() => this.deleteMarkers(deletedMarkers), 10);
         };
         ymaps.ready(this.init);
       });
