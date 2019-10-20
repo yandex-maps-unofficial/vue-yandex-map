@@ -68,6 +68,20 @@ Add `vue-yandex-maps/nuxt` in modules section `nuxt.config.js`
 }
 ```
 
+### Ymaps Loader
+
+If you need to use global variable `ymaps` separately from map component (e.g. for geocoder), just import loader. You may to define settings (see above) and `debug` option (`false` by default).
+
+```JavaScript
+import { loadYmap } from 'vue-yandex-maps'
+
+export default {
+  mounted() {
+    loadYmap({ ...settings, debug: true });
+  }
+}
+```
+
 ### CDN
 
 You can use plugin directly via link [https://unpkg.com/vue-yandex-maps](https://unpkg.com/vue-yandex-maps). The plugin will be install automatically if you use Vue JS. It could be useful when you use [Code Pen](https://codepen.io/PNKBizz/pen/WMRwyM)
