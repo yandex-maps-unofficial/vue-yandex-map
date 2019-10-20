@@ -62,6 +62,20 @@ export default {
 }
 ```
 
+### Ymaps Loader
+
+Если вам нужно использовать глобальную переменную `ymaps` отдельно от компонента карт (геокодер и др.), просто импортируйте лоадер. Вы можете задать настройки, описанные выше, а также указать параметр `debug` (по умолчанию - `false`).
+
+```JavaScript
+import { loadYmap } from 'vue-yandex-maps'
+
+export default {
+  mounted() {
+    loadYmap({ ...settings, debug: true });
+  }
+}
+```
+
 ### CDN
 
 Вы можете подключить плагин напрямую, используя ссылку [https://unpkg.com/vue-yandex-maps](https://unpkg.com/vue-yandex-maps). Установка будет произведена автоматически при обнаружении Vue JS. Это может быть полезно при использовании [Code Pen](https://codepen.io/PNKBizz/pen/WMRwyM)
