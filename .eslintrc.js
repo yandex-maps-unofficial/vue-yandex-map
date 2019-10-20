@@ -5,6 +5,7 @@ module.exports = {
   },
   "extends": [
     "plugin:vue/recommended",
+    "plugin:jest/recommended",
     "@vue/airbnb"
   ],
   "globals": {
@@ -23,7 +24,8 @@ module.exports = {
       multiline: { max: 1, allowFirstLine: false },
     }],
     "vue/no-v-html": 0,
-    "vue/require-default-prop": 0
+    "vue/require-default-prop": 0,
+    "no-undef": ['error', { allow: 'describe' }]
   },
   "parserOptions": {
     "parser": "babel-eslint"
