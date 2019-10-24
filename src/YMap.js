@@ -334,10 +334,11 @@ export default {
   },
   mounted() {
     if (this.$attrs['map-link'] || this.$attrs.mapLink) throw new Error('Vue-yandex-maps: Attribute mapLink is not supported. Use settings.');
-    this.markerObserver = new MutationObserver((() => {
+    this.markerObserver = new MutationObserver(() => {
+      if (!this.ymapReady) return;
       if (this.myMap.geoObjects) this.myMap.geoObjects.removeAll();
       this.setMarkers();
-    }));
+    });
 
     this.mapObserver = new MutationObserver((() => {
       this.myMap.container.fitToViewport();

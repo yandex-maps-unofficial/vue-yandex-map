@@ -189,7 +189,6 @@ export function createMarkerType(val, useObjectManager) {
 }
 
 export function createMarker(object, useObjectManager) {
-  ymaps.ready(() => {
     const marker = useObjectManager ? {
       type: 'Feature',
       id: object.properties.markerId,
@@ -206,7 +205,6 @@ export function createMarker(object, useObjectManager) {
     if (!useObjectManager) createCallbacks(object.callbacks, marker);
 
     return marker;
-  });
 }
 
 export function ymapLoader(settings = {}) {
