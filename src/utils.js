@@ -189,22 +189,24 @@ export function createMarkerType(val, useObjectManager) {
 }
 
 export function createMarker(object, useObjectManager) {
-  const marker = useObjectManager ? {
-    type: 'Feature',
-    id: object.properties.markerId,
-    geometry: {
-      type: object.markerType,
-      coordinates: object.coords,
-    },
-    properties: object.properties,
-    options: object.options,
-  } : new ymaps[object.markerType](object.coords, object.properties, object.options);
+  ymaps.ready(() => {
+    const marker = useObjectManager ? {
+      type: 'Feature',
+      id: object.properties.markerId,
+      geometry: {
+        type: object.markerType,
+        coordinates: object.coords,
+      },
+      properties: object.properties,
+      options: object.options,
+    } : new ymaps[object.markerType](object.coords, object.properties, object.options);
 
-  marker.clusterName = object.clusterName;
+    marker.clusterName = object.clusterName;
 
-  if (!useObjectManager) createCallbacks(object.callbacks, marker);
+    if (!useObjectManager) createCallbacks(object.callbacks, marker);
 
-  return marker;
+    return marker;
+  });
 }
 
 export function ymapLoader(settings = {}) {
