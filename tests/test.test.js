@@ -1,13 +1,18 @@
 import { mount } from '@vue/test-utils';
-import { yandexMap } from '../src';
+import { yandexMap, ymapMarker } from '../src';
 
 describe('Component', () => {
-  test('is a Vue instance', () => {
-    const wrapper = mount(yandexMap, {
-      propsData: {
-        coords: [1, 1]
-      }
-    });
-    expect(wrapper.isVueInstance()).toBeTruthy();
+  const wrapper = mount(yandexMap, {
+    propsData: {
+      coords: [1, 1]
+    }
+  });
+
+  test('Map is a Vue instance', () => {
+    expect(wrapper.isVueInstance()).toBe(true);
+  });
+
+  test('Map is rendered', () => {
+    expect(wrapper.contains('.ymap-container')).toBe(true);
   });
 });
