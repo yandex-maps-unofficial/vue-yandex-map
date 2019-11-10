@@ -19,13 +19,14 @@ module.exports = {
     "no-param-reassign": 0,
     "consistent-return": 0,
     "no-plusplus": 0,
+    "prefer-destructuring": 0,
     "vue/max-attributes-per-line": ['error', {
       singleline: 4,
       multiline: { max: 1, allowFirstLine: false },
     }],
     "vue/no-v-html": 0,
     "vue/require-default-prop": 0,
-    "no-undef": ['error', { allow: 'describe' }]
+    
   },
   "parserOptions": {
     "parser": "babel-eslint"

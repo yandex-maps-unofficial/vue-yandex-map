@@ -129,7 +129,6 @@ class EventEmitter {
     this.events = {};
     this.ymapReady = false;
     this.scriptIsNotAttached = true;
-    this.deleteMarker = () => {};
   }
 
   $on(eventName, fn) {
@@ -153,18 +152,6 @@ class EventEmitter {
 }
 
 export const emitter = new EventEmitter();
-
-let changedMarkers = [];
-
-export function compareValues(newVal, oldVal, id) {
-  if (objectComparison(newVal, oldVal)) { return; }
-  changedMarkers.push(id);
-  if (emitter.rerender) { clearTimeout(emitter.rerender); }
-  emitter.rerender = setTimeout(() => {
-    emitter.updateMap(changedMarkers);
-    changedMarkers = [];
-  }, 10);
-}
 
 const CONTROL_TYPES = [
   'fullscreenControl',

@@ -1,7 +1,35 @@
 import * as utils from './utils';
 
+const { emitter } = utils;
+
 export default {
   pluginOptions: {},
+  provide() {
+    let deleteMarkerWithTimeout;
+    let rerender;
+    const deletedMarkers = [];
+    let changedMarkers = [];
+    const deleteMarker = (id) => {
+      if (!this.myMap.geoObjects) return;
+      deletedMarkers.push(id);
+      if (deleteMarkerWithTimeout) clearTimeout(deleteMarkerWithTimeout);
+      deleteMarkerWithTimeout = setTimeout(() => this.deleteMarkers(deletedMarkers), 10);
+    };
+    const compareValues = (newVal, oldVal, id) => {
+      if (utils.objectComparison(newVal, oldVal)) { return; }
+      changedMarkers.push(id);
+      if (rerender) { clearTimeout(rerender); }
+      rerender = setTimeout(() => {
+        this.setMarkers(changedMarkers);
+        changedMarkers = [];
+      }, 10);
+    };
+    return {
+      deleteMarker,
+      rerender: null,
+      compareValues,
+    };
+  },
   data() {
     return {
       ymapId: `yandexMap${Math.round(Math.random() * 100000)}`,
@@ -92,6 +120,7 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    showAllMarkers: Boolean,
   },
   computed: {
     coordinates() {
@@ -251,15 +280,27 @@ export default {
     deleteMarkers(deletedMarkers) {
       this.myMap.geoObjects.each((collection) => {
         const removedMarkers = [];
-        collection.each((marker) => {
-          const markerId = marker.properties.get('markerId');
-          if (deletedMarkers.includes(markerId)) removedMarkers.push(marker);
-        });
-        const length = collection.getLength();
-        if (length === 0 || length === removedMarkers.length) {
-          this.myMap.geoObjects.remove(collection);
-        } else if (removedMarkers.length) {
-          removedMarkers.forEach(marker => collection.remove(marker));
+        if (this.useObjectManager) {
+          collection.remove(deletedMarkers);
+        } else {
+          const checkMarker = (marker) => {
+            const markerId = marker.properties.get('markerId');
+            if (deletedMarkers.includes(markerId)) removedMarkers.push(marker);
+          };
+          let length;
+          if (collection.each) {
+            collection.each(checkMarker);
+            length = collection.getLength();
+          } else {
+            const markersArray = collection.getGeoObjects();
+            markersArray.forEach(checkMarker);
+            length = markersArray.length;
+          }
+          if (length === 0 || length === removedMarkers.length) {
+            this.myMap.geoObjects.remove(collection);
+          } else if (removedMarkers.length) {
+            removedMarkers.forEach(marker => collection.remove(marker));
+          }
         }
       });
     },
@@ -296,6 +337,8 @@ export default {
       }
 
       this.setMarkers();
+
+      if (this.showAllMarkers) this.myMap.setBounds(this.myMap.geoObjects.getBounds());
 
       this.$emit('map-was-initialized', this.myMap);
     },
@@ -349,7 +392,6 @@ export default {
   },
   mounted() {
     if (this.$attrs['map-link'] || this.$attrs.mapLink) throw new Error('Vue-yandex-maps: Attribute mapLink is not supported. Use settings.');
-    const { emitter } = utils;
 
     this.mapObserver = new MutationObserver((() => {
       this.myMap.container.fitToViewport();
@@ -374,21 +416,11 @@ export default {
       ymaps.ready(this.init);
     } else {
       emitter.$on('scriptIsLoaded', () => {
-        let deleteMarkerWithTimeout;
-        const deletedMarkers = [];
-        emitter.updateMap = this.setMarkers;
-        emitter.deleteMarker = (id) => {
-          if (!this.myMap.geoObjects) return;
-          deletedMarkers.push(id);
-          if (deleteMarkerWithTimeout) clearTimeout(deleteMarkerWithTimeout);
-          deleteMarkerWithTimeout = setTimeout(() => this.deleteMarkers(deletedMarkers), 10);
-        };
         ymaps.ready(this.init);
       });
     }
   },
   beforeDestroy() {
     if (this.myMap.geoObjects) this.myMap.geoObjects.removeAll();
-    this.markerObserver.disconnect();
   },
 };

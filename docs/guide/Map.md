@@ -34,4 +34,5 @@
 | object-manager-clusterize  | Boolean | Кластеризация при использовании Object Mananger. *Default: true* |
 | ymap-class  | String | Определяет класс для элемента, где рендерится инстанс карты. Если аттрибут не определен - элемент использует стиль: `width: 100%; height: 100%;` |
 | init-without-markers  | Boolean | Установите значение в `false`, чтобы карта не отображалась при отсутствии маркеров. Default: `true` |
+| show-all-markers  | Boolean | Установите значение в `true`, чтобы границы карты при инициализации вмещали все маркеры. Default: `false` |
 | [options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/#Map__param-options) | Object | Опции карты |
