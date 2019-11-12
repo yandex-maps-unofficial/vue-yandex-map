@@ -13,6 +13,8 @@ The attributes `coords`, `placemarks` и `zoom` are observable. The map is react
 | ----- | ----- |
 | 'click' | [map event](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/events-docpage/) |
 | 'map-was-initialized' | Link to [map instance](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/) |
+| 'markers-was-change' | Array of changed markers ids |
+| 'markers-was-delete' | Array of deleted markers ids |
 
 ## Attributes
 

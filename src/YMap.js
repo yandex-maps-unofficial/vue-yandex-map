@@ -15,7 +15,7 @@ export default {
       if (deleteMarkerWithTimeout) clearTimeout(deleteMarkerWithTimeout);
       deleteMarkerWithTimeout = setTimeout(() => this.deleteMarkers(deletedMarkers), 10);
     };
-    const compareValues = (newVal, oldVal, id) => {
+    const compareValues = ({ newVal, oldVal, id }) => {
       if (utils.objectComparison(newVal, oldVal)) { return; }
       changedMarkers.push(id);
       if (rerender) { clearTimeout(rerender); }
@@ -276,6 +276,7 @@ export default {
         objectManagerClusterize: this.objectManagerClusterize,
       };
       utils.addToMap(this.createMarkers(changedMarkers), config);
+      if (changedMarkers) this.$emit('markers-was-change', changedMarkers);
     },
     deleteMarkers(deletedMarkers) {
       this.myMap.geoObjects.each((collection) => {
@@ -303,6 +304,7 @@ export default {
           }
         }
       });
+      this.$emit('markers-was-delete', deletedMarkers);
     },
     init() {
       // if ymap isn't initialized or have no markers;

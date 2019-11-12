@@ -13,6 +13,8 @@
 | ----- | ----- |
 | 'click' | [map event](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/events-docpage/) |
 | 'map-was-initialized' | Ссылка на [инстанс карты](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/) |
+| 'markers-was-change' | Массив идентификаторов измененных маркеров |
+| 'markers-was-delete' | Массив идентификаторов удаленных маркеров |
 
 ## Attributes
 
