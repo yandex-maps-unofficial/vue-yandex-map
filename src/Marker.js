@@ -1,5 +1,3 @@
-import { compareValues, emitter } from './utils';
-
 const MARKER_TYPES = [
   'placemark',
   'polyline',
@@ -8,11 +6,10 @@ const MARKER_TYPES = [
   'circle',
 ];
 
+const unwatchArr = [];
+
 export default {
-  data: () => ({
-    ymapEventBus: emitter,
-    unwatchArr: [],
-  }),
+  inject: ['deleteMarker', 'rerender', 'compareValues'],
   props: {
     coords: {
       type: Array,
@@ -33,7 +30,7 @@ export default {
     },
     markerFill: Object,
     markerStroke: Object,
-    clusterName: String,
+    clusterName: [String, Number],
     circleRadius: {
       validator(val) {
         return !Number.isNaN(val);
@@ -53,13 +50,18 @@ export default {
   },
   mounted() {
     Object.keys(this.$props).forEach((prop) => {
-      this.unwatchArr.push(this.$watch(
+      unwatchArr.push(this.$watch(
         prop,
-        (newVal, oldVal) => compareValues(newVal, oldVal, this.ymapEventBus),
+        (newVal, oldVal) => this.compareValues({
+          newVal,
+          oldVal,
+          id: this.markerId,
+        }),
       ));
     });
   },
   beforeDestroy() {
-    this.unwatchArr.forEach(f => f());
+    unwatchArr.forEach(f => f());
+    this.deleteMarker(this.markerId);
   },
 };

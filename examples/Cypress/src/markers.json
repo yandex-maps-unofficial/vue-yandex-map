@@ -1,0 +1,162 @@
+[
+  {
+    "id": "3fcb98b9-dd4c-4b37-af34-9a86b50ad11e",
+    "coords": [
+      "33.82",
+      "53.95"
+    ],
+    "clusterName": 1
+  },
+  {
+    "id": "84aee8c2-bb23-47f4-9830-691fff095b85",
+    "coords": [
+      "33.79",
+      "53.81"
+    ],
+    "clusterName": 3
+  },
+  {
+    "id": "80a9635a-db22-42ec-9d61-8f60f8f1ffaf",
+    "coords": [
+      "33.77",
+      "53.31"
+    ],
+    "clusterName": 1
+  },
+  {
+    "id": "5512f1fd-1521-4bca-a4e1-f4f99cfec782",
+    "coords": [
+      "33.37",
+      "53.97"
+    ],
+    "clusterName": 1
+  },
+  {
+    "id": "1de139bb-baf5-42e7-a5e8-8b7e781c138a",
+    "coords": [
+      "33.79",
+      "53.81"
+    ],
+    "clusterName": 2
+  },
+  {
+    "id": "7f5d9ab9-20e1-41ff-96e3-197868b2db18",
+    "coords": [
+      "33.16",
+      "53.95"
+    ],
+    "clusterName": 1
+  },
+  {
+    "id": "f5834d02-9892-422d-86fa-3b71b6712ca4",
+    "coords": [
+      "33.38",
+      "53.45"
+    ],
+    "clusterName": 2
+  },
+  {
+    "id": "2a48a160-ebcf-4cad-8f14-a8077a0cb903",
+    "coords": [
+      "33.74",
+      "53.92"
+    ],
+    "clusterName": 3
+  },
+  {
+    "id": "d5313f8d-d2de-416c-9703-5df19c0ad5db",
+    "coords": [
+      "33.84",
+      "53.89"
+    ],
+    "clusterName": 1
+  },
+  {
+    "id": "79c41b36-dc76-4e8e-b1a6-4fcf6b45e3e4",
+    "coords": [
+      "33.69",
+      "53.74"
+    ],
+    "clusterName": 3
+  },
+  {
+    "id": "a37a9989-0e28-4565-b761-1101d14a5a7b",
+    "coords": [
+      "33.44",
+      "53.36"
+    ],
+    "clusterName": 1
+  },
+  {
+    "id": "f9bf2d3d-d241-4759-add3-0b8ea4fdd4cb",
+    "coords": [
+      "33.54",
+      "53.91"
+    ],
+    "clusterName": 2
+  },
+  {
+    "id": "653eb7f6-f474-4f12-baac-a64d04b9bfab",
+    "coords": [
+      "33.44",
+      "53.48"
+    ],
+    "clusterName": 1
+  },
+  {
+    "id": "80c385fb-ed6b-4c10-bdfd-7109aa3ad943",
+    "coords": [
+      "33.36",
+      "53.22"
+    ],
+    "clusterName": 1
+  },
+  {
+    "id": "490ac17c-9a49-4d8d-85ea-c262990e4034",
+    "coords": [
+      "33.2",
+      "53.62"
+    ],
+    "clusterName": 2
+  },
+  {
+    "id": "1f4378ff-e5f7-418f-b20a-f41d72ff104a",
+    "coords": [
+      "33.79",
+      "53.57"
+    ],
+    "clusterName": 1
+  },
+  {
+    "id": "7af01f15-71c6-48f8-a6a1-f407ff77920c",
+    "coords": [
+      "33.55",
+      "53.23"
+    ],
+    "clusterName": 3
+  },
+  {
+    "id": "71b3c4a8-b29d-4e12-9a07-341749eb8276",
+    "coords": [
+      "33.64",
+      "53.52"
+    ],
+    "clusterName": 1
+  },
+  {
+    "id": "074d88a7-73f5-4fbf-814e-2838b75e4d7a",
+    "coords": [
+      "33.26",
+      "53.28"
+    ],
+    "clusterName": 3
+  },
+  {
+    "id": "b4282550-4ba4-4fa6-9f42-10f3cd85b5e1",
+    "coords": [
+      "33.72",
+      "53.42"
+    ],
+    "clusterName": 3
+  }
+]

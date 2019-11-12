@@ -1,10 +1,37 @@
 import * as utils from './utils';
 
+const { emitter } = utils;
+
 export default {
   pluginOptions: {},
+  provide() {
+    let deleteMarkerWithTimeout;
+    let rerender;
+    const deletedMarkers = [];
+    let changedMarkers = [];
+    const deleteMarker = (id) => {
+      if (!this.myMap.geoObjects) return;
+      deletedMarkers.push(id);
+      if (deleteMarkerWithTimeout) clearTimeout(deleteMarkerWithTimeout);
+      deleteMarkerWithTimeout = setTimeout(() => this.deleteMarkers(deletedMarkers), 10);
+    };
+    const compareValues = ({ newVal, oldVal, id }) => {
+      if (utils.objectComparison(newVal, oldVal)) { return; }
+      changedMarkers.push(id);
+      if (rerender) { clearTimeout(rerender); }
+      rerender = setTimeout(() => {
+        this.setMarkers(changedMarkers);
+        changedMarkers = [];
+      }, 10);
+    };
+    return {
+      deleteMarker,
+      rerender: null,
+      compareValues,
+    };
+  },
   data() {
     return {
-      ymapEventBus: utils.emitter,
       ymapId: `yandexMap${Math.round(Math.random() * 100000)}`,
       myMap: {},
       style: this.ymapClass ? '' : 'width: 100%; height: 100%;',
@@ -93,6 +120,7 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    showAllMarkers: Boolean,
   },
   computed: {
     coordinates() {
@@ -100,10 +128,10 @@ export default {
     },
   },
   methods: {
-    getMarkersFromSlots() {
+    getMarkersFromSlots(changedMarkers) {
       return this.$slots.default ? this.$slots.default.map((m) => {
         const props = m.componentOptions && m.componentOptions.propsData;
-        if (!props) return;
+        if (!props || (changedMarkers && !changedMarkers.includes(props.markerId))) return;
         let balloonOptions = {};
 
         if (props.balloonTemplate) {
@@ -146,9 +174,10 @@ export default {
         return marker;
       }).filter(marker => marker && marker.markerType) : [];
     },
-    createMarkers() {
+    createMarkers(changedMarkers) {
       const markers = [];
-      const myMarkers = this.getMarkersFromSlots();
+      const myMarkers = this.getMarkersFromSlots(changedMarkers);
+      if (changedMarkers) this.deleteMarkers(changedMarkers);
 
       for (let i = 0; i < myMarkers.length; i++) {
         const m = myMarkers[i];
@@ -238,7 +267,7 @@ export default {
 
       return markers;
     },
-    setMarkers() {
+    setMarkers(changedMarkers) {
       const config = {
         options: this.clusterOptions,
         callbacks: this.clusterCallbacks,
@@ -246,7 +275,36 @@ export default {
         useObjectManager: this.useObjectManager,
         objectManagerClusterize: this.objectManagerClusterize,
       };
-      utils.addToCart(this.createMarkers(), config);
+      utils.addToMap(this.createMarkers(changedMarkers), config);
+      if (changedMarkers) this.$emit('markers-was-change', changedMarkers);
+    },
+    deleteMarkers(deletedMarkers) {
+      this.myMap.geoObjects.each((collection) => {
+        const removedMarkers = [];
+        if (this.useObjectManager) {
+          collection.remove(deletedMarkers);
+        } else {
+          const checkMarker = (marker) => {
+            const markerId = marker.properties.get('markerId');
+            if (deletedMarkers.includes(markerId)) removedMarkers.push(marker);
+          };
+          let length;
+          if (collection.each) {
+            collection.each(checkMarker);
+            length = collection.getLength();
+          } else {
+            const markersArray = collection.getGeoObjects();
+            markersArray.forEach(checkMarker);
+            length = markersArray.length;
+          }
+          if (length === 0 || length === removedMarkers.length) {
+            this.myMap.geoObjects.remove(collection);
+          } else if (removedMarkers.length) {
+            removedMarkers.forEach(marker => collection.remove(marker));
+          }
+        }
+      });
+      this.$emit('markers-was-delete', deletedMarkers);
     },
     init() {
       // if ymap isn't initialized or have no markers;
@@ -281,6 +339,8 @@ export default {
       }
 
       this.setMarkers();
+
+      if (this.showAllMarkers) this.myMap.setBounds(this.myMap.geoObjects.getBounds());
 
       this.$emit('map-was-initialized', this.myMap);
     },
@@ -334,23 +394,13 @@ export default {
   },
   mounted() {
     if (this.$attrs['map-link'] || this.$attrs.mapLink) throw new Error('Vue-yandex-maps: Attribute mapLink is not supported. Use settings.');
-    this.markerObserver = new MutationObserver((() => {
-      if (this.myMap.geoObjects) this.myMap.geoObjects.removeAll();
-      this.setMarkers();
-    }));
 
     this.mapObserver = new MutationObserver((() => {
       this.myMap.container.fitToViewport();
     }));
 
     // Setup the observer
-    const { markersContainer, mapContainer } = this.$refs;
-    this.markerObserver.observe(
-      markersContainer,
-      {
-        attributes: true, childList: true, characterData: true, subtree: true,
-      },
-    );
+    const { mapContainer } = this.$refs;
 
     this.mapObserver.observe(
       mapContainer,
@@ -359,25 +409,20 @@ export default {
       },
     );
 
-    if (this.ymapEventBus.scriptIsNotAttached) {
+    if (emitter.scriptIsNotAttached) {
       const { debug } = this;
       const settings = { ...this.$options.pluginOptions, ...this.settings, debug };
       utils.ymapLoader(settings);
     }
-    if (this.ymapEventBus.ymapReady) {
+    if (emitter.ymapReady) {
       ymaps.ready(this.init);
     } else {
-      this.ymapEventBus.$on('scriptIsLoaded', () => {
-        this.ymapEventBus.updateMap = () => {
-          if (this.myMap.geoObjects) this.myMap.geoObjects.removeAll();
-          this.setMarkers();
-        };
+      emitter.$on('scriptIsLoaded', () => {
         ymaps.ready(this.init);
       });
     }
   },
   beforeDestroy() {
     if (this.myMap.geoObjects) this.myMap.geoObjects.removeAll();
-    this.markerObserver.disconnect();
   },
 };

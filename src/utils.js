@@ -6,7 +6,7 @@ export function createCallbacks(callbacks, placemark) {
   }
 }
 
-export function addToCart(markers, {
+export function addToMap(markers, {
   options, callbacks, map, useObjectManager, objectManagerClusterize,
 }) {
   const defaultLayout = `
@@ -122,12 +122,6 @@ export function objectComparison(first, second) {
 
     return true;
   }(first, second));
-}
-
-export function compareValues(newVal, oldVal, bus) {
-  if (objectComparison(newVal, oldVal)) { return; }
-  if (bus.rerender) { clearTimeout(bus.rerender); }
-  bus.rerender = setTimeout(() => bus.updateMap && bus.updateMap(), 10);
 }
 
 class EventEmitter {
