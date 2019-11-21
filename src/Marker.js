@@ -1,3 +1,7 @@
+import * as utils from './utils';
+
+const { emitter } = utils;
+
 const MARKER_TYPES = [
   'placemark',
   'polyline',
@@ -6,10 +10,7 @@ const MARKER_TYPES = [
   'circle',
 ];
 
-const unwatchArr = [];
-
 export default {
-  inject: ['deleteMarker', 'rerender', 'compareValues'],
   props: {
     coords: {
       type: Array,
@@ -46,22 +47,75 @@ export default {
     properties: Object,
     options: Object,
   },
+  data() {
+    return {
+      $_map: null,
+      $_marker: null
+    }
+  },
   render() {
   },
-  mounted() {
-    Object.keys(this.$props).forEach((prop) => {
-      unwatchArr.push(this.$watch(
-        prop,
-        (newVal, oldVal) => this.compareValues({
-          newVal,
-          oldVal,
-          id: this.markerId,
-        }),
-      ));
-    });
+  methods: {
+    init() {
+      // Create marker
+      const initialProps = {
+        hintContent: this.hintContent,
+        iconContent: this.icon ? this.icon.content : null,
+        markerId: this.markerId,
+      };
+
+      const balloonProps = this.balloon ? {
+        balloonContentHeader: this.balloon.header,
+        balloonContentBody: this.balloon.body,
+        balloonContentFooter: this.balloon.footer,
+      } : {};
+
+      const properties = Object.assign(initialProps, balloonProps, this.properties);
+
+      this.$_marker = new ymaps.Placemark(this.coords, properties, this.options);
+
+      // Associate marker to map
+      this.$_map.myMap.geoObjects.add(this.$_marker);
+
+      /*const config = {
+        options: this.$_map.clusterOptions,
+        callbacks: this.$_map.clusterCallbacks,
+        map: this.$_map.myMap,
+        useObjectManager: this.$_map.useObjectManager,
+        objectManagerClusterize: this.$_map.objectManagerClusterize,
+      };
+      utils.addToMap([this.$_marker], config);*/
+    }
   },
-  beforeDestroy() {
-    unwatchArr.forEach(f => f());
-    this.deleteMarker(this.markerId);
+  mounted() {
+    // Find parent map component
+    const $_findAncestor = (condition) => {
+      let search = this.$parent;
+
+      while (search) {
+        if (condition(search)) {
+          return search;
+        }
+        search = search.$parent;
+      }
+
+      return null;
+    }
+
+    this.$_map = $_findAncestor(a => a.$options.name === 'yandex-map');
+
+    // Init marker when ymap is ready
+    if (emitter.ymapReady) {
+      ymaps.ready(this.init);
+    } else {
+      emitter.$on('scriptIsLoaded', () => {
+        ymaps.ready(this.init);
+      });
+    }
+  },
+  beforeDestroy () {
+    if (this.$_marker) {
+      this.$_map.myMap.geoObjects.remove(this.$_marker);
+    }
   },
 };
