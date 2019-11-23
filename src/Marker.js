@@ -109,6 +109,8 @@ export default {
 
       this.$_marker = new ymaps[markerType](this.coords, properties, options);
 
+      this.$_marker.events.add('click', e => this.$emit('click', e));
+
       // Associate marker to map
       this.$_map.myMap.geoObjects.add(this.$_marker);
 
