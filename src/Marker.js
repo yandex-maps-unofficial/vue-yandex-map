@@ -120,6 +120,11 @@ export default {
         objectManagerClusterize: this.$_map.objectManagerClusterize,
       };
       utils.addToMap([this.$_marker], config);*/
+    },
+    removeFromMap() {
+      if (this.$_marker) {
+        this.$_map.myMap.geoObjects.remove(this.$_marker);
+      }
     }
   },
   mounted() {
@@ -147,10 +152,21 @@ export default {
         this.init();
       });
     }
+
+    // Watch each prop to update marker
+    Object.keys(this.$props).forEach((prop) => {
+      this.$watch(
+        prop,
+        (newVal, oldVal) => {
+          if (!utils.objectComparison(newVal, oldVal)) {
+            this.removeFromMap();
+            this.init();
+          }
+        },
+      );
+    });
   },
   beforeDestroy () {
-    if (this.$_marker) {
-      this.$_map.myMap.geoObjects.remove(this.$_marker);
-    }
+    this.removeFromMap();
   },
 };
