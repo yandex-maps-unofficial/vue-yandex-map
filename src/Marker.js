@@ -56,6 +56,8 @@ export default {
   methods: {
     init() {
       // Create marker
+      const markerType = utils.createMarkerType(this.markerType, this.$_map.useObjectManager)
+
       const initialProps = {
         hintContent: this.hintContent,
         iconContent: this.icon ? this.icon.content : null,
@@ -70,7 +72,42 @@ export default {
 
       const properties = Object.assign(initialProps, balloonProps, this.properties);
 
-      this.$_marker = new ymaps.Placemark(this.coords, properties, this.options);
+      const iconOptions = (this.icon && this.icon.layout) ? {
+        iconLayout: this.icon.layout,
+        iconImageHref: this.icon.imageHref,
+        iconImageSize: this.icon.imageSize,
+        iconImageOffset: this.icon.imageOffset,
+        iconContentOffset: this.icon.contentOffset,
+      } : { preset: this.icon && `islands#${utils.getIconPreset({ icon: this.icon })}Icon` };
+
+      if (this.icon && this.icon.layout && this.icon.contentLayout && typeof this.icon.contentLayout === 'string') {
+        iconOptions.iconContentLayout = ymaps.templateLayoutFactory
+          .createClass(this.icon.contentLayout);
+      }
+
+      const strokeOptions = this.markerStroke ? {
+        strokeColor: this.markerStroke.color || '0066ffff',
+        strokeOpacity: parseFloat(this.markerStroke.opacity) >= 0
+          ? parseFloat(this.markerStroke.opacity) : 1,
+        strokeStyle: this.markerStroke.style,
+        strokeWidth: parseFloat(this.markerStroke.width) >= 0 ? parseFloat(this.markerStroke.width) : 1,
+      } : {};
+
+      const fillOptions = this.markerFill ? {
+        fill: this.markerFill.enabled || true,
+        fillColor: this.markerFill.color || '0066ff99',
+        fillOpacity: parseFloat(this.markerFill.opacity) >= 0 ? parseFloat(this.markerFill.opacity) : 1,
+        fillImageHref: this.markerFill.imageHref || '',
+      } : {};
+
+      const options = Object.assign(
+        iconOptions,
+        strokeOptions,
+        fillOptions,
+        this.options,
+      );
+
+      this.$_marker = new ymaps[markerType](this.coords, properties, options);
 
       // Associate marker to map
       this.$_map.myMap.geoObjects.add(this.$_marker);
