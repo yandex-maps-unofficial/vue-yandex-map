@@ -1,7 +1,5 @@
 import * as utils from './utils';
 
-const { emitter } = utils;
-
 const MARKER_TYPES = [
   'placemark',
   'polyline',
@@ -105,11 +103,11 @@ export default {
     this.$_map = $_findAncestor(a => a.$options.name === 'yandex-map');
 
     // Init marker when ymap is ready
-    if (emitter.ymapReady) {
-      ymaps.ready(this.init);
+    if (this.$_map.initialized) {
+      this.init();
     } else {
-      emitter.$on('scriptIsLoaded', () => {
-        ymaps.ready(this.init);
+      this.$_map.$on('map-was-initialized', () => {
+        this.init();
       });
     }
   },

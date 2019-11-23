@@ -4,10 +4,12 @@ const { emitter } = utils;
 
 export default {
   pluginOptions: {},
+  name: 'yandex-map',
   data() {
     return {
       ymapId: `yandexMap${Math.round(Math.random() * 100000)}`,
       myMap: {},
+      initialized: false,
       style: this.ymapClass ? '' : 'width: 100%; height: 100%;',
     };
   },
@@ -203,6 +205,7 @@ export default {
 
       if (this.showAllMarkers) this.myMap.setBounds(this.myMap.geoObjects.getBounds());
 
+      this.initialized = true;
       this.$emit('map-was-initialized', this.myMap);
     },
   },
