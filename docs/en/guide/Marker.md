@@ -63,6 +63,10 @@ You can indicate marker type by using attribute `marker-type`. Allowable values:
   </tbody>
 </table>
 
+::: danger Важно!
+Since version `0.10` attribute `callbacks` not supported. You can listen component events.
+:::
+
 ## Attributes
 
 | Attribute | Type | Description | Marker-types |
@@ -81,7 +85,6 @@ You can indicate marker type by using attribute `marker-type`. Allowable values:
 | cluster-name | String | Cluster name to grouping of markers | All |
 | properties | Object | [Marker settings](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#param-feature.properties) | All |
 | options | Object | [Marker options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#param-options) | All |
-| callbacks | Object | Object where the key is name of event, and the value is callback-function, e.g. { click: function() {...}, contextmenu: anotherFunction }. [List of events](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#events-summary) | All |
 | [balloonTemplate](/examples/#кастомный-темпnейт-баnуна) | String | HTML Template for balloon | All |
 
 # Icons
