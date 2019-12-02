@@ -1,11 +1,3 @@
-export function createCallbacks(callbacks, placemark) {
-  if (callbacks && typeof callbacks === 'object') {
-    Object.keys(callbacks).forEach((key) => {
-      placemark.events.add(key, callbacks[key]);
-    });
-  }
-}
-
 export function addToMap(markers, {
   options, callbacks, map, useObjectManager, objectManagerClusterize,
 }) {
@@ -195,8 +187,6 @@ export function createMarker(object, useObjectManager) {
   } : new ymaps[object.markerType](object.coords, object.properties, object.options);
 
   marker.clusterName = object.clusterName;
-
-  if (!useObjectManager) createCallbacks(object.callbacks, marker);
 
   return marker;
 }
