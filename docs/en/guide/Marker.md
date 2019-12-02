@@ -63,7 +63,7 @@ You can indicate marker type by using attribute `marker-type`. Allowable values:
   </tbody>
 </table>
 
-::: danger Важно!
+::: danger Attention!
 Since version `0.10` attribute `callbacks` not supported. You can listen component events.
 :::
 
