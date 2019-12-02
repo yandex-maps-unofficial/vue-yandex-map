@@ -1,17 +1,67 @@
 # Маркер
 
-Вы можете задать маркеры для карты, используя компонент `<ymap-marker>` или передать их в качестве значения аттрибута карты `placemarks`. Во втором случае вы можете использовать только маркеры типа `Placemark`. [Описание интерфейса](https://tech.yandex.ru/maps/doc/jsapi/2.0/ref/reference/GeoObject-docpage/). Вы также можете использовать оба этих метода одновременно.
+Вы можете задать маркеры для карты, используя компонент `<ymap-marker>`.
+
+::: danger Важно!
+Начиная с версии `0.10` маркеры можно задавать только используя компонент `ymap-marker`. Атрибут карты `placemarks` не поддерживается.
+:::
 
 ::: tip Обратите внимание
 Для каждого маркера является обязательным указание свойста `markerId`
 :::
 
-Если вы задаете маркеры, используя компонент `<ymap-marker>` - вы можете указать его тип, используя аттрибут `marker-type`. Допустимые значения:
+Вы можете указать тип маркера, используя атрибут `marker-type`. Допустимые значения:
 * Placemark
 * Polyline
 * Rectangle
 * Polygon
 * Circle
+
+## Events
+
+<table>
+  <thead>
+    <tr>
+      <th>Event name</th>
+      <th>Payload</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">balloonclose</a></td>
+      <td rowspan="10" style="text-align: center;">
+        <a href="https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/events-docpage/">marker event</a>
+      </td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">balloonopen</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">click</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">contextmenu</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">dblclick</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">drag</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">dragend</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">dragstart</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">hintclose</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">hintopen</a></td>
+    </tr>
+  </tbody>
+</table>
 
 ## Attributes
 

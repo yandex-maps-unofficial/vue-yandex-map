@@ -1,17 +1,67 @@
 # Marker
 
-You can define map markers by using component `<ymap-marker>` or using these markers like map attribute `placemarks`. In second time you can use only `Placemark` type markers. [Interface description](https://tech.yandex.ru/maps/doc/jsapi/2.0/ref/reference/GeoObject-docpage/). You can use both these methods in parallel.
+You can define map markers by using component `<ymap-marker>`.
+
+::: danger Attention!
+Since version `0.10` you can define markers through `ymap-marker` only. Map attribute `placemarks` not supported
+:::
 
 ::: tip Take a look,
 For each marker you need to add property `markerId` 
 :::
 
-If you define markers through component `<ymap-marker>` - you can indicate its type by using attribute `marker-type`. Allowable values:
+You can indicate marker type by using attribute `marker-type`. Allowable values:
 * Placemark
 * Polyline
 * Rectangle
 * Polygon
 * Circle
+
+## Events
+
+<table>
+  <thead>
+    <tr>
+      <th>Event name</th>
+      <th>Payload</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">balloonclose</a></td>
+      <td rowspan="10" style="text-align: center;">
+        <a href="https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/events-docpage/">marker event</a>
+      </td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">balloonopen</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">click</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">contextmenu</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">dblclick</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">drag</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">dragend</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">dragstart</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">hintclose</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/GeoObject-docpage/#GeoObject__events-summary">hintopen</a></td>
+    </tr>
+  </tbody>
+</table>
 
 ## Attributes
 
