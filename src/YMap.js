@@ -2,31 +2,50 @@ import * as utils from './utils';
 
 const { emitter } = utils;
 
+const mapEvents = [
+  'actionend',
+  'balloonclose',
+  'balloonopen',
+  'click',
+  'contextmenu',
+  'dblclick',
+  'destroy',
+  'hintclose',
+  'hintopen',
+  'optionschange',
+  'sizechange',
+  'typechange',
+];
+
 export default {
   pluginOptions: {},
   provide() {
-    let deleteMarkerWithTimeout;
-    let rerender;
-    const deletedMarkers = [];
+    let deletedMarkers = [];
     let changedMarkers = [];
+    let deleteMarkerWithTimeout;
+    let changeMarkersWithTimeout;
     const deleteMarker = (id) => {
       if (!this.myMap.geoObjects) return;
       deletedMarkers.push(id);
       if (deleteMarkerWithTimeout) clearTimeout(deleteMarkerWithTimeout);
-      deleteMarkerWithTimeout = setTimeout(() => this.deleteMarkers(deletedMarkers), 10);
+      deleteMarkerWithTimeout = setTimeout(() => {
+        this.deleteMarkers(deletedMarkers);
+        deletedMarkers = [];
+      }, 0);
     };
-    const compareValues = ({ newVal, oldVal, id }) => {
+    const compareValues = ({ newVal, oldVal, marker }) => {
       if (utils.objectComparison(newVal, oldVal)) { return; }
-      changedMarkers.push(id);
-      if (rerender) { clearTimeout(rerender); }
-      rerender = setTimeout(() => {
+      changedMarkers.push(marker);
+      if (changeMarkersWithTimeout) { clearTimeout(changeMarkersWithTimeout); }
+      changeMarkersWithTimeout = setTimeout(() => {
         this.setMarkers(changedMarkers);
         changedMarkers = [];
-      }, 10);
+      }, 0);
     };
     return {
+      useObjectManager: this.useObjectManager,
+      addMarker: this.addMarker,
       deleteMarker,
-      rerender: null,
       compareValues,
     };
   },
@@ -35,14 +54,14 @@ export default {
       ymapId: `yandexMap${Math.round(Math.random() * 100000)}`,
       myMap: {},
       style: this.ymapClass ? '' : 'width: 100%; height: 100%;',
+      isReady: false,
+      debounce: null,
+      markers: [],
     };
   },
   props: {
     coords: {
       type: Array,
-      validator(val) {
-        return !val.filter(item => Number.isNaN(item)).length;
-      },
       required: true,
     },
     zoom: {
@@ -51,6 +70,7 @@ export default {
       },
       default: 18,
     },
+    bounds: Array,
     clusterOptions: {
       type: Object,
       default: () => ({}),
@@ -81,7 +101,6 @@ export default {
       type: Boolean,
       default: true,
     },
-    zoomControl: Object,
     mapType: {
       type: String,
       default: 'map',
@@ -128,146 +147,52 @@ export default {
     },
   },
   methods: {
-    getMarkersFromSlots(changedMarkers) {
-      return this.$slots.default ? this.$slots.default.map((m) => {
-        const props = m.componentOptions && m.componentOptions.propsData;
-        if (!props || (changedMarkers && !changedMarkers.includes(props.markerId))) return;
-        let balloonOptions = {};
+    init() {
+      // if ymap isn't initialized or have no markers;
+      if (!window.ymaps
+        || !ymaps.GeoObjectCollection
+        || (!this.initWithoutMarkers && !this.$slots.default && !this.placemarks.length)
+      ) return;
 
-        if (props.balloonTemplate) {
-          const BalloonContentLayoutClass = ymaps.templateLayoutFactory
-            .createClass(props.balloonTemplate);
-          balloonOptions = { balloonContentLayout: BalloonContentLayoutClass };
-        }
+      this.$emit('map-initialization-started');
 
-        const marker = {
-          markerId: props.markerId,
-          markerType: props.markerType || 'placemark',
-          coords: utils.setCoordsToNumeric(props.coords),
-          hintContent: props.hintContent,
-          markerFill: props.markerFill,
-          circleRadius: +props.circleRadius,
-          clusterName: props.clusterName,
-          markerStroke: props.markerStroke,
-          balloon: props.balloon,
-          callbacks: props.callbacks,
-          properties: props.properties,
-          options: props.options,
-          balloonOptions,
-        };
-
-        if (props.icon && ['default#image', 'default#imageWithContent'].includes(props.icon.layout)) {
-          marker.iconContent = props.icon.content;
-          marker.iconLayout = props.icon.layout;
-          marker.iconImageHref = props.icon.imageHref;
-          marker.iconImageSize = props.icon.imageSize;
-          marker.iconImageOffset = props.icon.imageOffset;
-          marker.iconContentOffset = props.icon.contentOffset;
-          if (props.icon.contentLayout && typeof props.icon.contentLayout === 'string') {
-            marker.iconContentLayout = ymaps.templateLayoutFactory
-              .createClass(props.icon.contentLayout);
-          }
-        } else {
-          marker.icon = props.icon;
-        }
-
-        return marker;
-      }).filter(marker => marker && marker.markerType) : [];
-    },
-    createMarkers(changedMarkers) {
-      const markers = [];
-      const myMarkers = this.getMarkersFromSlots(changedMarkers);
-      if (changedMarkers) this.deleteMarkers(changedMarkers);
-
-      for (let i = 0; i < myMarkers.length; i++) {
-        const m = myMarkers[i];
-        const markerType = utils.createMarkerType(m.markerType, this.useObjectManager);
-        const initialProps = {
-          hintContent: m.hintContent,
-          iconContent: m.icon ? m.icon.content : m.iconContent,
-          markerId: m.markerId,
-        };
-
-        const balloonProps = m.balloon ? {
-          balloonContentHeader: m.balloon.header,
-          balloonContentBody: m.balloon.body,
-          balloonContentFooter: m.balloon.footer,
-        } : {};
-
-        const properties = Object.assign(initialProps, balloonProps, m.properties);
-
-        const iconOptions = m.iconLayout ? {
-          iconLayout: m.iconLayout,
-          iconImageHref: m.iconImageHref,
-          iconImageSize: m.iconImageSize,
-          iconImageOffset: m.iconImageOffset,
-          iconContentOffset: m.iconContentOffset,
-          iconContentLayout: m.iconContentLayout,
-        } : { preset: m.icon && `islands#${utils.getIconPreset(m)}Icon` };
-
-        const strokeOptions = m.markerStroke ? {
-          strokeColor: m.markerStroke.color || '0066ffff',
-          strokeOpacity: parseFloat(m.markerStroke.opacity) >= 0
-            ? parseFloat(m.markerStroke.opacity) : 1,
-          strokeStyle: m.markerStroke.style,
-          strokeWidth: parseFloat(m.markerStroke.width) >= 0 ? parseFloat(m.markerStroke.width) : 1,
-        } : {};
-
-        const fillOptions = m.markerFill ? {
-          fill: m.markerFill.enabled || true,
-          fillColor: m.markerFill.color || '0066ff99',
-          fillOpacity: parseFloat(m.markerFill.opacity) >= 0 ? parseFloat(m.markerFill.opacity) : 1,
-          fillImageHref: m.markerFill.imageHref || '',
-        } : {};
-
-        const options = Object.assign(
-          iconOptions,
-          strokeOptions,
-          fillOptions,
-          m.balloonOptions,
-          m.options,
-        );
-
-        if (markerType === 'Circle') {
-          m.coords = [m.coords, m.circleRadius];
-        }
-
-        const obj = {
-          properties,
-          options,
-          markerType,
-          coords: m.coords,
-          clusterName: m.clusterName,
-          callbacks: m.callbacks,
-        };
-        const marker = utils.createMarker(obj, this.useObjectManager);
-
-        markers.push(marker);
-      }
-
-      if (this.placemarks) {
-        this.placemarks.forEach((placemark) => {
-          const {
-            markerType = 'Placemark', properties, options = {}, coords, clusterName, callbacks, balloonTemplate,
-          } = placemark;
-          const type = utils.createMarkerType(markerType, this.useObjectManager);
-          if (balloonTemplate) {
-            const BalloonContentLayoutClass = ymaps.templateLayoutFactory
-              .createClass(balloonTemplate);
-            options.balloonContentLayout = BalloonContentLayoutClass;
-          }
-          const obj = {
-            properties, options, markerType: type, coords, clusterName, callbacks,
-          };
-          const yplacemark = utils.createMarker(obj, this.useObjectManager);
-
-          markers.push(yplacemark);
+      this.myMap = new ymaps.Map(this.ymapId, {
+        center: this.coordinates,
+        zoom: +this.zoom,
+        bounds: this.bounds,
+        behaviors: this.behaviors,
+        controls: this.controls,
+        type: `yandex#${this.mapType}`,
+      }, this.options);
+      mapEvents.forEach(_ => this.myMap.events.add(_, e => this.$emit(_, e)));
+      this.myMap.events.add('boundschange', (e) => {
+        const { originalEvent: { newZoom, newCenter, newBounds } } = e;
+        this.$emit('boundschange', e);
+        this.$emit('update:zoom', newZoom);
+        this.$emit('update:coords', newCenter);
+        this.$emit('update:bounds', newBounds);
+      });
+      if (this.detailedControls) {
+        const controls = Object.keys(this.detailedControls);
+        controls.forEach((controlName) => {
+          this.myMap.controls.remove(controlName);
+          this.myMap.controls.add(controlName, this.detailedControls[controlName]);
         });
       }
+      if (this.scrollZoom === false) {
+        this.myMap.behaviors.disable('scrollZoom');
+      }
 
-      return markers;
+      this.isReady = true;
+
+      this.$emit('map-was-initialized', this.myMap);
     },
-    setMarkers(changedMarkers) {
+    addMarker(marker) {
+      this.markers.push(marker);
+      if (this.debounce) clearTimeout(this.debounce);
+      this.debounce = setTimeout(() => this.setMarkers(this.markers), 0);
+    },
+    setMarkers(markers) {
       const config = {
         options: this.clusterOptions,
         callbacks: this.clusterCallbacks,
@@ -275,18 +200,26 @@ export default {
         useObjectManager: this.useObjectManager,
         objectManagerClusterize: this.objectManagerClusterize,
       };
-      utils.addToMap(this.createMarkers(changedMarkers), config);
-      if (changedMarkers) this.$emit('markers-was-change', changedMarkers);
+      const ids = markers.map(_ => (this.useObjectManager ? _.id : _.properties.get('markerId')));
+      if (this.markers !== markers) {
+        this.deleteMarkers(ids);
+        utils.addToMap(markers, config);
+        this.$emit('markers-was-change', ids);
+      } else utils.addToMap(markers, config);
+      if (this.showAllMarkers) this.myMap.setBounds(this.myMap.geoObjects.getBounds());
     },
-    deleteMarkers(deletedMarkers) {
+    deleteMarkers(deletedMarkersIds) {
+      this.markers = this.markers
+        .filter(_ => !deletedMarkersIds
+          .includes(this.useObjectManager ? _.id : _.properties.get('markerId')));
       this.myMap.geoObjects.each((collection) => {
         const removedMarkers = [];
         if (this.useObjectManager) {
-          collection.remove(deletedMarkers);
+          collection.remove(deletedMarkersIds);
         } else {
           const checkMarker = (marker) => {
             const markerId = marker.properties.get('markerId');
-            if (deletedMarkers.includes(markerId)) removedMarkers.push(marker);
+            if (deletedMarkersIds.includes(markerId)) removedMarkers.push(marker);
           };
           let length;
           if (collection.each) {
@@ -304,59 +237,18 @@ export default {
           }
         }
       });
-      this.$emit('markers-was-delete', deletedMarkers);
-    },
-    init() {
-      // if ymap isn't initialized or have no markers;
-      if (!window.ymaps
-        || !ymaps.GeoObjectCollection
-        || (!this.initWithoutMarkers && !this.$slots.default && !this.placemarks.length)
-      ) return;
-
-      this.$emit('map-initialization-started');
-
-      this.myMap = new ymaps.Map(this.ymapId, {
-        center: this.coordinates,
-        zoom: +this.zoom,
-        behaviors: this.behaviors,
-        controls: this.controls,
-        type: `yandex#${this.mapType}`,
-      }, this.options);
-      this.myMap.events.add('click', e => this.$emit('click', e));
-      if (this.zoomControl) {
-        this.myMap.controls.remove('zoomControl');
-        this.myMap.controls.add(new ymaps.control.ZoomControl(this.zoomControl));
-      }
-      if (this.detailedControls) {
-        const controls = Object.keys(this.detailedControls);
-        controls.forEach((controlName) => {
-          this.myMap.controls.remove(controlName);
-          this.myMap.controls.add(controlName, this.detailedControls[controlName]);
-        });
-      }
-      if (this.scrollZoom === false) {
-        this.myMap.behaviors.disable('scrollZoom');
-      }
-
-      this.setMarkers();
-
-      if (this.showAllMarkers) this.myMap.setBounds(this.myMap.geoObjects.getBounds());
-
-      this.$emit('map-was-initialized', this.myMap);
+      this.$emit('markers-was-delete', deletedMarkersIds);
     },
   },
   watch: {
-    coordinates(newVal) {
-      if (this.myMap.panTo) this.myMap.panTo(newVal);
-    },
-    placemarks() {
-      if (window.ymaps) {
-        if (this.myMap.geoObjects) this.myMap.geoObjects.removeAll();
-        this.setMarkers();
-      }
+    coordinates(val) {
+      if (this.myMap.panTo) this.myMap.panTo(val);
     },
     zoom() {
       this.myMap.setZoom(this.zoom);
+    },
+    bounds(val) {
+      if (this.myMap.setBounds) this.myMap.setBounds(val);
     },
   },
   render(h) {
@@ -377,7 +269,7 @@ export default {
             },
           },
         ),
-        h(
+        this.isReady && h(
           'div',
           {
             ref: 'markersContainer',
@@ -395,8 +287,10 @@ export default {
   mounted() {
     if (this.$attrs['map-link'] || this.$attrs.mapLink) throw new Error('Vue-yandex-maps: Attribute mapLink is not supported. Use settings.');
 
+    if (this.placemarks && this.placemarks.length) throw new Error('Vue-yandex-maps: Attribute placemarks is not supported. Use marker component.');
+
     this.mapObserver = new MutationObserver((() => {
-      this.myMap.container.fitToViewport();
+      if (this.myMap.container) this.myMap.container.fitToViewport();
     }));
 
     // Setup the observer

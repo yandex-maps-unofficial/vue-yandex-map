@@ -5,24 +5,75 @@ You can assign a class to parent element of map via attribute `ymap-class`. If t
 
 All markers are added to the map via `GeoObjectCollection` by default, but if there is a huge count of markers, the map rendering will take a lof of time even when markers grouping to clusters. In this case, it is recommended to use `ObjectManager` and assign the attribute of map `useObjectManager`, but then you lose the opportunity to specify to each markers `callback`.<br>
 
-The attributes `coords`, `placemarks` и `zoom` are observable. The map is react if these attributes are changing.
+The attributes `coords`, `bounds` and `zoom` are observable. The map is react if these attributes are changing.
 
 ## Events
 
-| Event name | Payload |
-| ----- | ----- |
-| 'click' | [map event](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/events-docpage/) |
-| 'map-was-initialized' | Link to [map instance](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/) |
-| 'markers-was-change' | Array of changed markers ids |
-| 'markers-was-delete' | Array of deleted markers ids |
+<table>
+  <thead>
+    <tr>
+      <th>Event name</th>
+      <th>Payload</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>map-was-initialized</td>
+      <td>Link to <a href="https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/">map instance</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/Map-docpage/#Map__events-summary">actionend</a></td>
+      <td rowspan="12" style="text-align: center;">
+        <a href="https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/events-docpage/">map event</a>
+      </td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/Map-docpage/#Map__events-summary">balloonclose</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/Map-docpage/#Map__events-summary">balloonopen</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/Map-docpage/#Map__events-summary">boundschange</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/Map-docpage/#Map__events-summary">click</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/Map-docpage/#Map__events-summary">contextmenu</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/Map-docpage/#Map__events-summary">dblclick</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/Map-docpage/#Map__events-summary">destroy</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/Map-docpage/#Map__events-summary">hintclose</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/Map-docpage/#Map__events-summary">hintopen</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/Map-docpage/#Map__events-summary">optionschange</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/Map-docpage/#Map__events-summary">sizechange</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/Map-docpage/#Map__events-summary">typechange</a></td>
+    </tr>
+  </tbody>
+</table>
 
 ## Attributes
 
 | Attribute | Type | Description |
 | ----- | ----- | ----- |
 | settings | Object | Settings of map. API Key, language and version. |
-| coords | Array | Map center coordinates. [ lat, lng ]. *Required* |
-| zoom | Number | Zoom map value (from 0 to 19). *Default: 18*. |
+| coords | Array | Map center coordinates. [ lat, lng ]. May use with `.sync`. *Required* |
+| zoom | Number | Zoom map value (from 0 to 19). May use with `.sync`. *Default: 18*. |
+| bounds | Array | Coordinates of the left bottom and right top corners of the map. If defined, `coords` and `center` are ignored. May use with `.sync`. |
 | [cluster-options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/ClusterPlacemark-docpage/#param-options) | Object | An object where the keys are the names of the clusters, and the values are the objects of options these clusters. In options you can point field `clusterIconContentLayout` (type `String`) for HTML template of cluster icon, field `layout` (type `String`) and HTML template for `balloonItemContentLayout`. There is also `createCluster` field for overriding default creating cluster function (field `use-object-manager` have to be turned off).|
 | cluster-callbacks | Object | An object where the keys are the names of the clusters, and the values are the objects of events these clusters, e.g. `{ clusterName: { click: function() {...}, contextmenu: anotherFunction } }` |
 | [behaviors](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/map.behavior.Manager-docpage/#param-behaviors) | Array | Array of connected map behaviors. All other values are considered off.|
@@ -30,8 +81,7 @@ The attributes `coords`, `placemarks` и `zoom` are observable. The map is react
 | detailed-controls | Object | An object where the keys are the elements of map control, and the values are the objects of element settings. Designed for fine setting of control elements. |
 | map-type | String | Map type. Valid values: `map, satellite, hybrid`. *Default: map*. |
 | scroll-zoom | Boolean | Set `false` to disable map zoom on the page when you are scrolling. *Default: true* |
-| zoom-control  | Object | **Deprecated**. Use `detailed-controls` |
-| placemarks  | Array of Objects | Array of map labels. There are markers only type of `placemark`. Objects with fields: coordinates ([lat, lng]), properties, options. [More](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Placemark-docpage/) |
+| placemarks  | Array of Objects | **Deprecated**. Use marker component |
 | use-object-manager  | Boolean | Set `true` for use Object Manager. Used if there is huge count of markers on the map. *Default: false* |
 | object-manager-clusterize  | Boolean | Clustering with Object Manager. *Default: true* |
 | ymap-class  | String | Defines class for element, where rendering the map instance. If the attribute is not defined, the element uses style: `width: 100%; height: 100%;` |
