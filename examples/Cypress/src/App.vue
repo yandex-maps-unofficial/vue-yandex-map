@@ -4,7 +4,6 @@
       <yandex-map
         ref="map1"
         :coords="coords"
-        show-all-markers
         class="map basic"
         @map-was-initialized="onLoading($event, 1)"
         @markers-was-delete="checkDeleteMarkers('1', $event)"
@@ -16,6 +15,8 @@
           :marker-id="marker.id"
           :coords="marker.coords"
           :cluster-name="marker.clusterName"
+          @click="onClick"
+          @contextmenu="onContextMenu"
         />
       </yandex-map>
       <div class="passed passedMap1">
@@ -74,6 +75,9 @@
     <button id="changeButton" @click="changeMarkers">
       Change markers
     </button>
+    <button id="addButton" @click="addMarkers">
+      Add markers
+    </button>
   </div>
 </template>
 
@@ -81,6 +85,15 @@
 import { loadYmap, yandexMap, ymapMarker } from '../../../src';
 
 const markers = require('./markers.json');
+
+const newMarker = {
+  id: '3fcb98b9-dd4c-4b37-af34-9a86b50ad11e1',
+  coords: [
+    '33.832',
+    '53.935',
+  ],
+  clusterName: 1,
+};
 
 export default {
   name: 'App',
@@ -133,6 +146,15 @@ export default {
       map.setBounds(map.geoObjects.getBounds());
       const length = this.checkLength(mapNumber);
       if (length === this.markers.length) this[`passedMap${mapNumber}`].push('edited');
+    },
+    addMarkers() {
+      this.markers.push(newMarker);
+    },
+    onContextMenu(e) {
+      console.log({ contextmenu: e });
+    },
+    onClick(e) {
+      console.log({ click: e });
     },
   },
 };
