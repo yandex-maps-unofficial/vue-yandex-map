@@ -3,6 +3,7 @@ import * as utils from './utils';
 const { emitter } = utils;
 
 const mapEvents = [
+  'actionend',
   'balloonclose',
   'balloonopen',
   'click',

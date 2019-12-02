@@ -22,10 +22,13 @@
       <td>Ссылка на <a href="https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/">инстанс карты</a></td>
     </tr>
     <tr>
-      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/Map-docpage/#Map__events-summary">balloonclose</a></td>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/Map-docpage/#Map__events-summary">actionend</a></td>
       <td rowspan="12" style="text-align: center;">
         <a href="https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/events-docpage/">map event</a>
       </td>
+    </tr>
+    <tr>
+      <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/Map-docpage/#Map__events-summary">balloonclose</a></td>
     </tr>
     <tr>
       <td><a href="https://tech.yandex.ru/maps/jsapi/doc/2.1/ref/reference/Map-docpage/#Map__events-summary">balloonopen</a></td>
