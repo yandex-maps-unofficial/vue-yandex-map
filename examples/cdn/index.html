@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
+  <script src="../../dist/vue-yandex-maps.min.js"></script>
+  <style>
+    #app {
+      width: 800px;
+      height: 800px;
+    }
+    
+    .ymap-container {
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <yandex-map
+      :coords="[lat, lng]"
+      zoom="10"
+    >
+      <ymap-marker
+        marker-id="123123"
+        :coords="[lat, lng]" />
+      <ymap-marker
+        marker-id="345345345"
+        :coords="[54.84896654088406, lng]" />
+      <ymap-marker
+        v-for="marker in markers"
+        :key="marker.id"
+        :marker-id="marker.id"
+        :coords="marker.coords"
+        :icon="marker.icon"
+        marker-type="placemark"
+      />
+    </yandex-map>
+  
+    <button type="button" @click="removeLastMarker">
+       Remove last marker
+    </button>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        lat: 54.82896654088406,
+        lng: 39.831893822753904,
+        markers: [
+          {
+            id: 1,
+            coords: [54.85896654088406, 39.831893822753904],
+            icon: { content: '1' }
+          }, {
+            id: 2,
+            coords: [54.82796654088306, 39.931893822753904],
+            icon: { content: '2' }
+          }, {
+            id: 3,
+            coords: [54.79996654088506, 39.831893822753904],
+            icon: { content: '3' }
+          }, {
+            id: 4,
+            coords: [54.82796654088306, 39.731893822753904],
+            icon: { content: '4' }
+          }
+        ]
+      },
+      methods: {
+        removeLastMarker: function() {
+          this.markers.pop()
+        }
+      }
+    })
+  </script>
+</body>
+</html>

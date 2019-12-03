@@ -1,35 +1,53 @@
-import pkg from './package.json';
 import babel from 'rollup-plugin-babel';
-import { terser } from "rollup-plugin-terser";
+import { terser } from 'rollup-plugin-terser';
 import { uglify } from 'rollup-plugin-uglify';
+import pkg from './package.json';
 
 export default [
   {
     input: 'src/index.js',
     output: {
       name: 'vue-yandex-maps',
-      file: pkg.main,
+      file: pkg.module,
       format: 'es',
+      exports: 'named',
     },
     plugins: [
       babel({
-        exclude: 'node_modules/**'
+        exclude: 'node_modules/**',
       }),
-      terser()
-    ]
+      terser(),
+    ],
   },
   {
     input: 'src/index.js',
     output: {
       name: 'vue-yandex-maps',
-      file: pkg.unpkg, 
-      format: 'umd'
+      file: pkg.main,
+      format: 'umd',
+      exports: 'named',
     },
     plugins: [
       babel({
-        exclude: 'node_modules/**'
+        exclude: 'node_modules/**',
       }),
-      uglify()
-    ]
+      uglify(),
+    ],
+  },
+  {
+    input: 'src/index.js',
+    output: {
+      name: 'vue-yandex-maps',
+      file: pkg.unpkg,
+      format: 'iife',
+      exports: 'named',
+      extend: true,
+    },
+    plugins: [
+      babel({
+        exclude: 'node_modules/**',
+      }),
+      uglify(),
+    ],
   },
 ];

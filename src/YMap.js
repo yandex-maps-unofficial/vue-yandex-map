@@ -190,7 +190,7 @@ export default {
     addMarker(marker) {
       this.markers.push(marker);
       if (this.debounce) clearTimeout(this.debounce);
-      this.debounce = setTimeout(() => this.setMarkers(this.markers), 0);
+      this.debounce = setTimeout(this.setMarkers, 0);
     },
     setMarkers(markers) {
       const config = {
@@ -200,12 +200,12 @@ export default {
         useObjectManager: this.useObjectManager,
         objectManagerClusterize: this.objectManagerClusterize,
       };
-      const ids = markers.map(_ => (this.useObjectManager ? _.id : _.properties.get('markerId')));
-      if (this.markers !== markers) {
+      if (markers) {
+        const ids = markers.map(_ => (this.useObjectManager ? _.id : _.properties.get('markerId')));
         this.deleteMarkers(ids);
         utils.addToMap(markers, config);
         this.$emit('markers-was-change', ids);
-      } else utils.addToMap(markers, config);
+      } else utils.addToMap(this.markers, config);
       if (this.showAllMarkers) this.myMap.setBounds(this.myMap.geoObjects.getBounds());
     },
     deleteMarkers(deletedMarkersIds) {

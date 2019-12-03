@@ -68,6 +68,8 @@ export default {
       ));
     });
 
+    console.log({ mounted: this.markerId });
+
     this.addMarker(this.defineMarker());
   },
   methods: {

@@ -4,12 +4,21 @@
       <yandex-map
         ref="map1"
         :coords="coords"
+        show-all-markers
         class="map basic"
         @map-was-initialized="onLoading($event, 1)"
         @markers-was-delete="checkDeleteMarkers('1', $event)"
         @markers-was-change="checkChangeMarkers('1', $event)"
       >
         <ymap-marker
+          marker-id="1341324234"
+          :coords="[54, 39]"
+        />
+        <ymap-marker
+          marker-id="34645"
+          :coords="[55, 49]"
+        />
+        <!-- <ymap-marker
           v-for="marker in markers"
           :key="marker.id"
           :marker-id="marker.id"
@@ -17,7 +26,7 @@
           :cluster-name="marker.clusterName"
           @click="onClick"
           @contextmenu="onContextMenu"
-        />
+        /> -->
       </yandex-map>
       <div class="passed passedMap1">
         <label><input v-model="passedMap1" type="checkbox" value="loaded">loaded</label>
@@ -33,6 +42,10 @@
         @markers-was-delete="checkDeleteMarkers('2', $event)"
         @markers-was-change="checkChangeMarkers('2', $event)"
       >
+        <ymap-marker
+          marker-id="1341324234"
+          :coords="[54, 39]"
+        />
         <ymap-marker
           v-for="marker in markers"
           :key="marker.id"
