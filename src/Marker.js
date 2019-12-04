@@ -21,8 +21,6 @@ const markerEvents = [
   'hintopen',
 ];
 
-const unwatchArr = [];
-
 export default {
   inject: ['useObjectManager', 'addMarker', 'deleteMarker', 'compareValues'],
   props: {
@@ -54,11 +52,12 @@ export default {
     properties: Object,
     options: Object,
   },
+  data: () => ({ unwatchArr: [] }),
   render() {
   },
   mounted() {
     Object.keys(this.$props).forEach((prop) => {
-      unwatchArr.push(this.$watch(
+      this.unwatchArr.push(this.$watch(
         prop,
         (newVal, oldVal) => this.compareValues({
           newVal,
@@ -67,8 +66,6 @@ export default {
         }),
       ));
     });
-
-    console.log({ mounted: this.markerId });
 
     this.addMarker(this.defineMarker());
   },
@@ -181,7 +178,7 @@ export default {
     },
   },
   beforeDestroy() {
-    unwatchArr.forEach(f => f());
+    this.unwatchArr.forEach(f => f());
     this.deleteMarker(this.markerId);
   },
 };

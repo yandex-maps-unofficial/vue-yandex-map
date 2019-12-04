@@ -10,15 +10,8 @@
         @markers-was-delete="checkDeleteMarkers('1', $event)"
         @markers-was-change="checkChangeMarkers('1', $event)"
       >
+        <ymap-marker :coords="[userLat, 53.3]" marker-id="666" />
         <ymap-marker
-          marker-id="1341324234"
-          :coords="[54, 39]"
-        />
-        <ymap-marker
-          marker-id="34645"
-          :coords="[55, 49]"
-        />
-        <!-- <ymap-marker
           v-for="marker in markers"
           :key="marker.id"
           :marker-id="marker.id"
@@ -26,7 +19,7 @@
           :cluster-name="marker.clusterName"
           @click="onClick"
           @contextmenu="onContextMenu"
-        /> -->
+        />
       </yandex-map>
       <div class="passed passedMap1">
         <label><input v-model="passedMap1" type="checkbox" value="loaded">loaded</label>
@@ -42,10 +35,7 @@
         @markers-was-delete="checkDeleteMarkers('2', $event)"
         @markers-was-change="checkChangeMarkers('2', $event)"
       >
-        <ymap-marker
-          marker-id="1341324234"
-          :coords="[54, 39]"
-        />
+        <ymap-marker :coords="[userLat, 53.3]" marker-id="666" />
         <ymap-marker
           v-for="marker in markers"
           :key="marker.id"
@@ -68,6 +58,7 @@
         @markers-was-delete="checkDeleteMarkers('3', $event)"
         @markers-was-change="checkChangeMarkers('3', $event)"
       >
+        <ymap-marker :coords="[userLat, 53.3]" marker-id="666" />
         <ymap-marker
           v-for="marker in markers"
           :key="marker.id"
@@ -124,6 +115,7 @@ export default {
     myMap1: {},
     myMap2: {},
     myMap3: {},
+    userLat: 33.7,
   }),
   async created() {
     await loadYmap();
@@ -138,7 +130,7 @@ export default {
       this.markers = this.markers.filter(_ => _.clusterName > 1);
     },
     changeMarkers() {
-      this.markers.splice(0, 1, { ...this.markers[0], coords: [34, 55] });
+      this.userLat += 0.01;
     },
     checkLength(mapNumber) {
       let length = 0;
