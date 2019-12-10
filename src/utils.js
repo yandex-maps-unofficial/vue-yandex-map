@@ -210,9 +210,11 @@ export function ymapLoader(settings = {}) {
     document.body.appendChild(yandexMapScript);
     emitter.scriptIsNotAttached = false;
     yandexMapScript.onload = () => {
-      emitter.ymapReady = true;
-      emitter.$emit('scriptIsLoaded');
-      res();
+      ymaps.ready(() => {
+        emitter.ymapReady = true;
+        emitter.$emit('scriptIsLoaded');
+        res();
+      });
     };
     yandexMapScript.onerror = rej;
   });
