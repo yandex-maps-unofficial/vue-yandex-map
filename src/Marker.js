@@ -19,6 +19,8 @@ const markerEvents = [
   'dragstart',
   'hintclose',
   'hintopen',
+  'mouseenter',
+  'mouseleave',
 ];
 
 export default {
