@@ -193,6 +193,7 @@ export function createMarker(object, useObjectManager) {
 
 export function ymapLoader(settings = {}) {
   return new Promise((res, rej) => {
+    if (window.ymaps) return res();
     const yandexMapScript = document.createElement('SCRIPT');
     const {
       apiKey = '',
