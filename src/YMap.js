@@ -225,7 +225,7 @@ export default {
           if (collection.each) {
             collection.each(checkMarker);
             length = collection.getLength();
-          } else {
+          } else if (collection.getGeoObjects) {
             const markersArray = collection.getGeoObjects();
             markersArray.forEach(checkMarker);
             length = markersArray.length;
