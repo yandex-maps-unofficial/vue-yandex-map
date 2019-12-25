@@ -242,7 +242,7 @@ export default {
   },
   watch: {
     coordinates(val) {
-      if (this.myMap.panTo) this.myMap.panTo(val);
+      if (this.myMap.panTo && this.myMap.getZoom()) this.myMap.panTo(val);
     },
     zoom() {
       this.myMap.setZoom(this.zoom);
