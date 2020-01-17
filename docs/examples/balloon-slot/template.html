@@ -1,12 +1,15 @@
 <template>
   <yandex-map 
-    :coords="coords" 
+    :coords="coords"
+    :zoom="10" 
     @click="onClick"
   >
     <ymap-marker 
       :coords="coords" 
       marker-id="123" 
       hint-content="some hint" 
-    />
+    >
+      <my-component></my-component>
+    </ymap-marker>
   </yandex-map>
 </template>

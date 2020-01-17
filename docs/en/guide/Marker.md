@@ -91,7 +91,11 @@ Since version `0.10` attribute `callbacks` not supported. You can listen compone
 | cluster-name | String | Cluster name to grouping of markers | All |
 | properties | Object | [Marker settings](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#param-feature.properties) | All |
 | options | Object | [Marker options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#param-options) | All |
-| [balloonTemplate](/examples/#кастомный-темпnейт-баnуна) | String | HTML Template for balloon | All |
+| [balloonTemplate](/en/examples/#custom-cluster-balloon) | String | HTML Template for balloon | All |
+
+## Slots
+
+You may to define balloon template through `balloon` slot in marker. Also you may place your custom component into this slot, but keep in mind that balloon only render view of this component and discard any logic. If you need to add some user interactive (eg handle button click), you may to listen event `balloonopen` and bind any handlers to your balloon elements. Don't forget to delete these handlers on `balloonclose`. [Example](/en/examples/#balloon-slot-in-marker)
 
 # Icons
 

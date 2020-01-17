@@ -1,6 +1,6 @@
 {
   "name": "vue-yandex-maps",
-  "version": "0.10.4",
+  "version": "0.10.5",
   "description": "Yandex Maps component for VueJS.",
   "main": "dist/vue-yandex-maps.umd.js",
   "module": "dist/vue-yandex-maps.esm.js",
@@ -43,7 +43,6 @@
     "rollup-plugin-terser": "^4.0.4",
     "rollup-plugin-uglify": "^6.0.2",
     "vue-jest": "^3.0.5",
-    "vuepress": "^1.2.0",
-    "vuepress-plugin-demo-code": "^0.5.0"
+    "vuepress": "^1.2.0"
   }
 }
