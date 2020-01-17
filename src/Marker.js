@@ -55,7 +55,8 @@ export default {
     options: Object,
   },
   data: () => ({ unwatchArr: [] }),
-  render() {
+  render(h) {
+    return this.$slots.balloon && h('div', { style: 'display: none;' }, [this.$slots.balloon]);
   },
   mounted() {
     Object.keys(this.$props).forEach((prop) => {
@@ -78,6 +79,12 @@ export default {
       if (this.balloonTemplate) {
         const BalloonContentLayoutClass = ymaps.templateLayoutFactory
           .createClass(this.balloonTemplate);
+        balloonOptions = { balloonContentLayout: BalloonContentLayoutClass };
+      }
+
+      if (this.$slots.balloon) {
+        const BalloonContentLayoutClass = ymaps.templateLayoutFactory
+          .createClass(this.$slots.balloon[0].elm.outerHTML);
         balloonOptions = { balloonContentLayout: BalloonContentLayoutClass };
       }
 
