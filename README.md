@@ -1,6 +1,6 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-14-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-15-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![npm](https://img.shields.io/npm/v/vue-yandex-maps.svg)](https://www.npmjs.com/package/vue-yandex-maps)
 [![GitHub issues](https://img.shields.io/github/issues/PNKBizz/vue-yandex-map.svg)](https://github.com/PNKBizz/vue-yandex-map/issues)
@@ -38,6 +38,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/genius-spirit"><img src="https://avatars3.githubusercontent.com/u/32195682?v=4" width="100px;" alt=""/><br /><sub><b>Andrei Detenkov</b></sub></a><br /><a href="#translation-genius-spirit" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/KorolPaul"><img src="https://avatars3.githubusercontent.com/u/3993155?v=4" width="100px;" alt=""/><br /><sub><b>CSSKing</b></sub></a><br /><a href="https://github.com/PNKBizz/vue-yandex-map/commits?author=KorolPaul" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/mrswylet"><img src="https://avatars1.githubusercontent.com/u/37118883?v=4" width="100px;" alt=""/><br /><sub><b>MrSwylet</b></sub></a><br /><a href="#ideas-mrswylet" title="Ideas, Planning, & Feedback">🤔</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/cvaize"><img src="https://avatars2.githubusercontent.com/u/26907947?v=4" width="100px;" alt=""/><br /><sub><b>Орлов Дмитрий</b></sub></a><br /><a href="#ideas-cvaize" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
