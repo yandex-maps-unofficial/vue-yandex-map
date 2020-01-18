@@ -1,6 +1,6 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![npm](https://img.shields.io/npm/v/vue-yandex-maps.svg)](https://www.npmjs.com/package/vue-yandex-maps)
 [![GitHub issues](https://img.shields.io/github/issues/PNKBizz/vue-yandex-map.svg)](https://github.com/PNKBizz/vue-yandex-map/issues)
@@ -27,7 +27,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/NelinD"><img src="https://avatars3.githubusercontent.com/u/10078264?v=4" width="100px;" alt=""/><br /><sub><b>Nikitenko Andrey</b></sub></a><br /><a href="https://github.com/PNKBizz/vue-yandex-map/commits?author=NelinD" title="Code">💻</a></td>
     <td align="center"><a href="https://twitter.com/kamil_ocean"><img src="https://avatars3.githubusercontent.com/u/16609819?v=4" width="100px;" alt=""/><br /><sub><b>Kamil</b></sub></a><br /><a href="https://github.com/PNKBizz/vue-yandex-map/commits?author=KamilOcean" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/k0va1"><img src="https://avatars3.githubusercontent.com/u/3451694?v=4" width="100px;" alt=""/><br /><sub><b>Alexander Koval</b></sub></a><br /><a href="https://github.com/PNKBizz/vue-yandex-map/commits?author=k0va1" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/soldatovsh"><img src="https://avatars3.githubusercontent.com/u/992553?v=4" width="100px;" alt=""/><br /><sub><b>alex</b></sub></a><br /><a href="#code-soldatovsh" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/soldatovsh"><img src="https://avatars3.githubusercontent.com/u/992553?v=4" width="100px;" alt=""/><br /><sub><b>alex</b></sub></a><br /><a href="https://github.com/PNKBizz/vue-yandex-map/commits?author=soldatovsh" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Pinegin"><img src="https://avatars2.githubusercontent.com/u/5644410?v=4" width="100px;" alt=""/><br /><sub><b>Антон Пинегин</b></sub></a><br /><a href="https://github.com/PNKBizz/vue-yandex-map/commits?author=Pinegin" title="Code">💻</a></td>
   </tr>
 </table>
 

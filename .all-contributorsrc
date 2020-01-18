@@ -58,6 +58,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Pinegin",
+      "name": "Антон Пинегин",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5644410?v=4",
+      "profile": "https://github.com/Pinegin",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
