@@ -9,7 +9,7 @@ export default {
         clusterBalloonLayout: [
           '<ul class=list>',
           '{% for geoObject in properties.geoObjects %}',
-          '<li><a href=# data-placemarkid="{{ geoObject.properties.placemarkId }}" class="list_item">{{ geoObject.properties.balloonContentHeader|raw }}</a></li>',
+          '<li><a href=# class="list_item">{{ geoObject.properties.balloonContentHeader|raw }}</a></li>',
           '{% endfor %}',
           '</ul>',
         ].join(''),
