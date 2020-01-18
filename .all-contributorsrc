@@ -13,6 +13,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "k0va1",
+      "name": "Alexander Koval",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3451694?v=4",
+      "profile": "https://github.com/k0va1",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
