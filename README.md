@@ -23,7 +23,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://github.com/ivangretsky"><img src="https://avatars0.githubusercontent.com/u/6697626?v=4" width="100px;" alt=""/><br /><sub><b>Ivan Gretsky</b></sub></a><br /><a href="#translation-ivangretsky" title="Translation">🌍</a></td>
-    <td align="center"><a href="https://github.com/Wormaster"><img src="https://avatars1.githubusercontent.com/u/4989842?v=4" width="100px;" alt=""/><br /><sub><b>Wormaster</b></sub></a><br /><a href="#translation-Wormaster" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/Wormaster"><img src="https://avatars1.githubusercontent.com/u/4989842?v=4" width="100px;" alt=""/><br /><sub><b>Wormaster</b></sub></a><br /><a href="#translation-Wormaster" title="Translation">🌍</a> <a href="https://github.com/PNKBizz/vue-yandex-map/commits?author=Wormaster" title="Code">💻</a></td>
   </tr>
 </table>
 
