@@ -23,7 +23,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://github.com/ivangretsky"><img src="https://avatars0.githubusercontent.com/u/6697626?v=4" width="100px;" alt=""/><br /><sub><b>Ivan Gretsky</b></sub></a><br /><a href="#translation-ivangretsky" title="Translation">🌍</a></td>
-    <td align="center"><a href="https://github.com/NelinD"><img src="https://avatars3.githubusercontent.com/u/10078264?v=4" width="100px;" alt=""/><br /><sub><b>Nikitenko Andrey</b></sub></a><br /><a href="#translation-NelinD" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/NelinD"><img src="https://avatars3.githubusercontent.com/u/10078264?v=4" width="100px;" alt=""/><br /><sub><b>Nikitenko Andrey</b></sub></a><br /><a href="#translation-NelinD" title="Translation">🌍</a> <a href="https://github.com/PNKBizz/vue-yandex-map/commits?author=NelinD" title="Code">💻</a></td>
   </tr>
 </table>
 
