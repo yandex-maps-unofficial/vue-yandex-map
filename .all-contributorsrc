@@ -14,11 +14,20 @@
         "translation"
       ]
     },
-    {
+    {      
       "login": "KamilOcean",
       "name": "Kamil",
       "avatar_url": "https://avatars3.githubusercontent.com/u/16609819?v=4",
       "profile": "https://twitter.com/kamil_ocean",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "k0va1",
+      "name": "Alexander Koval",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3451694?v=4",
+      "profile": "https://github.com/k0va1",
       "contributions": [
         "code"
       ]
