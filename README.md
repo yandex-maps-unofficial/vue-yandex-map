@@ -1,6 +1,6 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-16-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-17-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![npm](https://img.shields.io/npm/v/vue-yandex-maps.svg)](https://www.npmjs.com/package/vue-yandex-maps)
 [![GitHub issues](https://img.shields.io/github/issues/PNKBizz/vue-yandex-map.svg)](https://github.com/PNKBizz/vue-yandex-map/issues)
@@ -42,6 +42,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/cvaize"><img src="https://avatars2.githubusercontent.com/u/26907947?v=4" width="100px;" alt=""/><br /><sub><b>Орлов Дмитрий</b></sub></a><br /><a href="#ideas-cvaize" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/windstep"><img src="https://avatars1.githubusercontent.com/u/51027899?v=4" width="100px;" alt=""/><br /><sub><b>windstep</b></sub></a><br /><a href="#ideas-windstep" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/antoinematyja"><img src="https://avatars2.githubusercontent.com/u/9961462?v=4" width="100px;" alt=""/><br /><sub><b>antoinematyja</b></sub></a><br /><a href="#ideas-antoinematyja" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
