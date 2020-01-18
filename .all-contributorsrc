@@ -103,6 +103,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "genius-spirit",
+      "name": "Andrei Detenkov",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/32195682?v=4",
+      "profile": "https://github.com/genius-spirit",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
