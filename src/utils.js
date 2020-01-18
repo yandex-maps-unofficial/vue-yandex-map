@@ -25,10 +25,11 @@ export function addToMap(markers, {
     clusterOptions.clusterBalloonItemContentLayout = ymaps.templateLayoutFactory
       .createClass(layout);
 
-    const ballonLayout = clusterOptions.clusterBalloonLayout || clusterOptions.clusterLayout;
+    const balloonLayout = clusterOptions.clusterBalloonLayout || clusterOptions.clusterLayout;
+    delete clusterOptions.clusterBalloonLayout;
 
-    const clusterBalloonLayout = ballonLayout
-      ? ymaps.templateLayoutFactory.createClass(ballonLayout)
+    const clusterBalloonLayout = balloonLayout
+      ? ymaps.templateLayoutFactory.createClass(balloonLayout)
       : clusterOptions.clusterBalloonContentLayout || defaultClusterLayout;
     clusterOptions.clusterBalloonContentLayout = clusterBalloonLayout;
 
