@@ -1,6 +1,6 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![npm](https://img.shields.io/npm/v/vue-yandex-maps.svg)](https://www.npmjs.com/package/vue-yandex-maps)
 [![GitHub issues](https://img.shields.io/github/issues/PNKBizz/vue-yandex-map.svg)](https://github.com/PNKBizz/vue-yandex-map/issues)
@@ -34,6 +34,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/VadimMalykhin"><img src="https://avatars3.githubusercontent.com/u/158365?v=4" width="100px;" alt=""/><br /><sub><b>Vadim Malykhin</b></sub></a><br /><a href="https://github.com/PNKBizz/vue-yandex-map/commits?author=VadimMalykhin" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/dmitrytarassov"><img src="https://avatars3.githubusercontent.com/u/12485596?v=4" width="100px;" alt=""/><br /><sub><b>Dmitriy</b></sub></a><br /><a href="https://github.com/PNKBizz/vue-yandex-map/commits?author=dmitrytarassov" title="Code">💻</a></td>
     <td align="center"><a href="http://t.me/vanishmax"><img src="https://avatars3.githubusercontent.com/u/29180358?v=4" width="100px;" alt=""/><br /><sub><b>VanishMax</b></sub></a><br /><a href="https://github.com/PNKBizz/vue-yandex-map/commits?author=VanishMax" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/rdemirbay"><img src="https://avatars1.githubusercontent.com/u/12648626?v=4" width="100px;" alt=""/><br /><sub><b>Rasim Demirbay</b></sub></a><br /><a href="https://github.com/PNKBizz/vue-yandex-map/commits?author=rdemirbay" title="Code">💻</a></td>
   </tr>
 </table>
 
