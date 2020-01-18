@@ -32,7 +32,7 @@
         "code"
       ]
     },
-    {      
+    {
       "login": "KamilOcean",
       "name": "Kamil",
       "avatar_url": "https://avatars3.githubusercontent.com/u/16609819?v=4",
@@ -48,6 +48,15 @@
       "profile": "https://github.com/k0va1",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "soldatovsh",
+      "name": "alex",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/992553?v=4",
+      "profile": "https://github.com/soldatovsh",
+      "contributions": [
+        "translation"
       ]
     }
   ],
