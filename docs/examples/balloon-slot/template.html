@@ -6,10 +6,12 @@
   >
     <ymap-marker 
       :coords="coords" 
-      marker-id="123" 
-      hint-content="some hint" 
+      marker-id="123"
+      marker-type="placemark"
+      @balloonopen="bindListener"
+      @balloonclose="unbindListener"
     >
-      <my-component></my-component>
+      <my-component slot="balloon"></my-component>
     </ymap-marker>
   </yandex-map>
 </template>
