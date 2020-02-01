@@ -34,6 +34,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { mode: 'client', src: '~plugins/yandexmaps.js' }
   ],
 
   /*
