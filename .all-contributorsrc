@@ -1,0 +1,168 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "Wormaster",
+      "name": "Wormaster",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/4989842?v=4",
+      "profile": "https://github.com/Wormaster",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "NelinD",
+      "name": "Nikitenko Andrey",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/10078264?v=4",
+      "profile": "https://github.com/NelinD",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "KamilOcean",
+      "name": "Kamil",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/16609819?v=4",
+      "profile": "https://twitter.com/kamil_ocean",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "k0va1",
+      "name": "Alexander Koval",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3451694?v=4",
+      "profile": "https://github.com/k0va1",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "soldatovsh",
+      "name": "alex",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/992553?v=4",
+      "profile": "https://github.com/soldatovsh",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Pinegin",
+      "name": "Антон Пинегин",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5644410?v=4",
+      "profile": "https://github.com/Pinegin",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "VadimMalykhin",
+      "name": "Vadim Malykhin",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/158365?v=4",
+      "profile": "https://github.com/VadimMalykhin",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "dmitrytarassov",
+      "name": "Dmitriy",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/12485596?v=4",
+      "profile": "https://github.com/dmitrytarassov",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "VanishMax",
+      "name": "VanishMax",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/29180358?v=4",
+      "profile": "http://t.me/vanishmax",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "rdemirbay",
+      "name": "Rasim Demirbay",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/12648626?v=4",
+      "profile": "https://github.com/rdemirbay",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "genius-spirit",
+      "name": "Andrei Detenkov",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/32195682?v=4",
+      "profile": "https://github.com/genius-spirit",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "KorolPaul",
+      "name": "CSSKing",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3993155?v=4",
+      "profile": "https://github.com/KorolPaul",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "mrswylet",
+      "name": "MrSwylet",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/37118883?v=4",
+      "profile": "https://github.com/mrswylet",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "cvaize",
+      "name": "Орлов Дмитрий",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/26907947?v=4",
+      "profile": "https://github.com/cvaize",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "windstep",
+      "name": "windstep",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/51027899?v=4",
+      "profile": "https://github.com/windstep",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "antoinematyja",
+      "name": "antoinematyja",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/9961462?v=4",
+      "profile": "https://github.com/antoinematyja",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "alxnkt",
+      "name": "alxnkt",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/49128174?v=4",
+      "profile": "https://github.com/alxnkt",
+      "contributions": [
+        "tutorial"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "vue-yandex-map",
+  "projectOwner": "PNKBizz",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
