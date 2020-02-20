@@ -157,6 +157,15 @@
       "contributions": [
         "tutorial"
       ]
+    },
+    {
+      "login": "sleleko",
+      "name": "Sergey Leleko",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2923963?v=4",
+      "profile": "https://leleko.ru",
+      "contributions": [
+        "tutorial"
+      ]
     }
   ],
   "contributorsPerLine": 7,
