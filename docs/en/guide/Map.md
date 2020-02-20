@@ -3,7 +3,7 @@ After installation, registration and plugged the component you can use `<yandex-
 
 You can assign a class to parent element of map via attribute `ymap-class`. If this attribute is not specified the element will be assign an attribute `style="width: 100%; height: 100%;"`.<br>
 
-All markers are added to the map via `GeoObjectCollection` by default, but if there is a huge count of markers, the map rendering will take a lof of time even when markers grouping to clusters. In this case, it is recommended to use `ObjectManager` and assign the attribute of map `useObjectManager`, but then you lose the opportunity to specify to each markers `callback`.<br>
+All markers are added to the map via `GeoObjectCollection` by default, but if there is a huge count of markers, the map rendering will take a lof of time even when markers grouping to clusters. In this case, it is recommended to use `ObjectManager` and assign the attribute of map `useObjectManager`, but then you lose the opportunity to listen events by each marker.<br>
 
 The attributes `coords`, `bounds` and `zoom` are observable. The map is react if these attributes are changing.
 

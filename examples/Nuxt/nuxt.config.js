@@ -34,13 +34,13 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '~/plugins/ymapPlugin.js',  mode: 'client' }
   ],
 
   /*
   ** Nuxt.js modules
   */
   modules: [
-    [resolve(__dirname, '../../', 'nuxt'), { lang: 'en_US' }]
   ],
 
   /*

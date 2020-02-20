@@ -52,26 +52,38 @@ export default {
 
 ### Nuxt module
 
-Добавьте `vue-yandex-maps/nuxt` в секцию модулей файла `nuxt.config.js`
+Добавьте в директорию `plugins` файл `ymapPlugin.js` со следующим содержанием
+
+```JavaScript
+import Vue from 'vue'
+import YmapPlugin from 'vue-yandex-maps'
+
+const settings = { ... } // настройки плагина
+
+Vue.use(YmapPlugin, settings);
+```
+
+Добавьте созданный плагин в секцию плагинов файла `nuxt.config.js`
 
 ```JavaScript
 {
-  modules: [
-    ['vue-yandex-maps/nuxt', settings]
+  plugins: [
+    { src: '~/plugins/ymapPlugin.js',  mode: 'client' }
   ]
 }
 ```
 
 ### Ymaps Loader
 
-Если вам нужно использовать глобальную переменную `ymaps` отдельно от компонента карт (геокодер и др.), просто импортируйте лоадер. Вы можете задать настройки, описанные выше, а также указать параметр `debug` (по умолчанию - `false`).
+Если вам нужно использовать глобальную переменную `ymaps` отдельно от компонента карт (геокодер и др.), просто импортируйте лоадер. Вы можете задать настройки, описанные выше, а также указать параметр `debug` (по умолчанию - `false`). Учтите, что функция загрузчика асинхронная. 
 
 ```JavaScript
 import { loadYmap } from 'vue-yandex-maps'
 
 export default {
-  mounted() {
-    loadYmap({ ...settings, debug: true });
+  async mounted() {
+    await loadYmap({ ...settings, debug: true });
+    // здесь доступна переменная ymaps
   }
 }
 ```
