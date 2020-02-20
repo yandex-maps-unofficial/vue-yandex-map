@@ -1,6 +1,6 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-18-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-19-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![npm](https://img.shields.io/npm/v/vue-yandex-maps.svg)](https://www.npmjs.com/package/vue-yandex-maps)
 [![GitHub issues](https://img.shields.io/github/issues/PNKBizz/vue-yandex-map.svg)](https://github.com/PNKBizz/vue-yandex-map/issues)
@@ -44,6 +44,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/antoinematyja"><img src="https://avatars2.githubusercontent.com/u/9961462?v=4" width="100px;" alt=""/><br /><sub><b>antoinematyja</b></sub></a><br /><a href="#ideas-antoinematyja" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/alxnkt"><img src="https://avatars3.githubusercontent.com/u/49128174?v=4" width="100px;" alt=""/><br /><sub><b>alxnkt</b></sub></a><br /><a href="#tutorial-alxnkt" title="Tutorials">✅</a></td>
     <td align="center"><a href="https://leleko.ru"><img src="https://avatars3.githubusercontent.com/u/2923963?v=4" width="100px;" alt=""/><br /><sub><b>Sergey Leleko</b></sub></a><br /><a href="#tutorial-sleleko" title="Tutorials">✅</a></td>
+    <td align="center"><a href="https://github.com/nikolawan"><img src="https://avatars1.githubusercontent.com/u/9902286?v=4" width="100px;" alt=""/><br /><sub><b>nikolawan</b></sub></a><br /><a href="#tutorial-nikolawan" title="Tutorials">✅</a></td>
   </tr>
 </table>
 
