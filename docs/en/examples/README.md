@@ -49,3 +49,7 @@ sidebar: auto
   See the Pen <a href='https://codepen.io/PNKBizz/pen/mdyGNaa'>mdyGNaa</a> by PNKBizz
   (<a href='https://codepen.io/PNKBizz'>@PNKBizz</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
+
+## How to use loadYmaps
+
+<<< @/docs/examples/load-ymap/script.js

@@ -1,5 +1,4 @@
-import pkg from './package'
-import {resolve} from 'path';
+import pkg from './package';
 
 export default {
   mode: 'universal',
@@ -34,7 +33,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    { src: '~/plugins/ymapPlugin.js',  mode: 'client' }
+    { src: '~/plugins/ymapPlugin.js', mode: 'client' },
   ],
 
   /*
