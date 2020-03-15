@@ -2,9 +2,9 @@ export function addToMap(markers, {
   options, callbacks, map, useObjectManager, objectManagerClusterize,
 }) {
   const defaultLayout = `
-      <div>{{ properties.balloonContentHeader }}</div>
-      <div>{{ properties.balloonContentBody }}</div>
-      <div>{{ properties.balloonContentFooter }}</div>
+      <div v-html="properties.balloonContentHeader"></div>
+      <div v-html="properties.balloonContentBody"></div>
+      <div v-html="properties.balloonContentFooter"></div>
     `;
   const defaultClusterLayout = 'cluster#balloonTwoColumns';
 
