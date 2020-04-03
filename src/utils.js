@@ -196,7 +196,7 @@ export function createMarker(object, useObjectManager) {
 
 export function ymapLoader(settings = {}) {
   return new Promise((res, rej) => {
-    if (window.ymaps) return res();
+    if (window.ymaps || document.getElementById('vue-yandex-maps')) return res();
     const yandexMapScript = document.createElement('SCRIPT');
     const {
       apiKey = '',
@@ -211,7 +211,8 @@ export function ymapLoader(settings = {}) {
     yandexMapScript.setAttribute('src', link);
     yandexMapScript.setAttribute('async', '');
     yandexMapScript.setAttribute('defer', '');
-    document.body.appendChild(yandexMapScript);
+    yandexMapScript.setAttribute('id', 'vue-yandex-maps');
+    document.head.appendChild(yandexMapScript);
     emitter.scriptIsNotAttached = false;
     yandexMapScript.onload = () => {
       ymaps.ready(() => {
