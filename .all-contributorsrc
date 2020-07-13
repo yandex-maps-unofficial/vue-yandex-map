@@ -184,6 +184,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "kirillunlimited",
+      "name": "Kirill Ivanov",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/7703762?v=4",
+      "profile": "http://kirillunlimited.ru",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
