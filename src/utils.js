@@ -157,6 +157,7 @@ const CONTROL_TYPES = [
   'trafficControl',
   'typeSelector',
   'zoomControl',
+  'routeButtonControl',
   'routePanelControl',
 ];
 
