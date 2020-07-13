@@ -1,6 +1,6 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-20-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-21-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![npm](https://img.shields.io/npm/v/vue-yandex-maps.svg)](https://www.npmjs.com/package/vue-yandex-maps)
 [![GitHub issues](https://img.shields.io/github/issues/PNKBizz/vue-yandex-map.svg)](https://github.com/PNKBizz/vue-yandex-map/issues)
@@ -46,6 +46,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://leleko.ru"><img src="https://avatars3.githubusercontent.com/u/2923963?v=4" width="100px;" alt=""/><br /><sub><b>Sergey Leleko</b></sub></a><br /><a href="#tutorial-sleleko" title="Tutorials">✅</a></td>
     <td align="center"><a href="https://github.com/nikolawan"><img src="https://avatars1.githubusercontent.com/u/9902286?v=4" width="100px;" alt=""/><br /><sub><b>nikolawan</b></sub></a><br /><a href="#tutorial-nikolawan" title="Tutorials">✅</a></td>
     <td align="center"><a href="https://github.com/Alex-Sokolov"><img src="https://avatars3.githubusercontent.com/u/4497128?v=4" width="100px;" alt=""/><br /><sub><b>Alexander Sokolov</b></sub></a><br /><a href="https://github.com/PNKBizz/vue-yandex-map/commits?author=Alex-Sokolov" title="Code">💻</a></td>
+    <td align="center"><a href="http://kirillunlimited.ru"><img src="https://avatars1.githubusercontent.com/u/7703762?v=4" width="100px;" alt=""/><br /><sub><b>Kirill Ivanov</b></sub></a><br /><a href="https://github.com/PNKBizz/vue-yandex-map/commits?author=kirillunlimited" title="Code">💻</a></td>
   </tr>
 </table>
 
