@@ -197,7 +197,13 @@ export function createMarker(object, useObjectManager) {
 
 export function ymapLoader(settings = {}) {
   return new Promise((res, rej) => {
-    if (window.ymaps || document.getElementById('vue-yandex-maps')) return res();
+    if (window.ymaps) return res();
+
+    if (document.getElementById('vue-yandex-maps')) {
+      emitter.$on('scriptIsLoaded', res);
+      return
+    }
+
     const yandexMapScript = document.createElement('SCRIPT');
     const {
       apiKey = '',
