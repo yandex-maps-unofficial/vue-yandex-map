@@ -140,6 +140,7 @@ export default {
       default: () => ({}),
     },
     showAllMarkers: Boolean,
+    disablePan: Boolean,
   },
   computed: {
     coordinates() {
@@ -242,7 +243,11 @@ export default {
   },
   watch: {
     coordinates(val) {
-      if (this.myMap.panTo && this.myMap.getZoom()) this.myMap.panTo(val, { checkZoomRange: true });
+      if (this.disablePan) {
+        if (this.myMap.setCenter) this.myMap.setCenter(val)
+      } else {
+        if (this.myMap.panTo && this.myMap.getZoom()) this.myMap.panTo(val, { checkZoomRange: true })
+      }
     },
     zoom() {
       this.myMap.setZoom(this.zoom);
