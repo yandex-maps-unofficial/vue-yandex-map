@@ -15,7 +15,7 @@ npm install vue-yandex-maps
 * [Используемый язык](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/localization-docpage/)
 * [Порядок задания географических координат](https://tech.yandex.ru/maps/jsapi/doc/2.1/dg/concepts/load-docpage/#load__coordorder)
 * [Использование коммерческой версии Я.Карт](https://yandex.ru/dev/maps/commercial/doc/concepts/about-enterprise.html)
-* версия Я.Карт
+* Версия Я.Карт
 
 Эти настройки являются опциональными, значения по умолчанию указаны ниже.
 
