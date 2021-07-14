@@ -17,13 +17,20 @@ yarn add vue-yandex-maps
 ```
 
 After that you can define settings of component:
- [API key](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/load-docpage/), [language](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/localization-docpage/), [procedure of assignment geographic coords](https://tech.yandex.ru/maps/jsapi/doc/2.1/dg/concepts/load-docpage/#load__coordorder) and Yandex map version. These settings are optional and below you can see default options:
+* [API key](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/load-docpage/)
+* [Language](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/localization-docpage/)
+* [Procedure of assignment geographic coords](https://tech.yandex.ru/maps/jsapi/doc/2.1/dg/concepts/load-docpage/#load__coordorder)
+* [Yandex Maps for Business usage](https://yandex.com/dev/maps/commercial/)
+* Yandex map version
+
+These settings are optional and below you can see default options:
 
 ```JavaScript
 const settings = {
   apiKey: '',
   lang: 'ru_RU',
   coordorder: 'latlong',
+  enterprise: false,
   version: '2.1'
 }
 ```
