@@ -10,13 +10,21 @@
 npm install vue-yandex-maps
 ```
 
-После этого вы можете определить настройки подключения компонента: [индивидуальный ключ АПИ](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/load-docpage/), [используемый язык](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/localization-docpage/), [порядок задания географических координат](https://tech.yandex.ru/maps/jsapi/doc/2.1/dg/concepts/load-docpage/#load__coordorder) и версия Я.Карт. Эти настройки являются опциональными, значения по умолчанию указаны ниже.
+После этого вы можете определить настройки подключения компонента:
+* [Индивидуальный ключ API](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/load-docpage/)
+* [Используемый язык](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/localization-docpage/)
+* [Порядок задания географических координат](https://tech.yandex.ru/maps/jsapi/doc/2.1/dg/concepts/load-docpage/#load__coordorder)
+* [Использование коммерческой версии Я.Карт](https://yandex.ru/dev/maps/commercial/doc/concepts/about-enterprise.html)
+* версия Я.Карт
+
+Эти настройки являются опциональными, значения по умолчанию указаны ниже.
 
 ```JavaScript
 const settings = {
   apiKey: '',
   lang: 'ru_RU',
   coordorder: 'latlong',
+  enterprise: false,
   version: '2.1'
 }
 ```

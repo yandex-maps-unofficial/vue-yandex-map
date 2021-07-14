@@ -211,10 +211,11 @@ export function ymapLoader(settings = {}) {
       version = '2.1',
       coordorder = 'latlong',
       debug = false,
+      enterprise = false,
     } = settings;
     const mode = debug ? 'debug' : 'release';
     const settingsPart = `lang=${lang}${apiKey && `&apikey=${apiKey}`}&mode=${mode}&coordorder=${coordorder}`;
-    const link = `https://api-maps.yandex.ru/${version}/?${settingsPart}`;
+    const link = `https://${enterprise ? 'enterprise.' : ''}api-maps.yandex.ru/${version}/?${settingsPart}`;
     yandexMapScript.setAttribute('src', link);
     yandexMapScript.setAttribute('async', '');
     yandexMapScript.setAttribute('defer', '');
