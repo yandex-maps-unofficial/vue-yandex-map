@@ -1,12 +1,7 @@
+import { h } from 'vue';
 import * as utils from './utils';
 
-const MARKER_TYPES = [
-  'placemark',
-  'polyline',
-  'rectangle',
-  'polygon',
-  'circle',
-];
+const MARKER_TYPES = ['placemark', 'polyline', 'rectangle', 'polygon', 'circle'];
 
 const markerEvents = [
   'balloonclose',
@@ -25,6 +20,7 @@ const markerEvents = [
 
 export default {
   inject: ['useObjectManager', 'addMarker', 'deleteMarker', 'compareValues'],
+  emits: [...markerEvents],
   props: {
     coords: Array,
     hintContent: String,
@@ -55,19 +51,18 @@ export default {
     options: Object,
   },
   data: () => ({ unwatchArr: [] }),
-  render(h) {
-    return this.$slots.balloon && h('div', { style: 'display: none;' }, [this.$slots.balloon]);
+  render() {
+    return this.$slots.balloon && h('div', { style: 'display: none;' }, this.$slots.balloon());
   },
   mounted() {
     Object.keys(this.$props).forEach((prop) => {
-      this.unwatchArr.push(this.$watch(
-        prop,
-        (newVal, oldVal) => this.compareValues({
+      this.unwatchArr.push(
+        this.$watch(prop, (newVal, oldVal) => this.compareValues({
           newVal,
           oldVal,
           marker: this.defineMarker(),
-        }),
-      ));
+        })),
+      );
     });
 
     this.addMarker(this.defineMarker());
@@ -77,14 +72,16 @@ export default {
       let balloonOptions = {};
 
       if (this.balloonTemplate) {
-        const BalloonContentLayoutClass = ymaps.templateLayoutFactory
-          .createClass(this.balloonTemplate);
+        const BalloonContentLayoutClass = ymaps.templateLayoutFactory.createClass(
+          this.balloonTemplate,
+        );
         balloonOptions = { balloonContentLayout: BalloonContentLayoutClass };
       }
 
       if (this.$slots.balloon) {
-        const BalloonContentLayoutClass = ymaps.templateLayoutFactory
-          .createClass(this.$slots.balloon[0].elm.outerHTML);
+        const BalloonContentLayoutClass = ymaps.templateLayoutFactory.createClass(
+          this.$slots.balloon()[0].el.outerHTML,
+        );
         balloonOptions = { balloonContentLayout: BalloonContentLayoutClass };
       }
 
@@ -111,8 +108,9 @@ export default {
         marker.iconImageOffset = this.icon.imageOffset;
         marker.iconContentOffset = this.icon.contentOffset;
         if (this.icon.contentLayout && typeof this.icon.contentLayout === 'string') {
-          marker.iconContentLayout = ymaps.templateLayoutFactory
-            .createClass(this.icon.contentLayout);
+          marker.iconContentLayout = ymaps.templateLayoutFactory.createClass(
+            this.icon.contentLayout,
+          );
         }
       } else {
         marker.icon = this.icon;
@@ -125,39 +123,55 @@ export default {
         markerId: marker.markerId,
       };
 
-      const balloonProps = marker.balloon ? {
-        balloonContentHeader: marker.balloon.header,
-        balloonContentBody: marker.balloon.body,
-        balloonContentFooter: marker.balloon.footer,
-      } : {};
+      const balloonProps = marker.balloon
+        ? {
+          balloonContentHeader: marker.balloon.header,
+          balloonContentBody: marker.balloon.body,
+          balloonContentFooter: marker.balloon.footer,
+        }
+        : {};
 
       const properties = Object.assign(initialProps, balloonProps, marker.properties);
 
-      const iconOptions = marker.iconLayout ? {
-        iconLayout: marker.iconLayout,
-        iconImageHref: marker.iconImageHref,
-        iconImageSize: marker.iconImageSize,
-        iconImageOffset: marker.iconImageOffset,
-        iconContentOffset: marker.iconContentOffset,
-        iconContentLayout: marker.iconContentLayout,
-      } : { preset: marker.icon && `islands#${utils.getIconPreset(marker)}Icon` };
+      const iconOptions = marker.iconLayout
+        ? {
+          iconLayout: marker.iconLayout,
+          iconImageHref: marker.iconImageHref,
+          iconImageSize: marker.iconImageSize,
+          iconImageOffset: marker.iconImageOffset,
+          iconContentOffset: marker.iconContentOffset,
+          iconContentLayout: marker.iconContentLayout,
+        }
+        : {
+          preset: marker.icon && `islands#${utils.getIconPreset(marker)}Icon`,
+        };
 
-      const strokeOptions = marker.markerStroke ? {
-        strokeColor: marker.markerStroke.color || '0066ffff',
-        strokeOpacity: parseFloat(marker.markerStroke.opacity) >= 0
-          ? parseFloat(marker.markerStroke.opacity) : 1,
-        strokeStyle: marker.markerStroke.style,
-        strokeWidth: parseFloat(marker.markerStroke.width) >= 0
-          ? parseFloat(marker.markerStroke.width) : 1,
-      } : {};
+      const strokeOptions = marker.markerStroke
+        ? {
+          strokeColor: marker.markerStroke.color || '0066ffff',
+          strokeOpacity:
+              parseFloat(marker.markerStroke.opacity) >= 0
+                ? parseFloat(marker.markerStroke.opacity)
+                : 1,
+          strokeStyle: marker.markerStroke.style,
+          strokeWidth:
+              parseFloat(marker.markerStroke.width) >= 0
+                ? parseFloat(marker.markerStroke.width)
+                : 1,
+        }
+        : {};
 
-      const fillOptions = marker.markerFill ? {
-        fill: marker.markerFill.enabled || true,
-        fillColor: marker.markerFill.color || '0066ff99',
-        fillOpacity: parseFloat(marker.markerFill.opacity) >= 0
-          ? parseFloat(marker.markerFill.opacity) : 1,
-        fillImageHref: marker.markerFill.imageHref || '',
-      } : {};
+      const fillOptions = marker.markerFill
+        ? {
+          fill: marker.markerFill.enabled || true,
+          fillColor: marker.markerFill.color || '0066ff99',
+          fillOpacity:
+              parseFloat(marker.markerFill.opacity) >= 0
+                ? parseFloat(marker.markerFill.opacity)
+                : 1,
+          fillImageHref: marker.markerFill.imageHref || '',
+        }
+        : {};
 
       const options = Object.assign(
         iconOptions,
@@ -186,7 +200,7 @@ export default {
       return mapMarker;
     },
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.unwatchArr.forEach(f => f());
     this.deleteMarker(this.markerId);
   },

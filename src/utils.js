@@ -1,6 +1,9 @@
-export function addToMap(markers, {
-  options, callbacks, map, useObjectManager, objectManagerClusterize,
-}) {
+export function addToMap(
+  markers,
+  {
+    options, callbacks, map, useObjectManager, objectManagerClusterize,
+  },
+) {
   const defaultLayout = `
       <div>{{ properties.balloonContentHeader }}</div>
       <div>{{ properties.balloonContentBody }}</div>
@@ -14,7 +17,8 @@ export function addToMap(markers, {
     if (!marker.clusterName) unclastered.push(marker);
     else {
       clusters[marker.clusterName] = clusters[marker.clusterName]
-        ? [...clusters[marker.clusterName], marker] : [marker];
+        ? [...clusters[marker.clusterName], marker]
+        : [marker];
     }
   });
 
@@ -22,8 +26,9 @@ export function addToMap(markers, {
     const clusterOptions = options[clusterName] || {};
     const clusterCallbacks = callbacks[clusterName] || {};
     const layout = clusterOptions.layout || defaultLayout;
-    clusterOptions.clusterBalloonItemContentLayout = ymaps.templateLayoutFactory
-      .createClass(layout);
+    clusterOptions.clusterBalloonItemContentLayout = ymaps.templateLayoutFactory.createClass(
+      layout,
+    );
 
     const balloonLayout = clusterOptions.clusterBalloonLayout || clusterOptions.clusterLayout;
     delete clusterOptions.clusterBalloonLayout;
@@ -38,10 +43,9 @@ export function addToMap(markers, {
       && ymaps.templateLayoutFactory.createClass(clusterIconContentLayout);
 
     if (useObjectManager) {
-      const ObjectManager = new ymaps.ObjectManager(Object.assign(
-        { clusterize: objectManagerClusterize },
-        clusterOptions,
-      ));
+      const ObjectManager = new ymaps.ObjectManager(
+        Object.assign({ clusterize: objectManagerClusterize }, clusterOptions),
+      );
       Object.keys(clusterCallbacks).forEach((key) => {
         ObjectManager.clusters.events.add(key, clusterCallbacks[key]);
       });
@@ -63,7 +67,8 @@ export function addToMap(markers, {
   });
   if (unclastered.length) {
     const unclasteredMarkers = useObjectManager
-      ? new ymaps.ObjectManager({ clusterize: false }) : new ymaps.GeoObjectCollection();
+      ? new ymaps.ObjectManager({ clusterize: false })
+      : new ymaps.GeoObjectCollection();
     unclastered.forEach(obj => unclasteredMarkers.add(obj));
     map.geoObjects.add(unclasteredMarkers);
   }
@@ -97,7 +102,8 @@ export function objectComparison(first, second) {
     let i = cache.length;
     while (i--) {
       if (
-        (cache[i][0] === f || cache[i][0] === s) && (cache[i][1] === s || cache[i][1] === f)
+        (cache[i][0] === f || cache[i][0] === s)
+        && (cache[i][1] === s || cache[i][1] === f)
       ) return true;
     }
     return false;
@@ -110,8 +116,8 @@ export function objectComparison(first, second) {
     if (inCache(f, s)) return true; // есть в кеше
     cache.push([f, s]); // кешируем
 
-    const keys = Object.keys(f); let
-      i = keys.length; // получаем ключи
+    const keys = Object.keys(f);
+    let i = keys.length; // получаем ключи
     if (Object.keys(s).length !== i) return false; // если количество ключей не совпадает
     while (i--) if (!eq(f[keys[i]], s[keys[i]])) return false; // рекурсивный вызов
 
@@ -134,7 +140,9 @@ class EventEmitter {
     this.events[eventName].push(fn);
 
     return () => {
-      this.events[eventName] = this.events[eventName].filter(eventFn => fn !== eventFn);
+      this.events[eventName] = this.events[eventName].filter(
+        eventFn => fn !== eventFn,
+      );
     };
   }
 
@@ -162,7 +170,10 @@ const CONTROL_TYPES = [
 ];
 
 export function controlsTypeValidator(val) {
-  return val.filter(control => ![...CONTROL_TYPES, 'default'].includes(control)).length === 0;
+  return (
+    val.filter(control => ![...CONTROL_TYPES, 'default'].includes(control))
+      .length === 0
+  );
 }
 
 export function createMarkerType(val, useObjectManager) {
@@ -179,16 +190,22 @@ export function createMarkerType(val, useObjectManager) {
 }
 
 export function createMarker(object, useObjectManager) {
-  const marker = useObjectManager ? {
-    type: 'Feature',
-    id: object.properties.markerId,
-    geometry: {
-      type: object.markerType,
-      coordinates: object.coords,
-    },
-    properties: object.properties,
-    options: object.options,
-  } : new ymaps[object.markerType](object.coords, object.properties, object.options);
+  const marker = useObjectManager
+    ? {
+      type: 'Feature',
+      id: object.properties.markerId,
+      geometry: {
+        type: object.markerType,
+        coordinates: object.coords,
+      },
+      properties: object.properties,
+      options: object.options,
+    }
+    : new ymaps[object.markerType](
+      object.coords,
+      object.properties,
+      object.options,
+    );
 
   marker.clusterName = object.clusterName;
 
@@ -201,7 +218,7 @@ export function ymapLoader(settings = {}) {
 
     if (document.getElementById('vue-yandex-maps')) {
       emitter.$on('scriptIsLoaded', res);
-      return
+      return;
     }
 
     const yandexMapScript = document.createElement('SCRIPT');
@@ -210,12 +227,15 @@ export function ymapLoader(settings = {}) {
       lang = 'ru_RU',
       version = '2.1',
       coordorder = 'latlong',
-      debug = false,
+      debug = true,
       enterprise = false,
     } = settings;
     const mode = debug ? 'debug' : 'release';
-    const settingsPart = `lang=${lang}${apiKey && `&apikey=${apiKey}`}&mode=${mode}&coordorder=${coordorder}`;
-    const link = `https://${enterprise ? 'enterprise.' : ''}api-maps.yandex.ru/${version}/?${settingsPart}`;
+    const settingsPart = `lang=${lang}${apiKey
+      && `&apikey=${apiKey}`}&mode=${mode}&coordorder=${coordorder}`;
+    const link = `https://${
+      enterprise ? 'enterprise.' : ''
+    }api-maps.yandex.ru/${version}/?${settingsPart}`;
     yandexMapScript.setAttribute('src', link);
     yandexMapScript.setAttribute('async', '');
     yandexMapScript.setAttribute('defer', '');

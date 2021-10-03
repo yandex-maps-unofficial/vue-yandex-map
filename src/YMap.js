@@ -1,3 +1,4 @@
+import { h } from 'vue';
 import * as utils from './utils';
 
 const { emitter } = utils;
@@ -17,6 +18,9 @@ const mapEvents = [
   'typechange',
 ];
 
+let markers = [];
+let myMap = {};
+
 export default {
   pluginOptions: {},
   provide() {
@@ -25,7 +29,7 @@ export default {
     let deleteMarkerWithTimeout;
     let changeMarkersWithTimeout;
     const deleteMarker = (id) => {
-      if (!this.myMap.geoObjects) return;
+      if (!myMap.geoObjects) return;
       deletedMarkers.push(id);
       if (deleteMarkerWithTimeout) clearTimeout(deleteMarkerWithTimeout);
       deleteMarkerWithTimeout = setTimeout(() => {
@@ -34,9 +38,13 @@ export default {
       }, 0);
     };
     const compareValues = ({ newVal, oldVal, marker }) => {
-      if (utils.objectComparison(newVal, oldVal)) { return; }
+      if (utils.objectComparison(newVal, oldVal)) {
+        return;
+      }
       changedMarkers.push(marker);
-      if (changeMarkersWithTimeout) { clearTimeout(changeMarkersWithTimeout); }
+      if (changeMarkersWithTimeout) {
+        clearTimeout(changeMarkersWithTimeout);
+      }
       changeMarkersWithTimeout = setTimeout(() => {
         this.setMarkers(changedMarkers);
         changedMarkers = [];
@@ -52,13 +60,22 @@ export default {
   data() {
     return {
       ymapId: `yandexMap${Math.round(Math.random() * 100000)}`,
-      myMap: {},
       style: this.ymapClass ? '' : 'width: 100%; height: 100%;',
       isReady: false,
       debounce: null,
-      markers: [],
     };
   },
+  emits: [
+    'map-initialization-started',
+    'boundschange',
+    'update:zoom',
+    'update:coords',
+    'update:bounds',
+    'map-was-initialized',
+    'markers-was-change',
+    'markers-was-delete',
+    ...mapEvents,
+  ],
   props: {
     coords: {
       type: Array,
@@ -150,24 +167,32 @@ export default {
   methods: {
     init() {
       // if ymap isn't initialized or have no markers;
-      if (!window.ymaps
+      if (
+        !window.ymaps
         || !ymaps.GeoObjectCollection
         || (!this.initWithoutMarkers && !this.$slots.default && !this.placemarks.length)
       ) return;
 
       this.$emit('map-initialization-started');
 
-      this.myMap = new ymaps.Map(this.ymapId, {
-        center: this.coordinates,
-        zoom: +this.zoom,
-        bounds: this.bounds,
-        behaviors: this.behaviors,
-        controls: this.controls,
-        type: `yandex#${this.mapType}`,
-      }, this.options);
-      mapEvents.forEach(_ => this.myMap.events.add(_, e => this.$emit(_, e)));
-      this.myMap.events.add('boundschange', (e) => {
-        const { originalEvent: { newZoom, newCenter, newBounds } } = e;
+      myMap = new ymaps.Map(
+        this.ymapId,
+        {
+          center: this.coordinates,
+          zoom: +this.zoom,
+          bounds: this.bounds,
+          behaviors: this.behaviors,
+          controls: this.controls,
+          type: `yandex#${this.mapType}`,
+        },
+        this.options,
+      );
+
+      mapEvents.forEach(_ => myMap.events.add(_, e => this.$emit(_, e)));
+      myMap.events.add('boundschange', (e) => {
+        const {
+          originalEvent: { newZoom, newCenter, newBounds },
+        } = e;
         this.$emit('boundschange', e);
         this.$emit('update:zoom', newZoom);
         this.$emit('update:coords', newCenter);
@@ -176,44 +201,44 @@ export default {
       if (this.detailedControls) {
         const controls = Object.keys(this.detailedControls);
         controls.forEach((controlName) => {
-          this.myMap.controls.remove(controlName);
-          this.myMap.controls.add(controlName, this.detailedControls[controlName]);
+          myMap.controls.remove(controlName);
+          myMap.controls.add(controlName, this.detailedControls[controlName]);
         });
       }
       if (this.scrollZoom === false) {
-        this.myMap.behaviors.disable('scrollZoom');
+        myMap.behaviors.disable('scrollZoom');
       }
 
       this.isReady = true;
 
-      this.$emit('map-was-initialized', this.myMap);
+      this.$emit('map-was-initialized', myMap);
     },
     addMarker(marker) {
-      this.markers.push(marker);
+      markers.push(marker);
       if (this.debounce) clearTimeout(this.debounce);
       this.debounce = setTimeout(() => {
-        this.setMarkers(this.markers);
+        this.setMarkers(markers);
       }, 0);
     },
-    setMarkers(markers) {
+    setMarkers(marks) {
       const config = {
         options: this.clusterOptions,
         callbacks: this.clusterCallbacks,
-        map: this.myMap,
+        map: myMap,
         useObjectManager: this.useObjectManager,
         objectManagerClusterize: this.objectManagerClusterize,
       };
-      if (this.markers !== markers) {
-        const ids = markers.map(_ => (this.useObjectManager ? _.id : _.properties.get('markerId')));
+      if (markers !== marks) {
+        const ids = marks.map(_ => (this.useObjectManager ? _.id : _.properties.get('markerId')));
         this.deleteMarkers(ids);
-        utils.addToMap(markers, config);
+        utils.addToMap(marks, config);
         this.$emit('markers-was-change', ids);
-      } else utils.addToMap(markers, config);
-      this.markers = [];
-      if (this.showAllMarkers) this.myMap.setBounds(this.myMap.geoObjects.getBounds());
+      } else utils.addToMap(marks, config);
+      markers = [];
+      if (this.showAllMarkers) myMap.setBounds(myMap.geoObjects.getBounds());
     },
     deleteMarkers(deletedMarkersIds) {
-      this.myMap.geoObjects.each((collection) => {
+      myMap.geoObjects.each((collection) => {
         const removedMarkers = [];
         if (this.useObjectManager) {
           collection.remove(deletedMarkersIds);
@@ -232,7 +257,7 @@ export default {
             length = markersArray.length;
           }
           if (length === 0 || length === removedMarkers.length) {
-            this.myMap.geoObjects.remove(collection);
+            myMap.geoObjects.remove(collection);
           } else if (removedMarkers.length) {
             removedMarkers.forEach(marker => collection.remove(marker));
           }
@@ -244,19 +269,17 @@ export default {
   watch: {
     coordinates(val) {
       if (this.disablePan) {
-        if (this.myMap.setCenter) this.myMap.setCenter(val)
-      } else {
-        if (this.myMap.panTo && this.myMap.getZoom()) this.myMap.panTo(val, { checkZoomRange: true })
-      }
+        if (myMap.setCenter) myMap.setCenter(val);
+      } else if (myMap.panTo && myMap.getZoom()) myMap.panTo(val, { checkZoomRange: true });
     },
     zoom() {
-      this.myMap.setZoom(this.zoom);
+      myMap.setZoom(this.zoom);
     },
     bounds(val) {
-      if (this.myMap.setBounds) this.myMap.setBounds(val);
+      if (myMap.setBounds) myMap.setBounds(val);
     },
   },
-  render(h) {
+  render() {
     return h(
       'section',
       {
@@ -264,53 +287,52 @@ export default {
         ref: 'mapContainer',
       },
       [
-        h(
-          'div',
-          {
-            attrs: {
-              id: this.ymapId,
-              class: this.ymapClass,
-              style: this.style,
-            },
-          },
-        ),
-        this.isReady && h(
-          'div',
-          {
-            ref: 'markersContainer',
-            attrs: {
+        h('div', {
+          id: this.ymapId,
+          class: this.ymapClass,
+          style: this.style,
+        }),
+        this.isReady
+          && h(
+            'div',
+            {
+              ref: 'markersContainer',
               class: 'ymap-markers',
             },
-          },
-          [
-            this.$slots.default,
-          ],
-        ),
+            this.$slots.default && this.$slots.default(),
+          ),
       ],
     );
   },
   mounted() {
     if (this.$attrs['map-link'] || this.$attrs.mapLink) throw new Error('Vue-yandex-maps: Attribute mapLink is not supported. Use settings.');
 
-    if (this.placemarks && this.placemarks.length) throw new Error('Vue-yandex-maps: Attribute placemarks is not supported. Use marker component.');
+    if (this.placemarks && this.placemarks.length) {
+      throw new Error(
+        'Vue-yandex-maps: Attribute placemarks is not supported. Use marker component.',
+      );
+    }
 
-    this.mapObserver = new MutationObserver((() => {
-      if (this.myMap.container) this.myMap.container.fitToViewport();
-    }));
+    this.mapObserver = new MutationObserver(() => {
+      if (myMap.container) myMap.container.fitToViewport();
+    });
 
     // Setup the observer
     const { mapContainer } = this.$refs;
-
-    this.mapObserver.observe(
-      mapContainer,
-      {
-        attributes: true, childList: true, characterData: true, subtree: false,
-      },
-    );
+    this.mapObserver.observe(mapContainer, {
+      attributes: true,
+      childList: true,
+      characterData: true,
+      subtree: false,
+    });
 
     if (emitter.scriptIsNotAttached) {
       const { debug } = this;
-      const settings = { ...this.$options.pluginOptions, ...this.settings, debug };
+      const settings = {
+        ...this.$options.pluginOptions,
+        ...this.settings,
+        debug,
+      };
       utils.ymapLoader(settings);
     }
     if (emitter.ymapReady) {
@@ -321,7 +343,7 @@ export default {
       });
     }
   },
-  beforeDestroy() {
-    if (this.myMap.geoObjects) this.myMap.geoObjects.removeAll();
+  beforeUnmount() {
+    if (myMap.geoObjects) myMap.geoObjects.removeAll();
   },
 };

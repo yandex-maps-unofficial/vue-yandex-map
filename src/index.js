@@ -12,10 +12,6 @@ const install = (Vue, options = {}) => {
 
 YMapPlugin.install = install;
 
-if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(YMapPlugin);
-}
-
 export const loadYmap = ymapLoader;
 export const yandexMap = YMapPlugin;
 export const ymapMarker = Marker;
