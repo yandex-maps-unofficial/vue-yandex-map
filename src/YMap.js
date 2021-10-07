@@ -42,11 +42,19 @@ export default {
         changedMarkers = [];
       }, 0);
     };
+
+    let makeComponentBalloonTemplate;
+
+    if (this.balloonComponent != null) {
+      makeComponentBalloonTemplate = utils.makeComponentBalloonTemplate(this.balloonComponent);
+    }
+
     return {
       useObjectManager: this.useObjectManager,
       addMarker: this.addMarker,
       deleteMarker,
       compareValues,
+      makeComponentBalloonTemplate,
     };
   },
   data() {
@@ -141,6 +149,10 @@ export default {
     },
     showAllMarkers: Boolean,
     disablePan: Boolean,
+    balloonComponent: {
+      type: [Object, Function],
+      default: () => null,
+    },
   },
   computed: {
     coordinates() {
@@ -244,9 +256,9 @@ export default {
   watch: {
     coordinates(val) {
       if (this.disablePan) {
-        if (this.myMap.setCenter) this.myMap.setCenter(val)
-      } else {
-        if (this.myMap.panTo && this.myMap.getZoom()) this.myMap.panTo(val, { checkZoomRange: true })
+        if (this.myMap.setCenter) this.myMap.setCenter(val);
+      } else if (this.myMap.panTo && this.myMap.getZoom()) {
+        this.myMap.panTo(val, { checkZoomRange: true });
       }
     },
     zoom() {
