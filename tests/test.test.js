@@ -1,18 +1,21 @@
+/**
+ * @jest-environment jsdom
+ */
 import { mount } from '@vue/test-utils';
 import { yandexMap, ymapMarker } from '../src';
 
 describe('Component', () => {
   const wrapper = mount(yandexMap, {
-    propsData: {
-      coords: [1, 1]
-    }
+    props: {
+      coords: [1, 1],
+    },
   });
 
   test('Map is a Vue instance', () => {
-    expect(wrapper.isVueInstance()).toBe(true);
+    expect(wrapper.findComponent(yandexMap));
   });
 
   test('Map is rendered', () => {
-    expect(wrapper.contains('.ymap-container')).toBe(true);
+    expect(wrapper.classes()).toContain('ymap-container');
   });
 });
