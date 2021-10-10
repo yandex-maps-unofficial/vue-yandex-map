@@ -201,7 +201,7 @@ export function ymapLoader(settings = {}) {
 
     if (document.getElementById('vue-yandex-maps')) {
       emitter.$on('scriptIsLoaded', res);
-      return
+      return;
     }
 
     const yandexMapScript = document.createElement('SCRIPT');
@@ -231,4 +231,52 @@ export function ymapLoader(settings = {}) {
     };
     yandexMapScript.onerror = rej;
   });
+}
+
+let idCounter = 1;
+let VueBalloonClass;
+
+export function setupBalloonClass(Vue) {
+  VueBalloonClass = Vue.extend({
+    props: ['marker', 'component'],
+    template: '<component :is="component" v-bind="{ marker, ...props.balloonComponentProps }" v-on="listeners" />',
+  });
+}
+
+export function makeComponentBalloonTemplate(component) {
+  let vueBalloon = null;
+  const balloonId = `vue-balloon-${idCounter}`;
+
+  idCounter += 1;
+
+  return (markerComponent, markerData) => {
+    const balloonContentLayout = ymaps.templateLayoutFactory.createClass(`<div id="${balloonId}"><div>`, {
+      build() {
+        balloonContentLayout.superclass.build.call(this);
+
+        vueBalloon = new VueBalloonClass({
+          parent: markerComponent.$root,
+          data() {
+            return {
+              props: markerComponent.$props,
+              listeners: markerComponent.$listeners,
+            };
+          },
+          propsData: {
+            marker: markerData,
+            component,
+          },
+        });
+
+        vueBalloon.$mount(`#${balloonId}`);
+      },
+      clear() {
+        vueBalloon.$destroy();
+        vueBalloon = null;
+        balloonContentLayout.superclass.clear.call(this);
+      },
+    });
+
+    return balloonContentLayout;
+  };
 }

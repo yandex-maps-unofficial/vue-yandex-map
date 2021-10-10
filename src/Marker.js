@@ -24,7 +24,7 @@ const markerEvents = [
 ];
 
 export default {
-  inject: ['useObjectManager', 'addMarker', 'deleteMarker', 'compareValues'],
+  inject: ['useObjectManager', 'addMarker', 'deleteMarker', 'compareValues', 'makeComponentBalloonTemplate'],
   props: {
     coords: Array,
     hintContent: String,
@@ -53,6 +53,10 @@ export default {
     },
     properties: Object,
     options: Object,
+    balloonComponentProps: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   data: () => ({ unwatchArr: [] }),
   render(h) {
@@ -74,20 +78,6 @@ export default {
   },
   methods: {
     defineMarker() {
-      let balloonOptions = {};
-
-      if (this.balloonTemplate) {
-        const BalloonContentLayoutClass = ymaps.templateLayoutFactory
-          .createClass(this.balloonTemplate);
-        balloonOptions = { balloonContentLayout: BalloonContentLayoutClass };
-      }
-
-      if (this.$slots.balloon) {
-        const BalloonContentLayoutClass = ymaps.templateLayoutFactory
-          .createClass(this.$slots.balloon[0].elm.outerHTML);
-        balloonOptions = { balloonContentLayout: BalloonContentLayoutClass };
-      }
-
       const marker = {
         markerId: this.markerId,
         markerType: this.markerType || 'placemark',
@@ -100,8 +90,28 @@ export default {
         balloon: this.balloon,
         properties: this.properties,
         options: this.options,
-        balloonOptions,
+        balloonOptions: {},
       };
+
+      let balloonContentLayout = null;
+
+      if (this.balloonTemplate) {
+        balloonContentLayout = ymaps.templateLayoutFactory
+          .createClass(this.balloonTemplate);
+      }
+
+      if (this.$slots.balloon) {
+        balloonContentLayout = ymaps.templateLayoutFactory
+          .createClass(this.$slots.balloon[0].elm.outerHTML);
+      }
+
+      if (this.makeComponentBalloonTemplate) {
+        balloonContentLayout = this.makeComponentBalloonTemplate(this, marker);
+      }
+
+      if (balloonContentLayout != null) {
+        marker.balloonOptions.balloonContentLayout = balloonContentLayout;
+      }
 
       if (this.icon && ['default#image', 'default#imageWithContent'].includes(this.icon.layout)) {
         marker.iconContent = this.icon.content;
