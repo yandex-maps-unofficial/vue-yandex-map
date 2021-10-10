@@ -72,6 +72,7 @@
 | ----- | ----- | ----- |
 | settings | Object | Настройки карты. API Key, язык и версия. |
 | coords | Array | Координаты центра карты. [ lat, lng ]. Может принимать модификатор `.sync`. *Required* |
+| map-events | Array | Нативные события (события Я.Карт), которые эмитит карта. Если не задано, то карта будет эмитить все события, перечисленные в секции [Events](#events)  |
 | zoom | Number | Значение зума карты (от 0 до 19). Может принимать модификатор `.sync`. *Default: 18*. |
 | bounds | Array | Координаты левого нижнего и правого верхнего углов карты. Если аттрибут задан, то значения `coords` и `center` игнорируются. Может принимать модификатор `.sync`. |
 | [cluster-options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/ClusterPlacemark-docpage/#param-options) | Object | Объект, где ключами являются имена кластеров, а значениями - объекты опций этих кластеров. Объект принимает поле `layout` (тип `String`) со строковым представлением HTML темплейта для `balloonItemContentLayout`, поле `clusterIconContentLayout` (тип `String`) для кастомизации иконки кластера и поле `clusterBalloonLayout` (тип `String`) для кастомизации балуна кластера: [Custom Balloon example](https://tech.yandex.ru/maps/jsbox/2.1/cluster_custom_balloon_content_layout). Также здесь можно передать переопределенную функцию `createCluster` для добавления своей логики при создание кластеров (опция `use-object-manager` при этом должна быть отключена).|

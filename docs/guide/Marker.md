@@ -82,6 +82,7 @@
 | coords | Array [ latitude, longitude ] | Координаты маркера или центр круга. `Required` | Placemark, Circle |
 | coords | Array of arrays [ [latitude, longitude], [...] ] | Координаты вершин. `Required` | Rectangle, Polyline |
 | coords | Array of two arrays of coordinates arrays (first for outer contour, second for inner) [ [[latitude, longitude], [...]], [[...], [...]] ] | Координаты вершин. `Required` | Polygon |
+| marker-events | Array | Нативные события (события Я.Карт), которые эмитит маркер. Если не задано, то маркер будет эмитить все события, перечисленные в секции [Events](#events) | All |
 | hint-content | String | Содержимое подсказки | All |
 | balloon | Object | Свойства балуна: header, body, footer | All |
 | [icon](#icons) | Object | Иконка маркера | Placemark |

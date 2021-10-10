@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { h } from 'vue';
 import * as utils from './utils';
 
 const MARKER_TYPES = [
@@ -8,7 +10,7 @@ const MARKER_TYPES = [
   'circle',
 ];
 
-const markerEvents = [
+const defaultMarkerEvents = [
   'balloonclose',
   'balloonopen',
   'click',
@@ -56,11 +58,15 @@ export default {
     balloonComponentProps: {
       type: Object,
       default: () => ({}),
+    markerEvents: {
+      type: Array,
+      default: () => [],
     },
   },
   data: () => ({ unwatchArr: [] }),
-  render(h) {
-    return this.$slots.balloon && h('div', { style: 'display: none;' }, [this.$slots.balloon]);
+  render(createElement) {
+    const render = typeof createElement === 'function' ? createElement : h;
+    return this.$slots.balloon && render('div', { style: 'display: none;' }, [typeof this.$slots.balloon === 'function' ? this.$slots.balloon() : this.$slots.balloon]);
   },
   mounted() {
     Object.keys(this.$props).forEach((prop) => {
@@ -102,7 +108,7 @@ export default {
 
       if (this.$slots.balloon) {
         balloonContentLayout = ymaps.templateLayoutFactory
-          .createClass(this.$slots.balloon[0].elm.outerHTML);
+        .createClass(typeof this.$slots.balloon === 'function' ? this.$slots.balloon()[0].elm.outerHTML : this.$slots.balloon[0].elm.outerHTML);
       }
 
       if (this.makeComponentBalloonTemplate) {
@@ -191,7 +197,8 @@ export default {
 
       const mapMarker = utils.createMarker(obj, this.useObjectManager, this.$emit);
       if (!this.useObjectManager) {
-        markerEvents.forEach(_ => mapMarker.events.add(_, e => this.$emit(_, e)));
+        const events = this.markerEvents.length ? this.markerEvents : defaultMarkerEvents;
+        events.forEach(_ => mapMarker.events.add(_, e => this.$emit(_, e)));
       }
       return mapMarker;
     },
