@@ -11,6 +11,7 @@ export default [
       file: pkg.module,
       format: 'es',
       exports: 'named',
+      globals: { vue: 'vue' },
     },
     plugins: [
       babel({
@@ -26,6 +27,7 @@ export default [
       file: pkg.main,
       format: 'umd',
       exports: 'named',
+      globals: { vue: 'vue' },
     },
     plugins: [
       babel({
@@ -42,6 +44,7 @@ export default [
       format: 'iife',
       exports: 'named',
       extend: true,
+      globals: { vue: 'vue' },
     },
     plugins: [
       babel({

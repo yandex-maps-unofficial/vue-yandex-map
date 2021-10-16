@@ -82,6 +82,7 @@ Since version `0.10` attribute `callbacks` not supported. You can listen compone
 | coords | Array [ latitude, longitude ] | Marker's coordinates or circle center. `Required` | Placemark, Circle |
 | coords | Array of arrays [ [latitude, longitude], [...] ] | Coordinates of tops. `Required` | Rectangle, Polyline |
 | coords | Array of two arrays of coordinates arrays (first for outer contour, second for inner) [ [[latitude, longitude], [...]], [[...], [...]] ] | Coordinates of tops. `Required` | Polygon |
+| marker-events | Array | Native events, which marker emits. If not provided, marker will be emit all events, from section [Events](#events) | All |
 | hint-content | String | Content of tip | All |
 | balloon | Object | Balloon properties: header, body, footer | All |
 | [icon](#icons) | Object | Marker's icon | Placemark |
@@ -92,6 +93,7 @@ Since version `0.10` attribute `callbacks` not supported. You can listen compone
 | properties | Object | [Marker settings](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#param-feature.properties) | All |
 | options | Object | [Marker options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#param-options) | All |
 | [balloonTemplate](/en/examples/#custom-cluster-balloon) | String | HTML Template for balloon | All |
+| balloon-component-props | Object | Props object for balloon. _Use only for balloonComponent_ | All |
 
 ## Slots
 

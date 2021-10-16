@@ -72,6 +72,7 @@ The attributes `coords`, `bounds` and `zoom` are observable. The map is react if
 | ----- | ----- | ----- |
 | settings | Object | Settings of map. API Key, language and version. |
 | coords | Array | Map center coordinates. [ lat, lng ]. May use with `.sync`. *Required* |
+| map-events | Array | Native events, which map emits. If not provided, map will be emit all events, from section [Events](#events) | All |
 | zoom | Number | Zoom map value (from 0 to 19). May use with `.sync`. *Default: 18*. |
 | bounds | Array | Coordinates of the left bottom and right top corners of the map. If defined, `coords` and `center` are ignored. May use with `.sync`. |
 | [cluster-options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/ClusterPlacemark-docpage/#param-options) | Object | An object where the keys are the names of the clusters, and the values are the objects of options these clusters. In options you can point field `layout` (type `String`) for HTML template for `balloonItemContentLayout`, field `clusterIconContentLayout` (type `String`) for cluster icon customization and field `clusterBalloonLayout` (type `String`) for cluster balloon customization: [Custom Balloon example](https://tech.yandex.ru/maps/jsbox/2.1/cluster_custom_balloon_content_layout). There is also `createCluster` field for overriding default creating cluster function (field `use-object-manager` have to be turned off).|
@@ -87,5 +88,6 @@ The attributes `coords`, `bounds` and `zoom` are observable. The map is react if
 | ymap-class  | String | Defines class for element, where rendering the map instance. If the attribute is not defined, the element uses style: `width: 100%; height: 100%;` |
 | init-without-markers  | Boolean | Set to `false` for prevent init and render map if there are no markers on the map. Default: `true` |
 | show-all-markers  | Boolean | Set to `true` to initialize map with all markers inside map bounds. Default: `false` |
+| use-html-in-layout  | Boolean | Set to `true` to define balloon properties as html. Default: `false` |
 | [options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/#Map__param-options) | Object | Map options. |
-
+| balloon-component | Vue Component | Allow to use Vue Component as balloon. Need to activate runtimeCompiler(https://cli.vuejs.org/config/#runtimecompiler). **Vue 2 only**|

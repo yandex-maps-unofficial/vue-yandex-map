@@ -82,6 +82,7 @@
 | coords | Array [ latitude, longitude ] | Координаты маркера или центр круга. `Required` | Placemark, Circle |
 | coords | Array of arrays [ [latitude, longitude], [...] ] | Координаты вершин. `Required` | Rectangle, Polyline |
 | coords | Array of two arrays of coordinates arrays (first for outer contour, second for inner) [ [[latitude, longitude], [...]], [[...], [...]] ] | Координаты вершин. `Required` | Polygon |
+| marker-events | Array | Нативные события (события Я.Карт), которые эмитит маркер. Если не задано, то маркер будет эмитить все события, перечисленные в секции [Events](#events) | All |
 | hint-content | String | Содержимое подсказки | All |
 | balloon | Object | Свойства балуна: header, body, footer | All |
 | [icon](#icons) | Object | Иконка маркера | Placemark |
@@ -91,7 +92,8 @@
 | cluster-name | String | Имя кластера для группировки маркеров | All |
 | properties | Object | [Свойства маркера](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#param-feature.properties) | All |
 | options | Object | [Опции маркера](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#param-options) | All |
-| [balloonTemplate](/examples/#кастомный-темпnейт-баnуна) | String | HTML Template for balloon | All |
+| [balloon-template](/examples/#кастомный-темпnейт-баnуна) | String | HTML Template for balloon | All |
+| balloon-component-props | Object | Объект пропсов для балуна. _Только при инициализации балуна через balloonComponent_ | All |
 
 ## Slots
 
