@@ -241,6 +241,7 @@ let idCounter = 1;
 let VueBalloonClass;
 
 export function setupBalloonClass(Vue) {
+  if (typeof Vue.extend !== 'function') return;
   VueBalloonClass = Vue.extend({
     props: ['marker', 'component'],
     template: '<component :is="component" v-bind="{ marker, ...props.balloonComponentProps }" v-on="listeners" />',

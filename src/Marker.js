@@ -58,6 +58,7 @@ export default {
     balloonComponentProps: {
       type: Object,
       default: () => ({}),
+    },
     markerEvents: {
       type: Array,
       default: () => [],
@@ -70,6 +71,7 @@ export default {
   },
   mounted() {
     Object.keys(this.$props).forEach((prop) => {
+      if (prop === 'balloonComponentProps') return;
       this.unwatchArr.push(this.$watch(
         prop,
         (newVal, oldVal) => this.compareValues({
@@ -108,7 +110,7 @@ export default {
 
       if (this.$slots.balloon) {
         balloonContentLayout = ymaps.templateLayoutFactory
-        .createClass(typeof this.$slots.balloon === 'function' ? this.$slots.balloon()[0].elm.outerHTML : this.$slots.balloon[0].elm.outerHTML);
+          .createClass(typeof this.$slots.balloon === 'function' ? this.$slots.balloon()[0].elm.outerHTML : this.$slots.balloon[0].elm.outerHTML);
       }
 
       if (this.makeComponentBalloonTemplate) {

@@ -90,3 +90,4 @@
 | show-all-markers  | Boolean | Установите значение в `true`, чтобы границы карты при инициализации вмещали все маркеры. Default: `false` |
 | use-html-in-layout  | Boolean | Установите значение в `true`, чтобы передавать в поля в балун в виде html-разметки. Default: `false` |
 | [options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/#Map__param-options) | Object | Опции карты |
+| balloon-component | Vue Component | Позволяет использовать компонент Vue в качестве балуна. Для работы необходима активация runtimeCompiler(https://cli.vuejs.org/config/#runtimecompiler). **Только для Vue 2**|

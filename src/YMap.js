@@ -233,7 +233,9 @@ export default {
         this.$emit('markers-was-change', ids);
       } else utils.addToMap(markers, config);
       this.$options.static.markers = [];
-      if (this.showAllMarkers) this.$options.static.myMap.setBounds(this.$options.static.myMap.geoObjects.getBounds());
+      if (this.showAllMarkers) {
+        this.$options.static.myMap.setBounds(this.$options.static.myMap.geoObjects.getBounds());
+      }
     },
     deleteMarkers(deletedMarkersIds) {
       this.$options.static.myMap.geoObjects.each((collection) => {
@@ -268,7 +270,9 @@ export default {
     coordinates(val) {
       if (this.disablePan) {
         if (this.$options.static.myMap.setCenter) this.$options.static.myMap.setCenter(val);
-      } else if (this.$options.static.myMap.panTo && this.$options.static.myMap.getZoom()) this.$options.static.myMap.panTo(val, { checkZoomRange: true });
+      } else if (this.$options.static.myMap.panTo && this.$options.static.myMap.getZoom()) {
+        this.$options.static.myMap.panTo(val, { checkZoomRange: true });
+      }
     },
     zoom() {
       this.$options.static.myMap.setZoom(this.zoom);
@@ -316,7 +320,9 @@ export default {
     if (this.placemarks && this.placemarks.length) throw new Error('Vue-yandex-maps: Attribute placemarks is not supported. Use marker component.');
 
     this.mapObserver = new MutationObserver((() => {
-      if (this.$options.static.myMap.container) this.$options.static.myMap.container.fitToViewport();
+      if (this.$options.static.myMap.container) {
+        this.$options.static.myMap.container.fitToViewport();
+      }
     }));
 
     // Setup the observer

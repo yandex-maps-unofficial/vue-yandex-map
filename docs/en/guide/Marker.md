@@ -93,6 +93,7 @@ Since version `0.10` attribute `callbacks` not supported. You can listen compone
 | properties | Object | [Marker settings](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#param-feature.properties) | All |
 | options | Object | [Marker options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#param-options) | All |
 | [balloonTemplate](/en/examples/#custom-cluster-balloon) | String | HTML Template for balloon | All |
+| balloon-component-props | Object | Props object for balloon. _Use only for balloonComponent_ | All |
 
 ## Slots
 

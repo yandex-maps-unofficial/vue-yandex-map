@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import ymapPlugin from '../../../src';
+import ymapPlugin from '../../../dist/vue-yandex-maps.esm.js';
 
 const app = createApp(App)
 

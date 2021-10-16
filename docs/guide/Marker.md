@@ -92,7 +92,8 @@
 | cluster-name | String | Имя кластера для группировки маркеров | All |
 | properties | Object | [Свойства маркера](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#param-feature.properties) | All |
 | options | Object | [Опции маркера](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject-docpage/#param-options) | All |
-| [balloonTemplate](/examples/#кастомный-темпnейт-баnуна) | String | HTML Template for balloon | All |
+| [balloon-template](/examples/#кастомный-темпnейт-баnуна) | String | HTML Template for balloon | All |
+| balloon-component-props | Object | Объект пропсов для балуна. _Только при инициализации балуна через balloonComponent_ | All |
 
 ## Slots
 
