@@ -161,6 +161,7 @@ export default {
       type: [Object, Function],
       default: () => null,
     },
+    useHtmlInLayout: Boolean,
   },
   computed: {
     coordinates() {
@@ -223,6 +224,7 @@ export default {
         map: this.$options.static.myMap,
         useObjectManager: this.useObjectManager,
         objectManagerClusterize: this.objectManagerClusterize,
+        useHtmlInLayout: this.useHtmlInLayout,
       };
       if (this.$options.static.markers !== markers) {
         const ids = markers.map(_ => (this.useObjectManager ? _.id : _.properties.get('markerId')));

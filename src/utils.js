@@ -1,11 +1,15 @@
 export function addToMap(markers, {
-  options, callbacks, map, useObjectManager, objectManagerClusterize,
+  options, callbacks, map, useObjectManager, objectManagerClusterize, useHtmlInLayout,
 }) {
-  const defaultLayout = `
-      <div>{{ properties.balloonContentHeader }}</div>
-      <div>{{ properties.balloonContentBody }}</div>
-      <div>{{ properties.balloonContentFooter }}</div>
-    `;
+  const defaultLayout = useHtmlInLayout ? `
+    <div v-html="properties.balloonContentHeader"></div>
+    <div v-html="properties.balloonContentBody"></div>
+    <div v-html="properties.balloonContentFooter"></div>
+  ` : `
+    <div>{{ properties.balloonContentHeader }}</div>
+    <div>{{ properties.balloonContentBody }}</div>
+    <div>{{ properties.balloonContentFooter }}</div>
+  `;
   const defaultClusterLayout = 'cluster#balloonTwoColumns';
 
   const clusters = {};

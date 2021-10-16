@@ -88,5 +88,6 @@ The attributes `coords`, `bounds` and `zoom` are observable. The map is react if
 | ymap-class  | String | Defines class for element, where rendering the map instance. If the attribute is not defined, the element uses style: `width: 100%; height: 100%;` |
 | init-without-markers  | Boolean | Set to `false` for prevent init and render map if there are no markers on the map. Default: `true` |
 | show-all-markers  | Boolean | Set to `true` to initialize map with all markers inside map bounds. Default: `false` |
+| use-html-in-layout  | Boolean | Set to `true` to define balloon properties as html. Default: `false` |
 | [options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/#Map__param-options) | Object | Map options. |
 
