@@ -90,4 +90,4 @@ The attributes `coords`, `bounds` and `zoom` are observable. The map is react if
 | show-all-markers  | Boolean | Set to `true` to initialize map with all markers inside map bounds. Default: `false` |
 | use-html-in-layout  | Boolean | Set to `true` to define balloon properties as html. Default: `false` |
 | [options](https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/#Map__param-options) | Object | Map options. |
-| balloon-component | Vue Component | Allow to use Vue Component as balloon. Need to activate runtimeCompiler(https://cli.vuejs.org/config/#runtimecompiler). **Vue 2 only**|
+| balloon-component | Vue Component | Allow to use Vue Component as balloon. Need to activate [runtimeCompiler](https://cli.vuejs.org/config/#runtimecompiler). **Vue 2 only**|
