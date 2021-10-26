@@ -238,7 +238,12 @@ export default {
       }
     },
     deleteMarkers(deletedMarkersIds) {
-      this.$options.static.myMap.geoObjects.each((collection) => {
+      // geoObjects.each is not immutable, so:
+      const geoObjects = [];
+      this.$options.static.myMap.geoObjects.each(geoObject => geoObjects.push(geoObject));
+
+      // and now - iterate & possibly delete
+      geoObjects.forEach((collection) => {
         const removedMarkers = [];
         if (this.useObjectManager) {
           collection.remove(deletedMarkersIds);
