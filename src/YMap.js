@@ -173,7 +173,7 @@ export default {
       // if ymap isn't initialized or have no markers;
       if (!window.ymaps
         || !ymaps.GeoObjectCollection
-        || (!this.initWithoutMarkers && !this.$slots.default && !this.placemarks.length)
+        || (!this.initWithoutMarkers && !this.$slots.default() && !this.placemarks.length)
       ) return;
 
       this.$emit('map-initialization-started');
@@ -281,35 +281,25 @@ export default {
       if (this.$options.static.myMap.setBounds) this.$options.static.myMap.setBounds(val);
     },
   },
-  render(createElement) {
-    const render = typeof createElement === 'function' ? createElement : h;
-    const childProps = typeof createElement === 'function' ? {
-      attrs: {
-        id: this.ymapId,
-        class: this.ymapClass,
-        style: this.style,
-      },
-    } : {
-      id: this.ymapId,
-      class: this.ymapClass,
-      style: this.style,
-    };
-    return render(
+  render() {
+    return h(
       'section',
       {
         class: 'ymap-container',
         ref: 'mapContainer',
       },
       [
-        render(
+        h(
           'div',
-          childProps,
+          {
+            id: this.ymapId,
+            class: this.ymapClass,
+            style: this.style,
+          },
         ),
-        this.isReady && render(
+        this.isReady && h(
           'div',
-          [
-            typeof this.$slots.default === 'function' ? this.$slots.default() : this.$slots.default,
-          ],
+          [this.$slots.default()],
         ),
       ],
     );
@@ -345,9 +335,6 @@ export default {
     } else {
       emitter.$on('scriptIsLoaded', this.init);
     }
-  },
-  beforeDestroy() {
-    if (this.$options.static.myMap.geoObjects) this.$options.static.myMap.geoObjects.removeAll();
   },
   beforeUnmount() {
     if (this.$options.static.myMap.geoObjects) this.$options.static.myMap.geoObjects.removeAll();

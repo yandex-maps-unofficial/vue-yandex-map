@@ -1,11 +1,10 @@
 import YMapPlugin from './YMap';
 import Marker from './Marker';
-import { setupBalloonClass, ymapLoader } from './utils';
+import { ymapLoader } from './utils';
 
 const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
-  setupBalloonClass(Vue);
   YMapPlugin.pluginOptions = options;
   Vue.component('yandex-map', YMapPlugin);
   Vue.component('ymap-marker', Marker);

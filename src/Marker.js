@@ -65,9 +65,8 @@ export default {
     },
   },
   data: () => ({ unwatchArr: [] }),
-  render(createElement) {
-    const render = typeof createElement === 'function' ? createElement : h;
-    return this.$slots.balloon && render('div', { style: 'display: none;' }, [typeof this.$slots.balloon === 'function' ? this.$slots.balloon() : this.$slots.balloon]);
+  render() {
+    return this.$slots.balloon && h('div', { style: 'display: none;' }, [this.$slots.balloon()]);
   },
   mounted() {
     Object.keys(this.$props).forEach((prop) => {
@@ -110,7 +109,7 @@ export default {
 
       if (this.$slots.balloon) {
         balloonContentLayout = ymaps.templateLayoutFactory
-          .createClass(typeof this.$slots.balloon === 'function' ? this.$slots.balloon()[0].elm.outerHTML : this.$slots.balloon[0].elm.outerHTML);
+          .createClass(this.$slots.balloon()[0].elm.outerHTML);
       }
 
       if (this.makeComponentBalloonTemplate) {
