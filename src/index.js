@@ -4,6 +4,11 @@ import { setupBalloonClass, ymapLoader } from './utils';
 
 const install = (Vue, options = {}) => {
   if (install.installed) return;
+  console.log(Vue.version[0]);
+  if (+Vue.version[0] === 3) {
+    console.warn('Vue-yandex-maps: This version is only compatible with Vue 2.X. Please install vue-yandex-maps@next');
+    return;
+  }
   install.installed = true;
   setupBalloonClass(Vue);
   YMapPlugin.pluginOptions = options;

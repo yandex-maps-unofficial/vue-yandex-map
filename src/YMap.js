@@ -1,5 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { h } from 'vue';
 import * as utils from './utils';
 
 const { emitter } = utils;
@@ -281,34 +279,28 @@ export default {
       if (this.$options.static.myMap.setBounds) this.$options.static.myMap.setBounds(val);
     },
   },
-  render(createElement) {
-    const render = typeof createElement === 'function' ? createElement : h;
-    const childProps = typeof createElement === 'function' ? {
-      attrs: {
-        id: this.ymapId,
-        class: this.ymapClass,
-        style: this.style,
-      },
-    } : {
-      id: this.ymapId,
-      class: this.ymapClass,
-      style: this.style,
-    };
-    return render(
+  render(h) {
+    return h(
       'section',
       {
         class: 'ymap-container',
         ref: 'mapContainer',
       },
       [
-        render(
+        h(
           'div',
-          childProps,
+          {
+            attrs: {
+              id: this.ymapId,
+              class: this.ymapClass,
+              style: this.style,
+            },
+          },
         ),
-        this.isReady && render(
+        this.isReady && h(
           'div',
           [
-            typeof this.$slots.default === 'function' ? this.$slots.default() : this.$slots.default,
+            this.$slots.default,
           ],
         ),
       ],
@@ -347,9 +339,6 @@ export default {
     }
   },
   beforeDestroy() {
-    if (this.$options.static.myMap.geoObjects) this.$options.static.myMap.geoObjects.removeAll();
-  },
-  beforeUnmount() {
     if (this.$options.static.myMap.geoObjects) this.$options.static.myMap.geoObjects.removeAll();
   },
 };

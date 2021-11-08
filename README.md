@@ -11,6 +11,13 @@
 
 # vue-yandex-maps
 
+Latest version is only compatible with Vue 2.x<br>
+Version for Vue 3 available with `next` tag
+
+```
+npm install vue-yandex-maps@next
+```
+
 Documentation: [RU](https://vue-yandex-maps.github.io/), [EN](https://vue-yandex-maps.github.io/en/)
 
 ## Contributors ✨
