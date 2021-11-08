@@ -1,6 +1,6 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-22-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-23-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![npm](https://img.shields.io/npm/v/vue-yandex-maps.svg)](https://www.npmjs.com/package/vue-yandex-maps)
 [![GitHub issues](https://img.shields.io/github/issues/PNKBizz/vue-yandex-map.svg)](https://github.com/PNKBizz/vue-yandex-map/issues)
@@ -57,6 +57,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/Donnevtis"><img src="https://avatars.githubusercontent.com/u/38441204?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Donnevtis</b></sub></a><br /><a href="#ideas-Donnevtis" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/agent-bo-007"><img src="https://avatars.githubusercontent.com/u/78845669?v=4?s=100" width="100px;" alt=""/><br /><sub><b>agent-bo-007</b></sub></a><br /><a href="https://github.com/PNKBizz/vue-yandex-map/commits?author=agent-bo-007" title="Code">💻</a></td>
   </tr>
 </table>
 
