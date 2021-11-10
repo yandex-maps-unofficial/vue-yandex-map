@@ -204,7 +204,7 @@ export default {
       return mapMarker;
     },
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.unwatchArr.forEach(f => f());
     this.deleteMarker(this.markerId);
   },
