@@ -25,7 +25,7 @@ export default {
     let deleteMarkerWithTimeout;
     let changeMarkersWithTimeout;
     const deleteMarker = (id) => {
-      if (!this.$options.static.myMap.geoObjects) return;
+      if (!this.myMap.geoObjects) return;
       deletedMarkers.push(id);
       if (deleteMarkerWithTimeout) clearTimeout(deleteMarkerWithTimeout);
       deleteMarkerWithTimeout = setTimeout(() => {
@@ -64,10 +64,6 @@ export default {
       isReady: false,
       debounce: null,
     };
-  },
-  static: {
-    myMap: {},
-    markers: [],
   },
   props: {
     coords: {
@@ -168,6 +164,9 @@ export default {
   },
   methods: {
     init() {
+      this.myMap = {};
+      this.markers = [];
+
       // if ymap isn't initialized or have no markers;
       if (!window.ymaps
         || !ymaps.GeoObjectCollection
@@ -176,7 +175,7 @@ export default {
 
       this.$emit('map-initialization-started');
 
-      this.$options.static.myMap = new ymaps.Map(this.ymapId, {
+      this.myMap = new ymaps.Map(this.ymapId, {
         center: this.coordinates,
         zoom: +this.zoom,
         bounds: this.bounds,
@@ -185,8 +184,8 @@ export default {
         type: `yandex#${this.mapType}`,
       }, this.options);
       const events = this.mapEvents.length ? this.mapEvents : defaultMapEvents;
-      events.forEach(_ => this.$options.static.myMap.events.add(_, e => this.$emit(_, e)));
-      this.$options.static.myMap.events.add('boundschange', (e) => {
+      events.forEach(_ => this.myMap.events.add(_, e => this.$emit(_, e)));
+      this.myMap.events.add('boundschange', (e) => {
         const { originalEvent: { newZoom, newCenter, newBounds } } = e;
         this.$emit('boundschange', e);
         this.$emit('update:zoom', newZoom);
@@ -196,49 +195,49 @@ export default {
       if (this.detailedControls) {
         const controls = Object.keys(this.detailedControls);
         controls.forEach((controlName) => {
-          this.$options.static.myMap.controls.remove(controlName);
-          this.$options.static.myMap.controls.add(controlName, this.detailedControls[controlName]);
+          this.myMap.controls.remove(controlName);
+          this.myMap.controls.add(controlName, this.detailedControls[controlName]);
         });
       }
       if (this.scrollZoom === false) {
-        this.$options.static.myMap.behaviors.disable('scrollZoom');
+        this.myMap.behaviors.disable('scrollZoom');
       }
 
       this.isReady = true;
 
-      this.$emit('map-was-initialized', this.$options.static.myMap);
+      this.$emit('map-was-initialized', this.myMap);
     },
     addMarker(marker) {
-      this.$options.static.markers.push(marker);
+      this.markers.push(marker);
       if (this.debounce) clearTimeout(this.debounce);
       this.debounce = setTimeout(() => {
-        this.setMarkers(this.$options.static.markers);
+        this.setMarkers(this.markers);
       }, 0);
     },
     setMarkers(markers) {
       const config = {
         options: this.clusterOptions,
         callbacks: this.clusterCallbacks,
-        map: this.$options.static.myMap,
+        map: this.myMap,
         useObjectManager: this.useObjectManager,
         objectManagerClusterize: this.objectManagerClusterize,
         useHtmlInLayout: this.useHtmlInLayout,
       };
-      if (this.$options.static.markers !== markers) {
+      if (this.markers !== markers) {
         const ids = markers.map(_ => (this.useObjectManager ? _.id : _.properties.get('markerId')));
         this.deleteMarkers(ids);
         utils.addToMap(markers, config);
         this.$emit('markers-was-change', ids);
       } else utils.addToMap(markers, config);
-      this.$options.static.markers = [];
+      this.markers = [];
       if (this.showAllMarkers) {
-        this.$options.static.myMap.setBounds(this.$options.static.myMap.geoObjects.getBounds());
+        this.myMap.setBounds(this.myMap.geoObjects.getBounds());
       }
     },
     deleteMarkers(deletedMarkersIds) {
       // geoObjects.each is not immutable, so:
       const geoObjects = [];
-      this.$options.static.myMap.geoObjects.each(geoObject => geoObjects.push(geoObject));
+      this.myMap.geoObjects.each(geoObject => geoObjects.push(geoObject));
 
       // and now - iterate & possibly delete
       geoObjects.forEach((collection) => {
@@ -260,7 +259,7 @@ export default {
             length = markersArray.length;
           }
           if (length === 0 || length === removedMarkers.length) {
-            this.$options.static.myMap.geoObjects.remove(collection);
+            this.myMap.geoObjects.remove(collection);
           } else if (removedMarkers.length) {
             removedMarkers.forEach(marker => collection.remove(marker));
           }
@@ -272,16 +271,16 @@ export default {
   watch: {
     coordinates(val) {
       if (this.disablePan) {
-        if (this.$options.static.myMap.setCenter) this.$options.static.myMap.setCenter(val);
-      } else if (this.$options.static.myMap.panTo && this.$options.static.myMap.getZoom()) {
-        this.$options.static.myMap.panTo(val, { checkZoomRange: true });
+        if (this.myMap.setCenter) this.myMap.setCenter(val);
+      } else if (this.myMap.panTo && this.myMap.getZoom()) {
+        this.myMap.panTo(val, { checkZoomRange: true });
       }
     },
     zoom() {
-      this.$options.static.myMap.setZoom(this.zoom);
+      this.myMap.setZoom(this.zoom);
     },
     bounds(val) {
-      if (this.$options.static.myMap.setBounds) this.$options.static.myMap.setBounds(val);
+      if (this.myMap.setBounds) this.myMap.setBounds(val);
     },
   },
   render(h) {
@@ -317,8 +316,8 @@ export default {
     if (this.placemarks && this.placemarks.length) throw new Error('Vue-yandex-maps: Attribute placemarks is not supported. Use marker component.');
 
     this.mapObserver = new MutationObserver((() => {
-      if (this.$options.static.myMap.container) {
-        this.$options.static.myMap.container.fitToViewport();
+      if (this.myMap.container) {
+        this.myMap.container.fitToViewport();
       }
     }));
 
@@ -344,6 +343,6 @@ export default {
     }
   },
   beforeDestroy() {
-    if (this.$options.static.myMap.geoObjects) this.$options.static.myMap.geoObjects.removeAll();
+    if (this.myMap.geoObjects) this.myMap.geoObjects.removeAll();
   },
 };
