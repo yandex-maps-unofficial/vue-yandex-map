@@ -23,7 +23,7 @@ export function addToMap(markers, {
   });
 
   Object.keys(clusters).forEach((clusterName) => {
-    const clusterOptions = options[clusterName] || {};
+    const clusterOptions = { ...options[clusterName] } || {};
     const clusterCallbacks = callbacks[clusterName] || {};
     const layout = clusterOptions.layout || defaultLayout;
     clusterOptions.clusterBalloonItemContentLayout = ymaps.templateLayoutFactory
