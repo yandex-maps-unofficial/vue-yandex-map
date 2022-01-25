@@ -343,6 +343,6 @@ export default {
     }
   },
   beforeDestroy() {
-    if (this.myMap.geoObjects) this.myMap.geoObjects.removeAll();
+    if (this.myMap && this.myMap.geoObjects) this.myMap.geoObjects.removeAll();
   },
 };
