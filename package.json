@@ -1,6 +1,6 @@
 {
   "name": "vue-yandex-maps",
-  "version": "0.11.02",
+  "version": "0.11.03",
   "description": "Yandex Maps component for VueJS.",
   "main": "dist/vue-yandex-maps.umd.js",
   "module": "dist/vue-yandex-maps.esm.js",
