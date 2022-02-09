@@ -270,6 +270,7 @@ export default {
   },
   watch: {
     coordinates(val) {
+      if (!this.myMap) return;
       if (this.disablePan) {
         if (this.myMap.setCenter) this.myMap.setCenter(val);
       } else if (this.myMap.panTo && this.myMap.getZoom()) {
@@ -277,10 +278,10 @@ export default {
       }
     },
     zoom() {
-      this.myMap.setZoom(this.zoom);
+      if (this.myMap) this.myMap.setZoom(this.zoom);
     },
     bounds(val) {
-      if (this.myMap.setBounds) this.myMap.setBounds(val);
+      if (this.myMap && this.myMap.setBounds) this.myMap.setBounds(val);
     },
   },
   render(h) {
