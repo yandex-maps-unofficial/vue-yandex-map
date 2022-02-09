@@ -272,6 +272,7 @@ export default {
   },
   watch: {
     coordinates(val) {
+      if (!this.myMap) return;
       if (this.disablePan) {
         if (this.myMap.setCenter) this.myMap.setCenter(val);
       } else if (this.myMap.panTo && this.myMap.getZoom()) {
