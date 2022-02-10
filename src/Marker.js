@@ -100,6 +100,7 @@ export default {
       };
 
       let balloonContentLayout = null;
+      let balloonLayout = null;
 
       if (this.balloonTemplate) {
         balloonContentLayout = ymaps.templateLayoutFactory
@@ -107,7 +108,7 @@ export default {
       }
 
       if (this.$slots.balloon) {
-        balloonContentLayout = ymaps.templateLayoutFactory
+        balloonLayout = ymaps.templateLayoutFactory
           .createClass(this.$slots.balloon[0].elm.outerHTML);
       }
 
@@ -117,6 +118,10 @@ export default {
 
       if (balloonContentLayout != null) {
         marker.balloonOptions.balloonContentLayout = balloonContentLayout;
+      }
+
+      if (balloonLayout != null) {
+        marker.balloonOptions.balloonLayout = balloonLayout;
       }
 
       if (this.icon && ['default#image', 'default#imageWithContent'].includes(this.icon.layout)) {
