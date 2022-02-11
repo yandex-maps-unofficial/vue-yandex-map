@@ -65,7 +65,10 @@ export default {
   },
   data: () => ({ unwatchArr: [] }),
   render(h) {
-    return this.$slots.balloon && h('div', { style: 'display: none;' }, [this.$slots.balloon]);
+    return h('div', [
+      this.$slots.balloon && h('div', { style: 'display: none;' }, [this.$slots.balloon]),
+      this.$slots.balloonLayout && h('div', { style: 'display: none;' }, [this.$slots.balloonLayout])
+    ]);
   },
   mounted() {
     Object.keys(this.$props).forEach((prop) => {
@@ -100,6 +103,7 @@ export default {
       };
 
       let balloonContentLayout = null;
+      let balloonLayout = null;
 
       if (this.balloonTemplate) {
         balloonContentLayout = ymaps.templateLayoutFactory
@@ -111,12 +115,21 @@ export default {
           .createClass(this.$slots.balloon[0].elm.outerHTML);
       }
 
+      if (this.$slots.balloonLayout) {
+        balloonLayout = ymaps.templateLayoutFactory
+          .createClass(this.$slots.balloonLayout[0].elm.outerHTML);
+      }
+
       if (this.makeComponentBalloonTemplate) {
         balloonContentLayout = this.makeComponentBalloonTemplate(this, marker);
       }
 
       if (balloonContentLayout != null) {
         marker.balloonOptions.balloonContentLayout = balloonContentLayout;
+      }
+
+      if (balloonLayout != null) {
+        marker.balloonOptions.balloonLayout = balloonLayout;
       }
 
       if (this.icon && ['default#image', 'default#imageWithContent'].includes(this.icon.layout)) {
