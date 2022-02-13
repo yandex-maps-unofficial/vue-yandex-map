@@ -98,6 +98,7 @@ Since version `0.10` attribute `callbacks` not supported. You can listen compone
 ## Slots
 
 You may to define balloon template through `balloon` slot in marker. Also you may place your custom component into this slot, but keep in mind that balloon only render view of this component and discard any logic. If you need to add some user interactive (eg handle button click), you may to listen event `balloonopen` and bind any handlers to your balloon elements. Don't forget to delete these handlers on `balloonclose`. [Example](/en/examples/#balloon-slot-in-marker)
+Also you may define balloon layout through `balloonLayout` slot in marker. It's rewrite default yandex layout for balloon. Be careful, if you use `balloonLayout` slot, `balloon` slot will be ignored
 
 # Icons
 
