@@ -9,8 +9,6 @@
 [![GitHub license](https://img.shields.io/github/license/PNKBizz/vue-yandex-map.svg)](https://github.com/PNKBizz/vue-yandex-map/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/PNKBizz/vue-yandex-map.svg?style=social)](https://github.com/PNKBizz/vue-yandex-map/stargazers)
 
-# NO WAR! НЕТ ВОЙНЕ!
-
 # vue-yandex-maps
 
 Latest version is only compatible with Vue 2.x<br>
