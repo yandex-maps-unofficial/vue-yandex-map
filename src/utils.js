@@ -110,6 +110,7 @@ export function objectComparison(first, second) {
   return (function eq(f, s) {
     if (f === s) return true; // сравниваем обычным образом
     if (f instanceof Date && s instanceof Date) return +f === +s; // время
+    if (typeof f === 'function' && typeof s === 'function') return true; // функции не сравниваем
     if (typeof f !== 'object' || typeof s !== 'object') return false; // если хотябы один из аргументов не объект (положительный случай для необъектов рассмотрен выше)
     if (inCache(f, s)) return true; // есть в кеше
     cache.push([f, s]); // кешируем
