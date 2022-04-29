@@ -164,6 +164,9 @@ const CONTROL_TYPES = [
   'zoomControl',
   'routeButtonControl',
   'routePanelControl',
+  'smallMapDefaultSet',
+  'mediumMapDefaultSet',
+  'largeMapDefaultSet',
 ];
 
 export function controlsTypeValidator(val) {
