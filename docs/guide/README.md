@@ -10,6 +10,11 @@
 npm install vue-yandex-maps
 ```
 
+Vue 3:
+```Bash
+npm install vue-yandex-maps@next
+```
+
 После этого вы можете определить настройки подключения компонента:
 * [Индивидуальный ключ API](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/load-docpage/)
 * [Используемый язык](https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/localization-docpage/)
