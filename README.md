@@ -20,6 +20,14 @@ npm install vue-yandex-maps@next
 
 Documentation: [RU](https://vue-yandex-maps.github.io/), [EN](https://vue-yandex-maps.github.io/en/)
 
+**New Beta for Vue 3** available with `beta` tag. Full on TS. Need testing. Not recommended to production.
+
+```
+npm install vue-yandex-maps@beta
+```
+
+Beta docs: [RU](https://vue-yandex-maps.github.io/new-docs/)
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
