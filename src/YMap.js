@@ -172,7 +172,7 @@ export default {
       // if ymap isn't initialized or have no markers;
       if (!window.ymaps
         || !ymaps.GeoObjectCollection
-        || (!this.initWithoutMarkers && !this.$slots.default() && !this.placemarks.length)
+        || (!this.initWithoutMarkers && !this.$slots.default && !this.placemarks.length)
       ) return;
 
       this.$emit('map-initialization-started');
@@ -287,27 +287,39 @@ export default {
     },
   },
   render() {
-    return h(
-      'section',
-      {
-        class: 'ymap-container',
-        ref: 'mapContainer',
-      },
-      [
-        h(
-          'div',
-          {
+    if (this.$slots.default) {
+      return h(
+        'section',
+        {
+          class: 'ymap-container',
+          ref: 'mapContainer',
+        },
+        [
+          h('div', {
             id: this.ymapId,
             class: this.ymapClass,
             style: this.style,
-          },
-        ),
-        this.isReady && h(
-          'div',
-          [this.$slots.default()],
-        ),
-      ],
-    );
+          }),
+          this.isReady && h('div', [this.$slots.default]),
+        ]
+      );
+    } else {
+      return h(
+        'section',
+        {
+          class: 'ymap-container',
+          ref: 'mapContainer',
+        },
+        [
+          h('div', {
+            id: this.ymapId,
+            class: this.ymapClass,
+            style: this.style,
+          }),
+          this.isReady,
+        ]
+      );
+    }
   },
   mounted() {
     if (this.$attrs['map-link'] || this.$attrs.mapLink) throw new Error('Vue-yandex-maps: Attribute mapLink is not supported. Use settings.');
