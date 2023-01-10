@@ -201,7 +201,8 @@ export function ymapLoader(settings = {}) {
 
     if (document.getElementById('vue-yandex-maps')) {
       emitter.$on('scriptIsLoaded', res);
-      return
+      emitter.$on('scriptIsFailed', rej);
+      return;
     }
 
     const yandexMapScript = document.createElement('SCRIPT');
@@ -229,6 +230,11 @@ export function ymapLoader(settings = {}) {
         res();
       });
     };
-    yandexMapScript.onerror = rej;
+    yandexMapScript.onerror = () => {
+      emitter.$emit('scriptIsFailed');
+      yandexMapScript.remove();
+      emitter.scriptIsNotAttached = true;
+      rej();
+    };
   });
 }
