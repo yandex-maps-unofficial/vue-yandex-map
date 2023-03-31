@@ -172,7 +172,7 @@ export default {
       // if ymap isn't initialized or have no markers;
       if (!window.ymaps
         || !ymaps.GeoObjectCollection
-        || (!this.initWithoutMarkers && !this.$slots.default() && !this.placemarks.length)
+        || (!this.initWithoutMarkers && !this.$slots.default?.() && !this.placemarks.length)
       ) return;
 
       this.$emit('map-initialization-started');
@@ -304,7 +304,7 @@ export default {
         ),
         this.isReady && h(
           'div',
-          [this.$slots.default()],
+          [this.$slots.default?.()],
         ),
       ],
     );
