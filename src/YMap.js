@@ -171,6 +171,7 @@ export default {
       if (!window.ymaps
         || !ymaps.GeoObjectCollection
         || (!this.initWithoutMarkers && !this.$slots.default && !this.placemarks.length)
+        || (!document.getElementById(this.ymapId))
       ) return;
 
       this.$emit('map-initialization-started');
