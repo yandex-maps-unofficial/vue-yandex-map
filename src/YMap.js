@@ -173,6 +173,7 @@ export default {
       if (!window.ymaps
         || !ymaps.GeoObjectCollection
         || (!this.initWithoutMarkers && !this.$slots.default?.() && !this.placemarks.length)
+        || (!document.getElementById(this.ymapId))
       ) return;
 
       this.$emit('map-initialization-started');
@@ -342,6 +343,6 @@ export default {
     }
   },
   beforeUnmount() {
-    if (this.myMap.geoObjects) this.myMap.geoObjects.removeAll();
+    if (this.myMap?.geoObjects) this.myMap.geoObjects.removeAll();
   },
 };
