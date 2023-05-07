@@ -1,3 +1,4 @@
+import { GenericEntity } from '@yandex/ymaps3-types/imperative/Entities';
 import {
   Ref, UnwrapRef, ref, ComputedGetter, DebuggerOptions, ComputedRef, computed,
 } from 'vue';

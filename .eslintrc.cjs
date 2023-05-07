@@ -37,7 +37,7 @@ module.exports = {
     'no-promise-executor-return': 'off',
     'object-shorthand': 'off',
     'no-unused-vars': 'off',
-    '@typescript/no-unused-vars': 'error',
+    '@typescript-eslint/no-unused-vars': 'error',
   },
   parser: 'vue-eslint-parser',
   parserOptions: {

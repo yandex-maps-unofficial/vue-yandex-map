@@ -1,5 +1,6 @@
 <template>
   <div ref="ymapContainer" class="__ymap-container" />
+  <YMapListener/>
 </template>
 
 <script lang="ts">
@@ -10,9 +11,11 @@ import {
 import { YMap, YMapProps } from '@yandex/ymaps3-types';
 import { GenericEntity } from '@yandex/ymaps3-types/imperative/Entities';
 import { initYmaps } from '../composables/maps';
+import YMapListener from './YMapListener.vue';
 
 export default defineComponent({
   name: 'YMap',
+  components: { YMapListener },
   props: {
     map: {
       type: Object as PropType<YMap | null>,
@@ -44,7 +47,9 @@ export default defineComponent({
       required: true,
     },
     /**
-     * @description You can also add layers throught <yandex-*> components. Modifying this object will cause whole component to rerender.
+     * @description You can also add layers throught <yandex-*> components
+     *
+     * Modifying this object will cause whole component to rerender.
      *
      * Instead, please use map methods, such as addChild.
      * @see https://yandex.ru/dev/maps/jsapi/doc/3.0/dg/concepts/map.html#layers
@@ -55,6 +60,11 @@ export default defineComponent({
       default: (() => []),
     },
   },
+  /**
+   * @description Other events are NOT available. You can listen to events via layers prop, addChildren prop or by adding <ymap-listener> as children.
+   * @see https://yandex.ru/dev/maps/jsapi/doc/3.0/dg/concepts/events.html
+   * @see https://yandex.com/dev/maps/jsapi/doc/3.0/dg/concepts/events.html
+   */
   emits: {
     'update:map'(map: YMap) {
       return map && map instanceof ymaps3.YMap;
@@ -88,8 +98,6 @@ export default defineComponent({
 
     watch(() => props.layers, (val) => {
       init();
-    }, {
-      deep: true,
     });
 
     return {
