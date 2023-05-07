@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "allowJs": false,
+    "strict": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "skipLibCheck": false,
+    "removeComments": true,
+    "outDir": "dist",
+    "declarationDir": "dist",
+    "lib": [
+      "ESNext",
+      "ESNext.AsyncIterable",
+      "DOM"
+    ],
+    "types": [
+      "@types/jest",
+      "@types/node"
+    ],
+    "typeRoots": [
+      "./node_modules/@yandex/ymaps3-types"
+    ],
+    "baseUrl": "."
+  },
+  "exclude": [
+    "node_modules",
+    "./packages/vue-module/dist",
+    "./packages/vue-module/src/tests/*"
+  ]
+}

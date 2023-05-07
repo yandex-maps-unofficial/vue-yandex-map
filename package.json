@@ -1,6 +1,6 @@
 {
   "name": "vue-yandex-maps",
-  "version": "0.11.15",
+  "version": "1.0.0",
   "description": "Yandex Maps component for VueJS.",
   "main": "dist/vue-yandex-maps.umd.js",
   "module": "dist/vue-yandex-maps.esm.js",
@@ -12,11 +12,18 @@
     "lint": "eslint ./src/* --fix",
     "test": "jest"
   },
+  "engines": {
+    "node": ">=16.14"
+  },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/PNKBizz/vue-yandex-map.git"
   },
   "keywords": [
+    "яндекс карты",
+    "яндекс-карты",
+    "yandex maps",
     "yandex-maps",
     "maps",
     "vue"
@@ -24,24 +31,38 @@
   "author": "bizz.gc@gmail.com",
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/polyfill": "^7.2.5",
-    "@babel/preset-env": "^7.2.3",
-    "@vue/cli-service": "^3.12.0",
-    "@vue/eslint-config-airbnb": "^4.0.0",
-    "@vue/test-utils": "^1.0.0-beta.29",
-    "babel-eslint": "^10.0.1",
-    "babel-jest": "^24.9.0",
-    "eslint": "^5.8.0",
-    "eslint-plugin-jest": "^22.19.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "jest": "^24.9.0",
-    "rollup": "^1.1.0",
-    "rollup-plugin-babel": "^4.3.0",
-    "rollup-plugin-terser": "^4.0.4",
-    "rollup-plugin-uglify": "^6.0.2",
-    "vue-jest": "^3.0.5",
-    "vuepress": "^1.9.7"
+    "@babel/cli": "^7.21.5",
+    "@babel/core": "^7.21.8",
+    "@babel/eslint-parser": "^7.21.8",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.21.5",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-typescript": "^11.1.0",
+    "@types/node": "^20.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
+    "@vue/eslint-config-airbnb": "^7.0.0",
+    "@vue/test-utils": "^2.3.2",
+    "@vue/vue3-jest": "^29.2.4",
+    "@vuepress/client": "^2.0.0-beta.61",
+    "@yandex/ymaps3-types": "^0.0.5",
+    "babel-jest": "^29.5.0",
+    "eslint": "^8.40.0",
+    "eslint-plugin-jest": "^27.2.1",
+    "eslint-plugin-vue": "^9.11.0",
+    "jest": "^29.5.0",
+    "rollup": "^3.21.5",
+    "typescript": "^4.9.5",
+    "vue": "^3.2.47",
+    "vuepress": "^2.0.0-beta.61"
+  },
+  "peerDependencies": {
+    "vue": ">= 2.7",
+    "nuxt": ">= 2.16"
+  },
+  "peerDependenciesMeta": {
+    "nuxt": {
+      "optional": true
+    }
   }
 }
