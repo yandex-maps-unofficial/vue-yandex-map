@@ -1,15 +1,15 @@
-import { safeRef } from 'src/composables/utils';
-import { Ref } from 'vue';
+import { Ref } from 'vue-demi';
 import type Ymaps3 from '@yandex/ymaps3-types';
 import { OverloadParameters } from './overload-extract';
+import { safeRef } from '../composables/utils';
 
 export namespace VueYandexMaps {
     export const settings: Ref<VueYandexMaps.PluginSettings> = safeRef({
-      apiKey: '',
+      apikey: '',
     });
 
     // Type-safe ymaps3 to avoid "never" problems with undefined checks
-    export const ymaps = ymaps3 as typeof Ymaps3;
+    export const ymaps = () => ymaps3 as typeof Ymaps3;
 
     export const loaded = safeRef(false);
 
@@ -18,7 +18,7 @@ export namespace VueYandexMaps {
          * @see https://yandex.ru/dev/maps/jsapi/doc/3.0/dg/concepts/load.html#parms
          * @see https://yandex.com/dev/maps/jsapi/doc/3.0/dg/concepts/load.html#parms
          */
-        apiKey: string
+        apikey: string
         /**
          * @see https://yandex.ru/dev/maps/jsapi/doc/3.0/dg/concepts/load.html#parms
          * @see https://yandex.com/dev/maps/jsapi/doc/3.0/dg/concepts/load.html#parms

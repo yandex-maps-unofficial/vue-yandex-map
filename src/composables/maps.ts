@@ -1,9 +1,8 @@
-import { watch } from 'vue';
-import type Ymaps3 from '@yandex/ymaps3-types';
+import { watch } from 'vue-demi';
 import { VueYandexMaps } from '../types/settings';
 
 const allowedOptionsKeys: Record<keyof VueYandexMaps.PluginSettings, true> = {
-  apiKey: true,
+  apikey: true,
   lang: true,
   initializeOn: true,
   importModules: true,
@@ -34,7 +33,7 @@ export function initYmaps() {
     const yandexMapScript = document.createElement('SCRIPT');
     const url = new URL(`https://api-maps.yandex.ru/${settings.version}/`);
     url.searchParams.set('lang', settings.lang || 'ru_RU');
-    url.searchParams.set('apiKey', settings.apiKey);
+    url.searchParams.set('apikey', settings.apikey);
 
     yandexMapScript.setAttribute('src', url.toString());
     yandexMapScript.setAttribute('async', '');
@@ -44,15 +43,15 @@ export function initYmaps() {
     document.head.appendChild(yandexMapScript);
     yandexMapScript.onload = async () => {
       try {
-        await VueYandexMaps.ymaps.ready;
+        await VueYandexMaps.ymaps().ready;
 
         // @ts-expect-error Yandex forgot to specify strictMode in types
-        if (settings.strictMode) VueYandexMaps.ymaps.strictMode = true;
+        if (settings.strictMode) VueYandexMaps.ymaps().strictMode = true;
 
         if (settings.importModules) {
           await Promise.all(
             settings.importModules.map(
-              (module) => VueYandexMaps.ymaps.import(module as any),
+              (module) => VueYandexMaps.ymaps().import(module as any),
             ),
           );
         }
@@ -77,7 +76,7 @@ export function createYmapsOptions(options: VueYandexMaps.PluginSettings): VueYa
     strictMode: false,
     ...options,
   };
-  if (!optionsShallowClone.apiKey) throw new Error('You must specify apiKey for createYmapsOptions');
+  if (!optionsShallowClone.apikey) throw new Error('You must specify apikey for createYmapsOptions');
 
   const notAllowedKeys = Object.keys(optionsShallowClone).filter((key) => !(key in allowedOptionsKeys));
   if (notAllowedKeys.length) throw new Error(`You have passed unknown keys to createYmapsOptions: ${notAllowedKeys.join(', ')}. Only ${Object.keys(allowedOptionsKeys).join(', ')} are allowed.`);

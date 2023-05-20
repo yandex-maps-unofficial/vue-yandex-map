@@ -1,4 +1,7 @@
-# 1.0.0 Migration
+# 2.0.0 Migration
+
+## Compatibility
+- Now requires ES Modules and named exports
 
 ## Changes
 

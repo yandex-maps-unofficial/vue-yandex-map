@@ -38,6 +38,10 @@ module.exports = {
     'object-shorthand': 'off',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'error',
+    'comma-dangle': [
+      'error',
+      'always-multiline',
+    ],
   },
   parser: 'vue-eslint-parser',
   parserOptions: {

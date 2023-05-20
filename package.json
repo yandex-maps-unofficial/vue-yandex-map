@@ -1,12 +1,16 @@
 {
-  "name": "vue-yandex-maps",
-  "version": "1.0.0",
+  "name": "daniluk4000-vue-yandex-maps",
+  "version": "2.0.0-alpha.13",
   "description": "Yandex Maps component for VueJS.",
-  "main": "dist/vue-yandex-maps.umd.js",
-  "module": "dist/vue-yandex-maps.esm.js",
-  "unpkg": "dist/vue-yandex-maps.min.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/daniluk4000-vue-yandex-maps.js",
+      "require": "./dist/daniluk4000-vue-yandex-maps.umd.cjs"
+    }
+  },
   "scripts": {
-    "build": "rollup -c",
+    "build": "tsc && vite build",
     "docs:build": "vuepress build docs",
     "docs:dev": "vuepress dev docs",
     "lint": "eslint ./src/* --fix",
@@ -31,39 +35,43 @@
   "author": "bizz.gc@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "@yandex/ymaps3-types": "^0.0.5"
+    "@yandex/ymaps3-types": "^0.0.5",
+    "vue-demi": "latest"
   },
   "devDependencies": {
-    "@babel/cli": "^7.21.5",
-    "@babel/core": "^7.21.8",
     "@babel/eslint-parser": "^7.21.8",
-    "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.21.5",
     "@rollup/plugin-babel": "^6.0.3",
-    "@rollup/plugin-typescript": "^11.1.0",
-    "@types/node": "^20.1.0",
-    "@typescript-eslint/eslint-plugin": "^5.59.2",
-    "@typescript-eslint/parser": "^5.59.2",
+    "@types/jest": "^29.5.1",
+    "@types/node": "^20.2.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.6",
+    "@vitejs/plugin-vue": "^4.2.3",
     "@vue/eslint-config-airbnb": "^7.0.0",
     "@vue/test-utils": "^2.3.2",
     "@vue/vue3-jest": "^29.2.4",
-    "@vuepress/client": "^2.0.0-beta.61",
+    "@vuepress/client": "2.0.0-beta.61",
     "babel-jest": "^29.5.0",
-    "eslint": "^8.40.0",
+    "eslint": "^8.41.0",
     "eslint-plugin-jest": "^27.2.1",
-    "eslint-plugin-vue": "^9.11.0",
+    "eslint-plugin-vue": "^9.13.0",
     "jest": "^29.5.0",
-    "rollup": "^3.21.5",
-    "typescript": "^4.9.5",
-    "vue": "^3.2.47",
-    "vuepress": "^2.0.0-beta.61"
+    "typescript": "^5.0.4",
+    "vite": "^4.3.8",
+    "vite-plugin-dts": "^2.3.0",
+    "vue": "^3.3.4",
+    "vuepress": "2.0.0-beta.61"
   },
   "peerDependencies": {
-    "vue": ">= 2.7",
-    "nuxt": ">= 2.16"
+    "@vue/composition-api": "^1.0.0-rc.1",
+    "nuxt": "^2.0.0 || >=3.0.0",
+    "vue": "^2.0.0 || >=3.0.0"
   },
   "peerDependenciesMeta": {
     "nuxt": {
+      "optional": true
+    },
+    "@vue/composition-api": {
       "optional": true
     }
   }
