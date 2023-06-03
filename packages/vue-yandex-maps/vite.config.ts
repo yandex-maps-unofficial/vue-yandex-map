@@ -5,7 +5,7 @@ import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   optimizeDeps: {
-    exclude: ['vue-demi'],
+    exclude: ['vue', 'vue-demi'],
   },
   build: {
     minify: false,
@@ -21,8 +21,8 @@ export default defineConfig({
         format: 'es',
         esModule: true,
         globals: {
-          vue: 'vue',
-          'vue-demi': 'vueDemi',
+          vue: 'Vue',
+          'vue-demi': 'VueDemi',
         },
       },
     },

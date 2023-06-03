@@ -1,25 +1,34 @@
-<template>
-  <slot />
-</template>
-
-<script lang="ts" setup>
+<script lang="ts">
 import { YMapDefaultFeaturesLayer } from '@yandex/ymaps3-types';
-import { onMounted, watch } from 'vue-demi';
+import {
+  onMounted, watch, defineComponent, PropType, h,
+} from 'vue-demi';
 import {
   insertLayerIntoMap,
 } from '../../composables/utils';
 
-const props = defineProps<{settings?: ConstructorParameters<typeof YMapDefaultFeaturesLayer>[0]}>();
+export default defineComponent({
+  name: 'YMapDefaultFeaturesLayer',
+  props: {
+    settings: {
+      type: Object as PropType<ConstructorParameters<typeof YMapDefaultFeaturesLayer>[0]>,
+      default: () => ({}),
+    },
+  },
+  setup(props, { slots }) {
+    let mapLayer: YMapDefaultFeaturesLayer | undefined;
 
-let mapLayer: YMapDefaultFeaturesLayer | undefined;
+    watch(props, () => {
+      mapLayer?.update(props.settings || {});
+    }, {
+      deep: true,
+    });
 
-watch(props, () => {
-  mapLayer?.update(props.settings || {});
-}, {
-  deep: true,
-});
+    onMounted(async () => {
+      mapLayer = await insertLayerIntoMap(() => new ymaps3.YMapDefaultFeaturesLayer(props.settings || {}));
+    });
 
-onMounted(async () => {
-  mapLayer = await insertLayerIntoMap(() => new ymaps3.YMapDefaultFeaturesLayer(props.settings || {}));
+    return () => h('div', slots.default?.());
+  },
 });
 </script>

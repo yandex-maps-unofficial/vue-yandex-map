@@ -214,7 +214,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/parser@npm:^7.1.0, @babel/parser@npm:^7.14.7, @babel/parser@npm:^7.20.15, @babel/parser@npm:^7.20.7, @babel/parser@npm:^7.21.3, @babel/parser@npm:^7.21.4, @babel/parser@npm:^7.21.9, @babel/parser@npm:^7.22.0, @babel/parser@npm:^7.22.4":
+"@babel/parser@npm:^7.1.0, @babel/parser@npm:^7.14.7, @babel/parser@npm:^7.18.4, @babel/parser@npm:^7.20.15, @babel/parser@npm:^7.20.7, @babel/parser@npm:^7.21.3, @babel/parser@npm:^7.21.4, @babel/parser@npm:^7.21.9, @babel/parser@npm:^7.22.0, @babel/parser@npm:^7.22.4":
   version: 7.22.4
   resolution: "@babel/parser@npm:7.22.4"
   bin:
@@ -949,6 +949,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jridgewell/source-map@npm:^0.3.3":
+  version: 0.3.3
+  resolution: "@jridgewell/source-map@npm:0.3.3"
+  dependencies:
+    "@jridgewell/gen-mapping": ^0.3.0
+    "@jridgewell/trace-mapping": ^0.3.9
+  checksum: ae1302146339667da5cd6541260ecbef46ae06819a60f88da8f58b3e64682f787c09359933d050dea5d2173ea7fa40f40dd4d4e7a8d325c5892cccd99aaf8959
+  languageName: node
+  linkType: hard
+
 "@jridgewell/sourcemap-codec@npm:1.4.14":
   version: 1.4.14
   resolution: "@jridgewell/sourcemap-codec@npm:1.4.14"
@@ -1494,6 +1504,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vitejs/plugin-vue2@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@vitejs/plugin-vue2@npm:2.2.0"
+  peerDependencies:
+    vite: ^3.0.0 || ^4.0.0
+    vue: ^2.7.0-0
+  checksum: 935d695844e87232912c955f7d9f6a0170c590919d2dda1c410f078464159773c0538cc1e24ffc30ae57a6decf40cc03b0329046a6b5c6a88117a0fea428d649
+  languageName: node
+  linkType: hard
+
 "@vitejs/plugin-vue@npm:^4.2.3":
   version: 4.2.3
   resolution: "@vitejs/plugin-vue@npm:4.2.3"
@@ -1550,6 +1570,17 @@ __metadata:
     "@vue/compiler-core": 3.3.4
     "@vue/shared": 3.3.4
   checksum: 1c2ac0c89de8eef7be1c568d57504e6245adaaec40c2c4d9717bc231ca10bf682d918a3b358d24c786eeaf8e0d7eb8a65f57d9044775a304783fde1d069a1896
+  languageName: node
+  linkType: hard
+
+"@vue/compiler-sfc@npm:2.7.14":
+  version: 2.7.14
+  resolution: "@vue/compiler-sfc@npm:2.7.14"
+  dependencies:
+    "@babel/parser": ^7.18.4
+    postcss: ^8.4.14
+    source-map: ^0.6.1
+  checksum: 25e00abaecb311f1effbf539bc3e4fdeedb39d35f9c2947b2640187a047e6a7400e693fd7da1d3a98977b9078c5bf629ca47f8b9a59dc14a080c0a1e1dd06a49
   languageName: node
   linkType: hard
 
@@ -1766,7 +1797,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.8.0":
+"acorn@npm:^8.8.0, acorn@npm:^8.8.2":
   version: 8.8.2
   resolution: "acorn@npm:8.8.2"
   bin:
@@ -2355,7 +2386,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^2.19.0":
+"commander@npm:^2.19.0, commander@npm:^2.20.0":
   version: 2.20.3
   resolution: "commander@npm:2.20.3"
   checksum: ab8c07884e42c3a8dbc5dd9592c606176c7eb5c1ca5ff274bcf907039b2c41de3626f684ea75ccf4d361ba004bbaff1f577d5384c155f3871e456bdf27becf9e
@@ -2457,7 +2488,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csstype@npm:^3.1.1":
+"csstype@npm:^3.1.0, csstype@npm:^3.1.1":
   version: 3.1.2
   resolution: "csstype@npm:3.1.2"
   checksum: e1a52e6c25c1314d6beef5168da704ab29c5186b877c07d822bd0806717d9a265e8493a2e35ca7e68d0f5d472d43fac1cdce70fd79fd0853dff81f3028d857b5
@@ -3209,6 +3240,40 @@ __metadata:
   checksum: 22b5b08f74737379a840b8ed2036a5fb35826c709ab000683b092d9054e5c2a82c27818f12604bfc2a9a76b90b6834ef081edbc1c7ae30d1627012e067c6ec87
   languageName: node
   linkType: hard
+
+"example-vue2@workspace:packages/examples/vue2":
+  version: 0.0.0-use.local
+  resolution: "example-vue2@workspace:packages/examples/vue2"
+  dependencies:
+    "@types/node": ^20.2.5
+    "@vitejs/plugin-vue2": ^2.2.0
+    "@vue/tsconfig": ^0.4.0
+    npm-run-all: ^4.1.5
+    terser: ^5.17.7
+    typescript: ~5.1.3
+    vite: ^4.3.9
+    vue: ^2.7.14
+    vue-demi: ^0.14.5
+    vue-tsc: ^1.7.8
+    vue-yandex-maps: "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"example-vue3@workspace:packages/examples/vue3":
+  version: 0.0.0-use.local
+  resolution: "example-vue3@workspace:packages/examples/vue3"
+  dependencies:
+    "@types/node": ^20.2.5
+    "@vitejs/plugin-vue": ^4.2.3
+    "@vue/tsconfig": ^0.4.0
+    npm-run-all: ^4.1.5
+    typescript: ~5.1.3
+    vite: ^4.3.9
+    vue: ^3.3.4
+    vue-tsc: ^1.7.8
+    vue-yandex-maps: "workspace:*"
+  languageName: unknown
+  linkType: soft
 
 "execa@npm:^5.0.0":
   version: 5.1.1
@@ -5648,7 +5713,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.1.10, postcss@npm:^8.4.23":
+"postcss@npm:^8.1.10, postcss@npm:^8.4.14, postcss@npm:^8.4.23":
   version: 8.4.24
   resolution: "postcss@npm:8.4.24"
   dependencies:
@@ -6156,6 +6221,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"source-map-support@npm:~0.5.20":
+  version: 0.5.21
+  resolution: "source-map-support@npm:0.5.21"
+  dependencies:
+    buffer-from: ^1.0.0
+    source-map: ^0.6.0
+  checksum: 43e98d700d79af1d36f859bdb7318e601dfc918c7ba2e98456118ebc4c4872b327773e5a1df09b0524e9e5063bb18f0934538eace60cca2710d1fa687645d137
+  languageName: node
+  linkType: hard
+
 "source-map@npm:0.5.6":
   version: 0.5.6
   resolution: "source-map@npm:0.5.6"
@@ -6424,6 +6499,20 @@ __metadata:
     mkdirp: ^1.0.3
     yallist: ^4.0.0
   checksum: f23832fceeba7578bf31907aac744ae21e74a66f4a17a9e94507acf460e48f6db598c7023882db33bab75b80e027c21f276d405e4a0322d58f51c7088d428268
+  languageName: node
+  linkType: hard
+
+"terser@npm:^5.17.7":
+  version: 5.17.7
+  resolution: "terser@npm:5.17.7"
+  dependencies:
+    "@jridgewell/source-map": ^0.3.3
+    acorn: ^8.8.2
+    commander: ^2.20.0
+    source-map-support: ~0.5.20
+  bin:
+    terser: bin/terser
+  checksum: b7b17b281febadf3bea9b9412d699fa24edf9b3e20fc7ad4e1a9cec276bdb65ddaa291c9663d5ab66b58834e433377477f73328574ccab2da1637a15b095811d
   languageName: node
   linkType: hard
 
@@ -6803,7 +6892,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-tsc@npm:^1.6.5":
+"vue-tsc@npm:^1.7.8":
   version: 1.7.8
   resolution: "vue-tsc@npm:1.7.8"
   dependencies:
@@ -6851,9 +6940,9 @@ __metadata:
     vue: ^3.3.4
     vue-demi: ^0.14.5
   peerDependencies:
-    "@vue/composition-api": ^1.0.0-rc.1
-    nuxt: ^2.0.0 || >=3.0.0
-    vue: ^2.0.0 || >=3.0.0
+    "@vue/composition-api": ">=1"
+    nuxt: 2||3
+    vue: 2||3
   peerDependenciesMeta:
     "@vue/composition-api":
       optional: true
@@ -6862,21 +6951,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"vue3@workspace:packages/vue3":
-  version: 0.0.0-use.local
-  resolution: "vue3@workspace:packages/vue3"
+"vue@npm:^2.7.14":
+  version: 2.7.14
+  resolution: "vue@npm:2.7.14"
   dependencies:
-    "@types/node": ^20.2.5
-    "@vitejs/plugin-vue": ^4.2.3
-    "@vue/tsconfig": ^0.4.0
-    npm-run-all: ^4.1.5
-    typescript: ~5.1.3
-    vite: ^4.3.9
-    vue: ^3.3.4
-    vue-tsc: ^1.6.5
-    vue-yandex-maps: "workspace:*"
-  languageName: unknown
-  linkType: soft
+    "@vue/compiler-sfc": 2.7.14
+    csstype: ^3.1.0
+  checksum: 8b06da67cc40870c66a30b7a6bc2874950cd4383792c371eb30497dd14fc7b41cf308b1c4517368d8f0e7ac16198c08de19236f6a79fe43f4bdbc4a1d9d4ad07
+  languageName: node
+  linkType: hard
 
 "vue@npm:^3.3.4":
   version: 3.3.4

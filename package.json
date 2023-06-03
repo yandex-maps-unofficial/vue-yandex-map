@@ -3,7 +3,7 @@
     "private": true,
     "scripts": {
         "build": "yarn workspace vue-yandex-maps build",
-        "test:vue2": "yarn workspace vue-yandex-maps build && ./packages/examples/vue3/dev",
+        "test:vue2": "yarn workspace vue-yandex-maps build && yarn workspace example-vue2 dev",
         "test:vue3": "yarn workspace vue-yandex-maps build && yarn workspace example-vue3 dev",
         "lint": "eslint ./src/* --fix"
     },
@@ -18,7 +18,8 @@
         "eslint-plugin-vue": "^9.14.1"
     },
     "workspaces": [
-        "packages/*"
+        "packages/*",
+        "packages/examples/*"
     ],
     "packageManager": "yarn@3.6.0"
 }

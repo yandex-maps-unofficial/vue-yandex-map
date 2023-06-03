@@ -1,29 +1,39 @@
-<template>
-  <slot />
-</template>
-
-<script lang="ts" setup>
-import { onMounted, watch } from 'vue-demi';
+<script lang="ts">
+import {
+  onMounted, watch, defineComponent, h, PropType,
+} from 'vue-demi';
 import {
   BehaviorEvents, DomEvents, MapEvents, YMapListener,
 } from '@yandex/ymaps3-types';
 import { injectMap, waitTillMapInit } from '../composables/utils';
 
-const props = defineProps<{ settings?: Partial<DomEvents> & Partial<MapEvents> & Partial<BehaviorEvents> }>();
-const map = injectMap();
+export default defineComponent({
+  name: 'YMapListener',
+  props: {
+    settings: {
+      type: Object as PropType<Partial<DomEvents & MapEvents & BehaviorEvents>>,
+      default: () => ({}),
+    },
+  },
+  setup(props, { slots }) {
+    const map = injectMap();
 
-let mapListener: YMapListener | undefined;
+    let mapListener: YMapListener | undefined;
 
-watch(props, () => {
-  mapListener?.update(props.settings || {});
-}, {
-  deep: true,
-});
+    watch(props, () => {
+      mapListener?.update(props.settings || {});
+    }, {
+      deep: true,
+    });
 
-onMounted(async () => {
-  await waitTillMapInit();
+    onMounted(async () => {
+      await waitTillMapInit();
 
-  mapListener = new ymaps3.YMapListener(props.settings || {});
-  map.value?.addChild(mapListener);
+      mapListener = new ymaps3.YMapListener(props.settings || {});
+      map.value?.addChild(mapListener);
+    });
+
+    return () => h('div', slots.default?.());
+  },
 });
 </script>

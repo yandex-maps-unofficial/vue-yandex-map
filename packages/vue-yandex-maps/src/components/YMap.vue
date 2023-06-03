@@ -1,15 +1,6 @@
-<template>
-  <component :is="tag" class="__ymap" :style="{ width, height }">
-    <div ref="ymapContainer" class="__ymap_container" :style="{ width: '100%', height: '100%' }" />
-    <div v-show="false" class="__ymap_slots">
-      <slot />
-    </div>
-  </component>
-</template>
-
 <script lang="ts">
 import {
-  defineComponent, onMounted, PropType, provide, ref,
+  defineComponent, h, onMounted, PropType, provide, ref,
 } from 'vue-demi';
 import type { YMap, YMapProps, YMapEntity } from '@yandex/ymaps3-types';
 import { initYmaps } from '../composables/maps';
@@ -75,7 +66,7 @@ export default defineComponent({
       return map && map instanceof ymaps3.YMap;
     },
   },
-  setup(props) {
+  setup(props, { slots }) {
     const map = ref<YMap | null>(null);
     const layers = ref([]);
     const ymapContainer = ref<HTMLDivElement | null>(null);
@@ -110,8 +101,29 @@ export default defineComponent({
       setTimeout(init, 300);
     });
 
-    return {
-      ymapContainer,
+    return () => {
+      const container = h('div', {
+        class: '__ymap_container',
+        style: {
+          width: '100%',
+          height: '100%',
+        },
+        ref: ymapContainer,
+      });
+
+      return h(props.tag, {
+        class: '__ymap',
+        style: {
+          width: props.width,
+          height: props.height,
+        },
+      }, [
+        container,
+        h('div', {
+          class: '__ymap_slots',
+          style: { display: 'none' },
+        }, slots.default?.()),
+      ]);
     };
   },
 });
