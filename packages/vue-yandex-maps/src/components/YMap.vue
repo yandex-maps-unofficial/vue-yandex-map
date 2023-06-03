@@ -1,6 +1,6 @@
 <template>
   <component :is="tag" class="__ymap" :style="{ width, height }">
-    <div ref="ymapContainer" class="__ymap_container" />
+    <div ref="ymapContainer" class="__ymap_container" :style="{ width: '100%', height: '100%' }" />
     <div v-show="false" class="__ymap_slots">
       <slot />
     </div>
@@ -9,10 +9,9 @@
 
 <script lang="ts">
 import {
-  PropType, defineComponent, onMounted, ref, watch, provide,
+  defineComponent, onMounted, PropType, provide, ref,
 } from 'vue-demi';
-import { YMap, YMapProps } from '@yandex/ymaps3-types';
-import { GenericEntity } from '@yandex/ymaps3-types/imperative/Entities';
+import type { YMap, YMapProps, YMapEntity } from '@yandex/ymaps3-types';
 import { initYmaps } from '../composables/maps';
 import { VueYandexMaps } from '../types/settings';
 
@@ -38,9 +37,9 @@ export default defineComponent({
     /**
      * @description Settings for cart initialization.
      *
-     * Modifying this object will call map.update with new settings.
+     * Modifying this object after mount will cause no effect.
      *
-     * Instead, you can also use map methods, such as setLocation/setBehaviors e.t.c.
+     * Instead, you myst use map methods, such as setLocation/setBehaviors e.t.c.
      * @see https://yandex.ru/dev/maps/jsapi/doc/3.0/dg/concepts/map.html#map-parms
      * @see https://yandex.com/dev/maps/jsapi/doc/3.0/dg/concepts/map.html#map-parms
      */
@@ -55,14 +54,14 @@ export default defineComponent({
     /**
      * @description You can also add layers through <yandex-*> components
      *
-     * Modifying this object will cause whole component to rerender.
+     * Modifying this object after mount will cause no effect.
      *
      * Instead, please use map methods, such as addChild.
      * @see https://yandex.ru/dev/maps/jsapi/doc/3.0/dg/concepts/map.html#layers
      * @see https://yandex.com/dev/maps/jsapi/doc/3.0/dg/concepts/map.html#layers
      */
     layers: {
-      type: Array as PropType<GenericEntity<unknown>[]>,
+      type: Array as PropType<YMapEntity<unknown>[]>,
       default: (() => []),
     },
   },
@@ -78,15 +77,22 @@ export default defineComponent({
   },
   setup(props) {
     const map = ref<YMap | null>(null);
+    const layers = ref([]);
     const ymapContainer = ref<HTMLDivElement | null>(null);
 
     provide('map', map);
+    provide('layers', layers);
 
     const init = async () => {
-      if (!ymapContainer.value) throw new Error('<yandex-map> container is undefined after component mount. This is likely Vue Yandex Map internal bug.');
+      const container = ymapContainer.value;
+      if (!container) throw new Error('<yandex-map> container is undefined after component mount. This is likely Vue Yandex Map internal bug.');
 
       if (map.value) map.value.destroy();
-      map.value = new ymaps3.YMap(ymapContainer.value, props.settings, props.layers);
+
+      map.value = new ymaps3.YMap(container, props.settings, [
+        ...layers.value,
+        ...props.layers,
+      ]);
     };
 
     onMounted(async () => {
@@ -101,17 +107,7 @@ export default defineComponent({
         } else throw new Error('You have set up <yandex-map> component without initializing Yandex maps. Please check initializeOn setting or call initYmaps manually before registering this component.');
       }
 
-      await init();
-    });
-
-    watch(() => props.settings, (val: YMapProps) => {
-      map.value?.update(val);
-    }, {
-      deep: true,
-    });
-
-    watch(() => props.layers, (val) => {
-      init();
+      setTimeout(init, 300);
     });
 
     return {

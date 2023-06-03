@@ -7,3 +7,9 @@ yarn-error.log
 vue-yandex-maps.js
 .vscode/
 package-lock.json
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

@@ -45,7 +45,7 @@ export function initYmaps() {
       try {
         await VueYandexMaps.ymaps().ready;
 
-        // @ts-expect-error Yandex forgot to specify strictMode in types
+        // @ts-ignore Yandex forgot to specify strictMode in types
         if (settings.strictMode) VueYandexMaps.ymaps().strictMode = true;
 
         if (settings.importModules) {

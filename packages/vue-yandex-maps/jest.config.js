@@ -13,9 +13,9 @@ module.exports = {
   },
   globals: {
     MutationObserver: class {
-      constructor(callback) {}
-      disconnect() {}
-      observe(element, initObject) {}
+      constructor(callback) { }
+      disconnect() { }
+      observe(element, initObject) { }
     }
   }
 }

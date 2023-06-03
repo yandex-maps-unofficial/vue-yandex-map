@@ -1,5 +1,4 @@
 import { Ref } from 'vue-demi';
-import type Ymaps3 from '@yandex/ymaps3-types';
 import { OverloadParameters } from './overload-extract';
 import { safeRef } from '../composables/utils';
 
@@ -9,7 +8,7 @@ export namespace VueYandexMaps {
     });
 
     // Type-safe ymaps3 to avoid "never" problems with undefined checks
-    export const ymaps = () => ymaps3 as typeof Ymaps3;
+    export const ymaps = () => ymaps3;
 
     export const loaded = safeRef(false);
 

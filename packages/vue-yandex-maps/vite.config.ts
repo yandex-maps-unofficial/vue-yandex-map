@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import babel from '@rollup/plugin-babel';
-import dts from 'vite-plugin-dts'
+import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   optimizeDeps: {
