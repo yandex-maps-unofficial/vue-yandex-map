@@ -1,6 +1,6 @@
 import type { App, Vue2 } from 'vue-demi';
-import { VueYandexMaps } from '../..';
-import { createYmapsOptions } from '../maps';
+import { VueYandexMaps } from '..';
+import { createYmapsOptions } from '../composables/maps';
 
 export function createYmaps(settings: VueYandexMaps.PluginSettings) {
   return {

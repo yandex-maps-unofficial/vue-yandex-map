@@ -2,8 +2,7 @@
 import {
   h, onMounted, PropType, provide, ref,
   defineComponent,
-  computed,
-shallowRef,
+  shallowRef,
 } from 'vue';
 import type { YMap, YMapEntity, YMapProps } from '@yandex/ymaps3-types';
 import { initYmaps } from '../composables/maps';
@@ -117,7 +116,7 @@ export default defineComponent({
         ref: ymapContainer,
       });
 
-      return h(props.tag, {
+      const result = h(props.tag, {
         class: '__ymap',
         style: {
           width: props.width,
@@ -130,6 +129,8 @@ export default defineComponent({
           style: { display: 'none' },
         }, slots.default?.()),
       ]);
+
+      return result;
     };
   },
 });

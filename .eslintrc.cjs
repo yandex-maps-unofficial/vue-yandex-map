@@ -49,5 +49,6 @@ module.exports = {
   },
   ignorePatterns: [
     'dist',
+    'nuxt2-plugin.js',
   ],
 };

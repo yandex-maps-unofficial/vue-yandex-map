@@ -1,5 +1,5 @@
 export * from './composables/maps';
-export * from './composables/plugins/vue';
+export * from './plugins/vue';
 export * from './components';
 export {
   VueYandexMaps,

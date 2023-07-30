@@ -1,7 +1,9 @@
+import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import babel from '@rollup/plugin-babel';
 import dts from 'vite-plugin-dts';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 export default defineConfig({
   optimizeDeps: {
@@ -13,10 +15,14 @@ export default defineConfig({
     outDir: 'dist',
     lib: {
       entry: 'src/index.ts',
-      name: 'vue-yandex-maps',
+      formats: ['es'],
     },
     rollupOptions: {
-      external: ['vue', 'vue-demi'],
+      external: ['vue', 'vue-demi', 'path'],
+      input: {
+        'vue-yandex-maps': resolve(__dirname, 'src/index.ts'),
+        nuxt2: resolve(__dirname, 'src/plugins/nuxt2'),
+      },
       output: {
         format: 'es',
         esModule: true,
@@ -24,6 +30,7 @@ export default defineConfig({
           vue: 'Vue',
           'vue-demi': 'VueDemi',
         },
+        entryFileNames: '[name].js',
       },
     },
   },
@@ -34,6 +41,18 @@ export default defineConfig({
       babelHelpers: 'runtime',
       exclude: '**/node_modules/**',
       sourceType: 'unambiguous',
+    }),
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'src/plugins/nuxt2-plugin.js',
+          dest: '',
+        },
+        {
+          src: 'src/plugins/nuxt-plugin.js',
+          dest: '',
+        },
+      ],
     }),
   ],
 });

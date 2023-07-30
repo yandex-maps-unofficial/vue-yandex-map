@@ -1,9 +1,9 @@
 <script lang="ts">
 import { YMapControls } from '@yandex/ymaps3-types';
 import {
-  defineComponent, h, onMounted, PropType, provide, Ref, ref, shallowRef, watch, computed, nextTick,
+  defineComponent, h, onMounted, PropType, provide, Ref, ref, shallowRef, watch, nextTick,
 } from 'vue';
-import { waitTillMapInit, injectMap, sleep } from '../../composables/utils';
+import { waitTillMapInit, injectMap } from '../../composables/utils';
 
 export default defineComponent({
   name: 'YMapControls',
