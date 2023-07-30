@@ -1,4 +1,4 @@
-import { Ref } from 'vue-demi';
+import { Ref } from 'vue';
 import { OverloadParameters } from './overload-extract';
 import { safeRef } from '../composables/utils';
 

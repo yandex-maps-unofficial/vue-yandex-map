@@ -1,6 +1,6 @@
 {
   "name": "vue-yandex-maps",
-  "version": "2.0.0-alpha.37",
+  "version": "2.0.0-alpha.40",
   "description": "Yandex Maps component for VueJS.",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -34,8 +34,7 @@
   "author": "bizz.gc@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "@yandex/ymaps3-types": "^0.0.12",
-    "vue-demi": "^0.14.5"
+    "@yandex/ymaps3-types": "^0.0.12"
   },
   "devDependencies": {
     "@rollup/plugin-babel": "^6.0.3",
@@ -48,12 +47,13 @@
     "typescript": "^5.1.6",
     "vite": "^4.4.7",
     "vite-plugin-dts": "^3.4.0",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue-demi": "^0.14.5"
   },
   "peerDependencies": {
     "@vue/composition-api": ">=1",
     "nuxt": "2||3",
-    "vue": "2||3"
+    "vue": ">=2.7||3"
   },
   "peerDependenciesMeta": {
     "@vue/composition-api": {

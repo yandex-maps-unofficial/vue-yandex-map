@@ -12266,7 +12266,7 @@ __metadata:
   peerDependencies:
     "@vue/composition-api": ">=1"
     nuxt: 2||3
-    vue: 2||3
+    vue: ">=2.7||3"
   peerDependenciesMeta:
     "@vue/composition-api":
       optional: true

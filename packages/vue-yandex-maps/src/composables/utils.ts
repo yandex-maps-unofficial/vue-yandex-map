@@ -1,6 +1,6 @@
 import {
   Ref, UnwrapRef, ref, ComputedGetter, DebuggerOptions, ComputedRef, computed, inject, getCurrentInstance, isRef, watch, onBeforeUnmount,
-} from 'vue-demi';
+} from 'vue';
 import { YMap, YMapEntity } from '@yandex/ymaps3-types';
 
 /**

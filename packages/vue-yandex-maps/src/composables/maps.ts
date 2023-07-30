@@ -1,4 +1,4 @@
-import { watch } from 'vue-demi';
+import { watch } from 'vue';
 import { VueYandexMaps } from '../types/settings';
 
 const allowedOptionsKeys: Record<keyof VueYandexMaps.PluginSettings, true> = {

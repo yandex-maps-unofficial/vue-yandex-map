@@ -1,8 +1,9 @@
 <script lang="ts">
 import { YMapDefaultFeaturesLayer } from '@yandex/ymaps3-types';
 import {
-  onMounted, watch, defineComponent, PropType, h,
-} from 'vue-demi';
+  onMounted, watch, PropType, h,
+} from 'vue';
+import { defineComponent } from 'vue';
 import {
   insertLayerIntoMap,
 } from '../../composables/utils';

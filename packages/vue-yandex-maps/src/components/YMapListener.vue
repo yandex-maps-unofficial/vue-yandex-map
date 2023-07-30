@@ -1,7 +1,8 @@
 <script lang="ts">
 import {
-  onMounted, watch, defineComponent, h, PropType,
-} from 'vue-demi';
+  onMounted, watch, h, PropType,
+} from 'vue';
+import { defineComponent } from 'vue';
 import {
   BehaviorEvents, DomEvents, MapEvents, YMapListener,
 } from '@yandex/ymaps3-types';
