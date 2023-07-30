@@ -18,12 +18,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <div id="app">
-      <y-map width="50dvw" height="75dvh" :settings="{ location: { center: [37.588144, 55.733842], zoom: 7 } }">
-      <y-map-listener :settings="{ onClick: test }" />
-      <y-map-default-scheme-layer :settings="{ theme: 'dark' }" />
-    </y-map>
-  </div>
+  <y-map width="50dvw" height="75dvh" :settings="{ location: { center: [37.588144, 55.733842], zoom: 7 } }">
+    <y-map-listener :settings="{ onClick: test }" />
+    <y-map-default-scheme-layer :settings="{ theme: 'dark' }" />
+  </y-map>
 </template>
 
 <style>

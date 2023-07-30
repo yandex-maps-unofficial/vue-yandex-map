@@ -3,7 +3,7 @@
     "private": true,
     "scripts": {
         "build": "yarn workspace vue-yandex-maps build",
-        "test:vue2": "yarn workspace vue-yandex-maps build && yarn workspace example-vue2 dev",
+        "test:vue2": "yarn workspace vue-yandex-maps build && yarn workspace example-vue2 serve",
         "test:vue3": "yarn workspace vue-yandex-maps build && yarn workspace example-vue3 dev",
         "lint": "eslint ./src/* --fix"
     },

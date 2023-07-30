@@ -1,10 +1,8 @@
 <script lang="ts">
-import {
-  defineComponent, h, onMounted, PropType, provide, ref,
-} from 'vue-demi';
-import type { YMap, YMapProps, YMapEntity } from '@yandex/ymaps3-types';
-import { initYmaps } from '../composables/maps';
-import { VueYandexMaps } from '../types/settings';
+import {defineComponent, h, onMounted, PropType, provide, ref,} from 'vue-demi';
+import type {YMap, YMapEntity, YMapProps} from '@yandex/ymaps3-types';
+import {initYmaps} from '../composables/maps';
+import {VueYandexMaps} from '../types/settings';
 
 export default defineComponent({
   name: 'YMap',
@@ -66,7 +64,7 @@ export default defineComponent({
       return map && map instanceof ymaps3.YMap;
     },
   },
-  setup(props, { slots }) {
+  setup(props, {slots}) {
     const map = ref<YMap | null>(null);
     const layers = ref([]);
     const ymapContainer = ref<HTMLDivElement | null>(null);
@@ -94,6 +92,7 @@ export default defineComponent({
           } catch (e) {
             console.error('An error occured while initializing Yandex Map with onComponentMount setting');
             console.error(e);
+            return;
           }
         } else throw new Error('You have set up <yandex-map> component without initializing Yandex maps. Please check initializeOn setting or call initYmaps manually before registering this component.');
       }
@@ -121,7 +120,7 @@ export default defineComponent({
         container,
         h('div', {
           class: '__ymap_slots',
-          style: { display: 'none' },
+          style: {display: 'none'},
         }, slots.default?.()),
       ]);
     };
