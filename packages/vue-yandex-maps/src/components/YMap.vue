@@ -1,8 +1,10 @@
 <script lang="ts">
-import {defineComponent, h, onMounted, PropType, provide, ref,} from 'vue-demi';
-import type {YMap, YMapEntity, YMapProps} from '@yandex/ymaps3-types';
-import {initYmaps} from '../composables/maps';
-import {VueYandexMaps} from '../types/settings';
+import {
+  defineComponent, h, onMounted, PropType, provide, ref,
+} from 'vue-demi';
+import type { YMap, YMapEntity, YMapProps } from '@yandex/ymaps3-types';
+import { initYmaps } from '../composables/maps';
+import { VueYandexMaps } from '../types/settings';
 
 export default defineComponent({
   name: 'YMap',
@@ -64,7 +66,7 @@ export default defineComponent({
       return map && map instanceof ymaps3.YMap;
     },
   },
-  setup(props, {slots}) {
+  setup(props, { slots }) {
     const map = ref<YMap | null>(null);
     const layers = ref([]);
     const ymapContainer = ref<HTMLDivElement | null>(null);
@@ -120,7 +122,7 @@ export default defineComponent({
         container,
         h('div', {
           class: '__ymap_slots',
-          style: {display: 'none'},
+          style: { display: 'none' },
         }, slots.default?.()),
       ]);
     };

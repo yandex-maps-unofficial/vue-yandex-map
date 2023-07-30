@@ -5,7 +5,6 @@ module.exports = {
   },
   extends: [
     'plugin:vue/vue3-recommended',
-    'plugin:jest/recommended',
     '@vue/airbnb',
   ],
   plugins: [
@@ -48,4 +47,7 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     sourceType: 'module',
   },
+  ignorePatterns: [
+    'dist',
+  ],
 };
