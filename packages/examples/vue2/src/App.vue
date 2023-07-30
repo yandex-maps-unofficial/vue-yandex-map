@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {
-  YMap, YMapDefaultSchemeLayer, YMapListener, YMapMarker, YMapDefaultFeaturesLayer,
+  YMap, YMapDefaultSchemeLayer, YMapListener, YMapMarker, YMapDefaultFeaturesLayer, YMapControls, YMapGeolocationControl, YMapZoomControl,
 } from 'vue-yandex-maps';
 
 export default defineComponent({
@@ -11,6 +11,9 @@ export default defineComponent({
     YMapDefaultFeaturesLayer,
     YMapListener,
     YMap,
+    YMapControls,
+    YMapGeolocationControl,
+    YMapZoomControl,
   },
   data() {
     return {
@@ -35,6 +38,14 @@ export default defineComponent({
         {{ markerValue }}
       </span>
     </y-map-marker>
+    <y-map-controls :settings="{ position: 'top left', orientation: 'vertical' }">
+      <y-map-geolocation-control />
+      <y-map-zoom-control />
+    </y-map-controls>
+    <y-map-controls :settings="{ position: 'top right', orientation: 'horizontal' }">
+      <y-map-geolocation-control />
+      <y-map-zoom-control />
+    </y-map-controls>
   </y-map>
 </template>
 
