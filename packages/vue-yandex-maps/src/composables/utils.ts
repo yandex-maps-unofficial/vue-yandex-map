@@ -11,8 +11,9 @@ import {
   ref,
   UnwrapRef,
   watch,
+  WatchStopHandle,
 } from 'vue';
-import { YMap, YMapEntity } from '@yandex/ymaps3-types';
+import { YMap, YMapControls, YMapEntity } from '@yandex/ymaps3-types';
 
 /**
  * @description Prevents memory leak on SSR when ref is called outside setup
@@ -50,6 +51,10 @@ export function safeComputed<T>(
   return computed<T>(getter, debugOptions);
 }
 
+export function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export function injectMap(): Ref<YMap | null> {
   if (!getCurrentInstance()) throw new Error('injectMap must be only called on runtime. This is likely Vue Yandex Map internal bug.');
   const map = inject<Ref<YMap | null>>('map');
@@ -63,9 +68,18 @@ export function injectLayers(): Ref<any[]> {
   if (!getCurrentInstance()) throw new Error('injectLayers must be only called on runtime. This is likely Vue Yandex Map internal bug.');
   const layers = inject<Ref<any[]>>('layers');
 
-  if (!layers || !isRef(layers)) throw new Error('Was not able to inject valid map in injectLayers. This is likely Vue Yandex Map internal bug.');
+  if (!layers || !isRef(layers)) throw new Error('Was not able to inject valid layers in injectLayers. This is likely Vue Yandex Map internal bug.');
 
   return layers;
+}
+
+export function injectControl(): Ref<YMapControls | null> {
+  if (!getCurrentInstance()) throw new Error('injectControl must be only called on runtime. This is likely Vue Yandex Map internal bug.');
+  const control = inject<Ref<YMapControls | null>>('control');
+
+  if (!control || !isRef(control)) throw new Error('Was not able to inject valid control in injectControl. This is likely Vue Yandex Map internal bug.');
+
+  return control;
 }
 
 export function waitTillYmapInit() {
@@ -97,9 +111,13 @@ export function waitTillMapInit(_map?: Ref<YMap | null>) {
       if (!map.value) reject(new Error('Was not able to wait for map initialization in waitTillMapInit. Ensure that map was initialized.'));
     }, 5000);
 
-    const watcher = watch(map, () => {
+    // Breaks without this
+    let watcher: WatchStopHandle | undefined;
+
+    // eslint-disable-next-line prefer-const
+    watcher = watch(map, () => {
       if (map.value) {
-        watcher();
+        watcher?.();
         clearTimeout(timeout);
         resolve();
       }
@@ -133,6 +151,29 @@ export async function insertLayerIntoMap<T extends YMapEntity<unknown>>(layerCre
   }
 
   return layer;
+}
+
+export async function insertControlIntoMap<R extends(() => Promise<unknown>), T extends YMapEntity<unknown>>(requiredImport: R, controlCreateFunction: (neededImport: Awaited<ReturnType<R>>) => T | Promise<T>): Promise<T> {
+  if (!getCurrentInstance()) throw new Error('insertControlIntoMap must be only called on runtime. This is likely Vue Yandex Map internal bug.');
+
+  const control = injectControl();
+  const controlInitPromises = inject<Ref<PromiseLike<any>[]>>('controlInitPromises');
+  let newControl: T | undefined;
+
+  onBeforeUnmount(() => {
+    if (newControl) {
+      control.value?.removeChild(newControl);
+    }
+  });
+
+  await waitTillYmapInit();
+
+  if (!control.value) throw new Error('control is undefined in insertControlIntoMap. Please ensure you are calling this component inside <y-map-controls> component.');
+  controlInitPromises?.value.push(requiredImport());
+  newControl = await controlCreateFunction(await requiredImport() as Awaited<ReturnType<R>>);
+
+  control.value.addChild(newControl);
+  return newControl;
 }
 
 export async function insertChildrenIntoMap<T extends YMapEntity<unknown>>(childrenCreateFunction: () => T): Promise<T> {

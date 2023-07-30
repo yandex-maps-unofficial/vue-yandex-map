@@ -3,7 +3,7 @@ import { YMapTileDataSource } from '@yandex/ymaps3-types';
 import {
   defineComponent, h, onMounted, PropType, watch,
 } from 'vue';
-import { insertLayerIntoMap } from '../../composables/utils.ts';
+import { insertLayerIntoMap } from '../../composables/utils';
 
 export default defineComponent({
   name: 'YMapTileDataSource',

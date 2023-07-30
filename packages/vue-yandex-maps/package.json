@@ -1,6 +1,6 @@
 {
   "name": "vue-yandex-maps",
-  "version": "2.0.0-alpha.48",
+  "version": "2.0.0-alpha.49",
   "description": "Yandex Maps component for VueJS.",
   "types": "./dist/index.d.ts",
   "exports": {

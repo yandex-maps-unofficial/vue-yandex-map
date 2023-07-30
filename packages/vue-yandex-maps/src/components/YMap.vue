@@ -2,6 +2,8 @@
 import {
   h, onMounted, PropType, provide, ref,
   defineComponent,
+  computed,
+shallowRef,
 } from 'vue';
 import type { YMap, YMapEntity, YMapProps } from '@yandex/ymaps3-types';
 import { initYmaps } from '../composables/maps';
@@ -68,8 +70,8 @@ export default defineComponent({
     },
   },
   setup(props, { slots }) {
-    const map = ref<YMap | null>(null);
-    const layers = ref([]);
+    const map = shallowRef<YMap | null>(null);
+    const layers = shallowRef([]);
     const ymapContainer = ref<HTMLDivElement | null>(null);
 
     provide('map', map);
@@ -81,10 +83,12 @@ export default defineComponent({
 
       if (map.value) map.value.destroy();
 
-      map.value = new ymaps3.YMap(container, props.settings, [
+      const createdMap = new ymaps3.YMap(container, props.settings, [
         ...layers.value,
         ...props.layers,
       ]);
+
+      map.value = createdMap;
     };
 
     onMounted(async () => {

@@ -1,37 +1,33 @@
-/* eslint-disable no-unused-vars */
-
 // https://github.com/microsoft/TypeScript/issues/32164
 
-type FN = (...args: any[]) => unknown;
+type OverloadProps<TOverload> = Pick<TOverload, keyof TOverload>;
 
-// current typescript version infers 'unknown[]' for any additional overloads
-// we can filter them out to get the correct result
-type _Params<T> = T extends {
-  (...args: infer A1): unknown;
-  (...args: infer A2): unknown;
-  (...args: infer A3): unknown;
-  (...args: infer A4): unknown;
-  (...args: infer A5): unknown;
-  (...args: infer A6): unknown;
-  (...args: infer A7): unknown;
-  (...args: infer A8): unknown;
-  (...args: infer A9): unknown;
-}
-  ? [A1, A2, A3, A4, A5, A6, A7, A8, A9]
+type OverloadUnionRecursive<TOverload, TPartialOverload = unknown> = TOverload extends (
+  ...args: infer TArgs
+) => infer TReturn
+  ? // Prevent infinite recursion by stopping recursion when TPartialOverload
+    // has accumulated all of the TOverload signatures.
+    TPartialOverload extends TOverload
+    ? never
+    :
+        | OverloadUnionRecursive<
+            TPartialOverload & TOverload,
+            TPartialOverload & ((...args: TArgs) => TReturn) & OverloadProps<TOverload>
+          >
+        | ((...args: TArgs) => TReturn)
   : never;
 
-// type T1 = filterUnknowns<[unknown[], string[]]>; // [string[]]
-type filterUnknowns<T> = T extends [infer A, ...infer Rest]
-  ? unknown[] extends A
-    ? filterUnknowns<Rest>
-    : [A, ...filterUnknowns<Rest>]
-  : T;
+type OverloadUnion<TOverload extends (...args: any[]) => any> = Exclude<
+  OverloadUnionRecursive<
+    // The "() => never" signature must be hoisted to the "front" of the
+    // intersection, for two reasons: a) because recursion stops when it is
+    // encountered, and b) it seems to prevent the collapse of subsequent
+    // "compatible" signatures (eg. "() => void" into "(a?: 1) => void"),
+    // which gives a direct conversion to a union.
+    (() => never) & TOverload
+  >,
+  TOverload extends () => never ? never : () => never
+>;
 
-// type T1 = TupleArrayUnion<[[], [string], [string, number]]>; // [] | [string] | [string, number]
-type TupleArrayUnion<A extends readonly unknown[][]> = A extends (infer T)[]
-  ? T extends unknown[]
-    ? T
-    : []
-  : [];
-
-export type OverloadParameters<T extends FN> = TupleArrayUnion<filterUnknowns<_Params<T>>>;
+// Inferring a union of parameter tuples or return types is now possible.
+export type OverloadParameters<T extends (...args: any[]) => any> = Parameters<OverloadUnion<T>>;
