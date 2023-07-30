@@ -8,18 +8,18 @@
         "lint": "eslint ./src/* --fix"
     },
     "devDependencies": {
-        "@babel/eslint-parser": "^7.21.8",
-        "@types/node": "^20.2.5",
-        "@typescript-eslint/eslint-plugin": "^5.59.8",
-        "@typescript-eslint/parser": "^5.59.8",
+        "@babel/eslint-parser": "^7.22.9",
+        "@types/node": "^20.4.5",
+        "@typescript-eslint/eslint-plugin": "^6.2.0",
+        "@typescript-eslint/parser": "^6.2.0",
         "@vue/eslint-config-airbnb": "^7.0.0",
-        "eslint": "^8.42.0",
-        "eslint-plugin-jest": "^27.2.1",
-        "eslint-plugin-vue": "^9.14.1"
+        "eslint": "^8.46.0",
+        "eslint-plugin-jest": "^27.2.3",
+        "eslint-plugin-vue": "^9.16.0"
     },
     "workspaces": [
         "packages/*",
         "packages/examples/*"
     ],
-    "packageManager": "yarn@3.6.0"
+    "packageManager": "yarn@3.6.1"
 }
