@@ -1,40 +1,39 @@
 <script lang="ts">
+import { YMapMarker } from '@yandex/ymaps3-types';
 import {
-  onMounted, watch, h, PropType,
-  defineComponent,
+  defineComponent, onMounted, PropType, watch, h, ref,
 } from 'vue';
-import {
-  BehaviorEvents, DomEvents, MapEvents, YMapListener,
-} from '@yandex/ymaps3-types';
-import { injectMap, waitTillMapInit } from '../composables/utils';
+import { insertChildrenIntoMap } from '../composables/utils';
 
 export default defineComponent({
-  name: 'YMapListener',
+  name: 'YMapMarker',
   props: {
     settings: {
-      type: Object as PropType<Partial<DomEvents & MapEvents & BehaviorEvents>>,
+      type: Object as PropType<ConstructorParameters<typeof YMapMarker>[0]>,
       default: () => ({}),
     },
   },
   setup(props, { slots }) {
-    const map = injectMap();
-
-    let mapListener: YMapListener | undefined;
+    let mapChildren: YMapMarker | undefined;
 
     watch(props, () => {
-      mapListener?.update(props.settings || {});
+      mapChildren?.update(props.settings || {});
     }, {
       deep: true,
     });
 
-    onMounted(async () => {
-      await waitTillMapInit();
+    const element = ref<null | HTMLDivElement>(null);
 
-      mapListener = new ymaps3.YMapListener(props.settings || {});
-      map.value?.addChild(mapListener);
+    onMounted(async () => {
+      mapChildren = await insertChildrenIntoMap(() => new ymaps3.YMapMarker(
+        props.settings,
+        element.value!,
+      ));
     });
 
-    return () => h('div', slots.default?.());
+    return () => h('div', {
+      ref: element,
+    }, slots.default?.());
   },
 });
 </script>

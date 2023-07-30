@@ -1,5 +1,16 @@
 import {
-  Ref, UnwrapRef, ref, ComputedGetter, DebuggerOptions, ComputedRef, computed, inject, getCurrentInstance, isRef, watch, onBeforeUnmount,
+  computed,
+  ComputedGetter,
+  ComputedRef,
+  DebuggerOptions,
+  getCurrentInstance,
+  inject,
+  isRef,
+  onBeforeUnmount,
+  Ref,
+  ref,
+  UnwrapRef,
+  watch,
 } from 'vue';
 import { YMap, YMapEntity } from '@yandex/ymaps3-types';
 
@@ -106,7 +117,9 @@ export async function insertLayerIntoMap<T extends YMapEntity<unknown>>(layerCre
   let layer: T | undefined;
 
   onBeforeUnmount(() => {
-    if (layer) { map.value?.removeChild(layer); }
+    if (layer) {
+      map.value?.removeChild(layer);
+    }
   });
 
   await waitTillYmapInit();
@@ -120,4 +133,26 @@ export async function insertLayerIntoMap<T extends YMapEntity<unknown>>(layerCre
   }
 
   return layer;
+}
+
+export async function insertChildrenIntoMap<T extends YMapEntity<unknown>>(childrenCreateFunction: () => T): Promise<T> {
+  if (!getCurrentInstance()) throw new Error('insertChildrenIntoMap must be only called on runtime. This is likely Vue Yandex Map internal bug.');
+
+  const map = injectMap();
+  let children: T | undefined;
+
+  onBeforeUnmount(() => {
+    if (children) {
+      map.value?.removeChild(children);
+    }
+  });
+
+  await waitTillMapInit();
+  if (!map.value) throw new Error('map is undefined in insertChildrenIntoMap. This is likely Vue Yandex Map internal bug.');
+
+  children = childrenCreateFunction();
+
+  map.value.addChild(children);
+
+  return children;
 }

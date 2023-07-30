@@ -2,8 +2,8 @@
 import { YMapDefaultFeaturesLayer } from '@yandex/ymaps3-types';
 import {
   onMounted, watch, PropType, h,
+  defineComponent,
 } from 'vue';
-import { defineComponent } from 'vue';
 import {
   insertLayerIntoMap,
 } from '../../composables/utils';

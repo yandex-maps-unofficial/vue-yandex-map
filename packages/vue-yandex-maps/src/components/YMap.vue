@@ -1,8 +1,8 @@
 <script lang="ts">
 import {
   h, onMounted, PropType, provide, ref,
+  defineComponent,
 } from 'vue';
-import { defineComponent } from 'vue';
 import type { YMap, YMapEntity, YMapProps } from '@yandex/ymaps3-types';
 import { initYmaps } from '../composables/maps';
 import { VueYandexMaps } from '../types/settings';

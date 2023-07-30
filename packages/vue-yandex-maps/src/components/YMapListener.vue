@@ -1,12 +1,12 @@
 <script lang="ts">
 import {
   onMounted, watch, h, PropType,
+  defineComponent,
 } from 'vue';
-import { defineComponent } from 'vue';
 import {
   BehaviorEvents, DomEvents, MapEvents, YMapListener,
 } from '@yandex/ymaps3-types';
-import { injectMap, waitTillMapInit } from '../composables/utils';
+import { insertChildrenIntoMap } from '../composables/utils';
 
 export default defineComponent({
   name: 'YMapListener',
@@ -17,8 +17,6 @@ export default defineComponent({
     },
   },
   setup(props, { slots }) {
-    const map = injectMap();
-
     let mapListener: YMapListener | undefined;
 
     watch(props, () => {
@@ -28,10 +26,7 @@ export default defineComponent({
     });
 
     onMounted(async () => {
-      await waitTillMapInit();
-
-      mapListener = new ymaps3.YMapListener(props.settings || {});
-      map.value?.addChild(mapListener);
+      mapListener = await insertChildrenIntoMap(() => new ymaps3.YMapListener(props.settings || {}));
     });
 
     return () => h('div', slots.default?.());
