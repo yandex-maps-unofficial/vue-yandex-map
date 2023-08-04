@@ -37,7 +37,7 @@
   "author": "bizz.gc@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "@yandex/ymaps3-types": "^0.0.12"
+    "@yandex/ymaps3-types": "^0.0.13"
   },
   "devDependencies": {
     "@nuxt/kit": "^3.6.5",
@@ -53,7 +53,7 @@
     "jest": "^29.6.2",
     "nuxt": "^3.6.5",
     "typescript": "^5.1.6",
-    "vite": "^4.4.7",
+    "vite": "^4.4.8",
     "vite-plugin-dts": "^3.4.0",
     "vite-plugin-static-copy": "^0.17.0",
     "vue": "^3.3.4",
