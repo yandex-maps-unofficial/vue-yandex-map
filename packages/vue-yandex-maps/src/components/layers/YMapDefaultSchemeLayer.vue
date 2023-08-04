@@ -19,7 +19,7 @@ export default defineComponent({
   setup(props, { slots }) {
     let mapLayer: YMapDefaultSchemeLayer | undefined;
 
-    watch(props, () => {
+    watch(() => props, () => {
       mapLayer?.update(props.settings || {});
     }, {
       deep: true,

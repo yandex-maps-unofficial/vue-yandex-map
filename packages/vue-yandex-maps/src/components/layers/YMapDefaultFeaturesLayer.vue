@@ -19,7 +19,7 @@ export default defineComponent({
   setup(props, { slots }) {
     let mapLayer: YMapDefaultFeaturesLayer | undefined;
 
-    watch(props, () => {
+    watch(() => props, () => {
       mapLayer?.update(props.settings || {});
     }, {
       deep: true,

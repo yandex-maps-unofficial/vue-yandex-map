@@ -19,7 +19,7 @@ export default defineComponent({
   setup(props, { slots }) {
     let mapListener: YMapListener | undefined;
 
-    watch(props, () => {
+    watch(() => props, () => {
       mapListener?.update(props.settings || {});
     }, {
       deep: true,

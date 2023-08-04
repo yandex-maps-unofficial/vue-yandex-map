@@ -1,0 +1,31 @@
+{
+  "name": "nuxt",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "prepack": "nuxt-module-build",
+    "dev": "nuxi dev playground",
+    "dev:build": "nuxi build playground",
+    "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
+    "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
+    "lint": "eslint ",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^3.6.5",
+    "vue-yandex-maps": "workspace:*"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "^0.7.4",
+    "@nuxt/eslint-config": "^0.1.1",
+    "@nuxt/module-builder": "^0.4.0",
+    "@nuxt/schema": "^3.6.5",
+    "@nuxt/test-utils": "^3.6.5",
+    "@types/node": "^20.4.7",
+    "changelogen": "^0.5.4",
+    "nuxt": "^3.6.5",
+    "vitest": "^0.34.1",
+    "vue-tsc": "^1.8.8"
+  }
+}

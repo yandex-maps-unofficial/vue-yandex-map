@@ -4,10 +4,11 @@
     "scripts": {
         "build": "yarn workspace vue-yandex-maps build",
         "nuxt:build": "yarn workspace vue-yandex-maps nuxt:prepare",
-        "test:vue2": "yarn workspace vue-yandex-maps build && yarn workspace example-vue2 serve",
-        "test:nuxt2": "yarn workspace vue-yandex-maps build && yarn workspace example-nuxt2 dev",
+        "test:vue2": "yarn workspace vue-yandex-maps build:package-only && yarn workspace example-vue2 serve",
+        "test:nuxt2": "yarn workspace vue-yandex-maps build:package-only && yarn workspace example-nuxt2 dev",
         "test:nuxt2-bridge": "yarn workspace vue-yandex-maps build && yarn workspace example-nuxt2-bridge dev",
-        "test:vue3": "yarn workspace vue-yandex-maps build && yarn workspace example-vue3 dev",
+        "test:vue3": "yarn workspace vue-yandex-maps build:package-only && yarn workspace example-vue3 dev",
+        "test:nuxt3": "yarn workspace vue-yandex-maps build && yarn workspace example-nuxt3 dev",
         "lint": "eslint --ext \".js,.ts,.vue\" ./packages/* --max-warnings 0",
         "lint:fix": "yarn lint --fix"
     },

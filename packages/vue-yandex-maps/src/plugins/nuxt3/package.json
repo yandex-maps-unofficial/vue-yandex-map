@@ -1,9 +1,0 @@
-{
-    "name": "vue-yandex-maps",
-    "build": {
-        "externals": [
-            "@yandex/ymaps3-types",
-            "defu"
-        ]
-    }
-}

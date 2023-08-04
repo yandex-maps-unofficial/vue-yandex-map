@@ -19,7 +19,7 @@ export default defineComponent({
     provide('control', mapChildren);
     provide('controlInitPromises', controlInitPromises);
 
-    watch(props, () => {
+    watch(() => props, () => {
       mapChildren.value?.update(props.settings || {});
     }, {
       deep: true,

@@ -52,6 +52,11 @@ export default defineConfig({
           src: 'src/plugins/nuxt-plugin.js',
           dest: '',
         },
+        {
+          src: '../nuxt/dist',
+          rename: 'nuxt',
+          dest: '',
+        },
       ],
     }),
   ],

@@ -16,7 +16,7 @@ export default defineComponent({
   setup(props, { slots }) {
     let mapChildren: YMapFeature | undefined;
 
-    watch(props, () => {
+    watch(() => props, () => {
       mapChildren?.update(props.settings || {});
     }, {
       deep: true,

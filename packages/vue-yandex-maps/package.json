@@ -6,14 +6,16 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/vue-yandex-maps.js",
-    "./nuxt": "./dist/nuxt3.js",
-    "./nuxt3-plugin": "./dist/nuxt3-plugin.js",
-    "./nuxt2": "./dist/nuxt2.js",
-    "./nuxt2-plugin": "./dist/nuxt2-plugin.js"
+    "./nuxt": {
+      "types": "./dist/nuxt/types.d.ts",
+      "import": "./dist/nuxt/module.mjs",
+      "require": "./dist/nuxt/module.cjs"
+    },
+    "./nuxt2": "./dist/nuxt2.js"
   },
   "scripts": {
-    "nuxt:prepare": "nuxt-module-build",
-    "build": "tsc && vite build",
+    "build": "yarn workspace nuxt prepack && yarn build:package-only",
+    "build:package-only": "tsc && vite build",
     "docs:build": "vuepress build docs",
     "docs:dev": "vuepress dev docs",
     "test": "jest"
@@ -37,12 +39,10 @@
   "author": "bizz.gc@gmail.com",
   "license": "MIT",
   "dependencies": {
+    "@nuxt/kit": "^3.6.5",
     "@yandex/ymaps3-types": "^0.0.13"
   },
   "devDependencies": {
-    "@nuxt/kit": "^3.6.5",
-    "@nuxt/module-builder": "^0.4.0",
-    "@nuxt/schema": "^3.6.5",
     "@nuxt/types": "^2.17.1",
     "@rollup/plugin-babel": "^6.0.3",
     "@types/jest": "^29.5.3",
@@ -51,7 +51,6 @@
     "@vue/vue3-jest": "^29.2.4",
     "babel-jest": "^29.6.2",
     "jest": "^29.6.2",
-    "nuxt": "^3.6.5",
     "typescript": "^5.1.6",
     "vite": "^4.4.8",
     "vite-plugin-dts": "^3.4.0",
