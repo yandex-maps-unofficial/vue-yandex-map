@@ -4210,12 +4210,12 @@ __metadata:
   linkType: hard
 
 "@types/eslint@npm:*":
-  version: 8.44.1
-  resolution: "@types/eslint@npm:8.44.1"
+  version: 8.44.2
+  resolution: "@types/eslint@npm:8.44.2"
   dependencies:
     "@types/estree": "*"
     "@types/json-schema": "*"
-  checksum: 8b45be72d3c22a1ee0b1cc7e7fb0e34e32bbf959e6b7e0e46d160c17894aedf159c1db5c85750f10068884c741eebc37a1cc7ea659de23a8df0c9a3203e2ff9d
+  checksum: 25b3ef61bae96350026593c9914c8a61ee02fde48ab8d568a73ee45032f13c0028c62e47a5ff78715af488dfe8e8bba913f7d30f859f60c7f9e639d328e80482
   languageName: node
   linkType: hard
 
@@ -6092,10 +6092,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@yandex/ymaps3-types@npm:^0.0.13":
-  version: 0.0.13
-  resolution: "@yandex/ymaps3-types@npm:0.0.13"
-  checksum: ad07842b09c96fd02975d181c74494de5019c7ac228658dfce312595c870e798aedc7fc3f8029f220691882afb47eef8408350997e7422e3578d8ce23335524e
+"@yandex/ymaps3-types@npm:^0.0.14":
+  version: 0.0.14
+  resolution: "@yandex/ymaps3-types@npm:0.0.14"
+  checksum: 48dee1db7a1640685742613555d84045a5fc4709f88374f315f0b97eb3e8b8c46c8966e4e75c399c4b0235ed6a3dc11c0e9a4516254920aa5fad6e28698a5435
   languageName: node
   linkType: hard
 
@@ -6185,13 +6185,13 @@ __metadata:
   linkType: hard
 
 "agentkeepalive@npm:^4.2.1":
-  version: 4.3.0
-  resolution: "agentkeepalive@npm:4.3.0"
+  version: 4.4.0
+  resolution: "agentkeepalive@npm:4.4.0"
   dependencies:
     debug: ^4.1.0
     depd: ^2.0.0
     humanize-ms: ^1.2.1
-  checksum: 982453aa44c11a06826c836025e5162c846e1200adb56f2d075400da7d32d87021b3b0a58768d949d824811f5654223d5a8a3dad120921a2439625eb847c6260
+  checksum: 36e0919a7503dacc863dc216ea6ca176c454724a63fd3d7b215089a1a2c89ee97db377b3af2454f79e5a8e7bb87e5975317734e9b0f9d5898c2269e3d8be05c7
   languageName: node
   linkType: hard
 
@@ -9586,9 +9586,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.477":
-  version: 1.4.484
-  resolution: "electron-to-chromium@npm:1.4.484"
-  checksum: 30e1df1f2d32b4be0fab07622d6ac3cc05dfdb70aa8901cfbf0511d7834df82d06478bd3d5fa2c37ca114dc8b3da44fa8f8b8cb994c8ac629f0ecbc351b0c0bb
+  version: 1.4.485
+  resolution: "electron-to-chromium@npm:1.4.485"
+  checksum: 6f9efc92c18c4c8a16ba6d6004823d7ec893b98a0a0eae372e8cf1fbb61bdd04b9e2edd692dcb2e9d59cec06e3ef899262c52f1eb1e5d0202ee3d0b594fb4bd2
   languageName: node
   linkType: hard
 
@@ -10075,13 +10075,13 @@ __metadata:
   linkType: hard
 
 "eslint-import-resolver-node@npm:^0.3.6, eslint-import-resolver-node@npm:^0.3.7":
-  version: 0.3.7
-  resolution: "eslint-import-resolver-node@npm:0.3.7"
+  version: 0.3.8
+  resolution: "eslint-import-resolver-node@npm:0.3.8"
   dependencies:
     debug: ^3.2.7
-    is-core-module: ^2.11.0
-    resolve: ^1.22.1
-  checksum: 3379aacf1d2c6952c1b9666c6fa5982c3023df695430b0d391c0029f6403a7775414873d90f397e98ba6245372b6c8960e16e74d9e4a3b0c0a4582f3bdbe3d6e
+    is-core-module: ^2.13.0
+    resolve: ^1.22.4
+  checksum: 5769ebec976d1145957f5d87ee05b6e880cd3fbeb001a43b7a6e6a03b303d9b253b37ca296277f228159a0bbb690638c2e4b3a573dd4d6753b8f28ff85dbe192
   languageName: node
   linkType: hard
 
@@ -10194,7 +10194,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-vue@npm:^9.16.0, eslint-plugin-vue@npm:^9.8.0":
+"eslint-plugin-vue@npm:^9.16.1, eslint-plugin-vue@npm:^9.8.0":
   version: 9.16.1
   resolution: "eslint-plugin-vue@npm:9.16.1"
   dependencies:
@@ -12612,12 +12612,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-core-module@npm:^2.1.0, is-core-module@npm:^2.11.0, is-core-module@npm:^2.12.0, is-core-module@npm:^2.12.1, is-core-module@npm:^2.8.1, is-core-module@npm:^2.9.0":
-  version: 2.12.1
-  resolution: "is-core-module@npm:2.12.1"
+"is-core-module@npm:^2.1.0, is-core-module@npm:^2.12.1, is-core-module@npm:^2.13.0, is-core-module@npm:^2.8.1, is-core-module@npm:^2.9.0":
+  version: 2.13.0
+  resolution: "is-core-module@npm:2.13.0"
   dependencies:
     has: ^1.0.3
-  checksum: f04ea30533b5e62764e7b2e049d3157dc0abd95ef44275b32489ea2081176ac9746ffb1cdb107445cf1ff0e0dfcad522726ca27c27ece64dadf3795428b8e468
+  checksum: 053ab101fb390bfeb2333360fd131387bed54e476b26860dc7f5a700bbf34a0ec4454f7c8c4d43e8a0030957e4b3db6e16d35e1890ea6fb654c833095e040355
   languageName: node
   linkType: hard
 
@@ -18287,11 +18287,11 @@ __metadata:
   linkType: hard
 
 "regenerator-transform@npm:^0.15.1":
-  version: 0.15.1
-  resolution: "regenerator-transform@npm:0.15.1"
+  version: 0.15.2
+  resolution: "regenerator-transform@npm:0.15.2"
   dependencies:
     "@babel/runtime": ^7.8.4
-  checksum: 2d15bdeadbbfb1d12c93f5775493d85874dbe1d405bec323da5c61ec6e701bc9eea36167483e1a5e752de9b2df59ab9a2dfff6bf3784f2b28af2279a673d29a4
+  checksum: 20b6f9377d65954980fe044cfdd160de98df415b4bff38fbade67b3337efaf078308c4fed943067cd759827cc8cfeca9cb28ccda1f08333b85d6a2acbd022c27
   languageName: node
   linkType: hard
 
@@ -18460,16 +18460,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@npm:^1.1.7, resolve@npm:^1.10.0, resolve@npm:^1.14.2, resolve@npm:^1.20.0, resolve@npm:^1.22.0, resolve@npm:^1.22.1, resolve@npm:^1.22.2, resolve@npm:^1.22.3, resolve@npm:~1.22.1":
-  version: 1.22.3
-  resolution: "resolve@npm:1.22.3"
+"resolve@npm:^1.1.7, resolve@npm:^1.10.0, resolve@npm:^1.14.2, resolve@npm:^1.20.0, resolve@npm:^1.22.0, resolve@npm:^1.22.1, resolve@npm:^1.22.2, resolve@npm:^1.22.3, resolve@npm:^1.22.4, resolve@npm:~1.22.1":
+  version: 1.22.4
+  resolution: "resolve@npm:1.22.4"
   dependencies:
-    is-core-module: ^2.12.0
+    is-core-module: ^2.13.0
     path-parse: ^1.0.7
     supports-preserve-symlinks-flag: ^1.0.0
   bin:
     resolve: bin/resolve
-  checksum: fb834b81348428cb545ff1b828a72ea28feb5a97c026a1cf40aa1008352c72811ff4d4e71f2035273dc536dcfcae20c13604ba6283c612d70fa0b6e44519c374
+  checksum: 23f25174c2736ce24c6d918910e0d1f89b6b38fefa07a995dff864acd7863d59a7f049e691f93b4b2ee29696303390d921552b6d1b841ed4a8101f517e1d0124
   languageName: node
   linkType: hard
 
@@ -18496,16 +18496,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@^1.1.7#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.3#~builtin<compat/resolve>, resolve@patch:resolve@~1.22.1#~builtin<compat/resolve>":
-  version: 1.22.3
-  resolution: "resolve@patch:resolve@npm%3A1.22.3#~builtin<compat/resolve>::version=1.22.3&hash=c3c19d"
+"resolve@patch:resolve@^1.1.7#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.3#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.4#~builtin<compat/resolve>, resolve@patch:resolve@~1.22.1#~builtin<compat/resolve>":
+  version: 1.22.4
+  resolution: "resolve@patch:resolve@npm%3A1.22.4#~builtin<compat/resolve>::version=1.22.4&hash=c3c19d"
   dependencies:
-    is-core-module: ^2.12.0
+    is-core-module: ^2.13.0
     path-parse: ^1.0.7
     supports-preserve-symlinks-flag: ^1.0.0
   bin:
     resolve: bin/resolve
-  checksum: ad59734723b596d0891321c951592ed9015a77ce84907f89c9d9307dd0c06e11a67906a3e628c4cae143d3e44898603478af0ddeb2bba3f229a9373efe342665
+  checksum: c45f2545fdc4d21883861b032789e20aa67a2f2692f68da320cc84d5724cd02f2923766c5354b3210897e88f1a7b3d6d2c7c22faeead8eed7078e4c783a444bc
   languageName: node
   linkType: hard
 
@@ -18648,8 +18648,8 @@ __metadata:
   linkType: hard
 
 "rollup@npm:^3.20.2, rollup@npm:^3.21.0, rollup@npm:^3.25.2, rollup@npm:^3.25.3":
-  version: 3.27.1
-  resolution: "rollup@npm:3.27.1"
+  version: 3.27.2
+  resolution: "rollup@npm:3.27.2"
   dependencies:
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -18657,7 +18657,7 @@ __metadata:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: 1f82ef0fd15317ef35f7dea9712c50e83357ae21e3d7688ad22218968e0b2aaeebae4130afed2c3566e5abab8cbebf60b0b40f9544fedced4f1f7dd39b4f25b8
+  checksum: 524477e73885bafd2df395c12db330f3893e1f8eca67e811fb1423a4f6318451987e978607c75f8115bd9ce7fa834460969b0c39b797d45da87fa42fef9bafa8
   languageName: node
   linkType: hard
 
@@ -21216,9 +21216,9 @@ __metadata:
   linkType: hard
 
 "validator@npm:^13.7.0":
-  version: 13.9.0
-  resolution: "validator@npm:13.9.0"
-  checksum: e2c936f041f61faa42bafd17c6faddf939498666cd82e88d733621c286893730b008959f4cb12ab3e236148a4f3805c30b85e3dcf5e0efd8b0cbcd36c02bfc0c
+  version: 13.11.0
+  resolution: "validator@npm:13.11.0"
+  checksum: d1e0c27022681420756da25bc03eb08d5f0c66fb008f8ff02ebc95812b77c6be6e03d3bd05cf80ca702e23eeb73dadd66b4b3683173ea2a0bc7cc72820bee131
   languageName: node
   linkType: hard
 
@@ -21313,9 +21313,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-dts@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "vite-plugin-dts@npm:3.4.0"
+"vite-plugin-dts@npm:^3.5.0":
+  version: 3.5.0
+  resolution: "vite-plugin-dts@npm:3.5.0"
   dependencies:
     "@microsoft/api-extractor": ^7.36.3
     "@rollup/pluginutils": ^5.0.2
@@ -21329,7 +21329,7 @@ __metadata:
   peerDependenciesMeta:
     vite:
       optional: true
-  checksum: 47f0b2a1415b870978ba361d2e3cf31715270b7e4534da5046ff23dbb10730ba8e4b6a17d810a6264ce1362256cae67074bd6243ab8da0cd403bfe83a5554f91
+  checksum: a8ad5c300979476564028f852af22f5536e212a690823789d5631f950d68f986882a2f2f52ecaa7ea41872dd1e96c3387462bd6588b387b75347b401de288afc
   languageName: node
   linkType: hard
 
@@ -21781,7 +21781,7 @@ __metadata:
     "@vue/eslint-config-airbnb": ^7.0.0
     eslint: ^8.46.0
     eslint-plugin-jest: ^27.2.3
-    eslint-plugin-vue: ^9.16.0
+    eslint-plugin-vue: ^9.16.1
     typescript: ^5.1.6
   languageName: unknown
   linkType: soft
@@ -21797,12 +21797,12 @@ __metadata:
     "@vitejs/plugin-vue": ^4.2.3
     "@vue/test-utils": ^2.4.1
     "@vue/vue3-jest": ^29.2.4
-    "@yandex/ymaps3-types": ^0.0.13
+    "@yandex/ymaps3-types": ^0.0.14
     babel-jest: ^29.6.2
     jest: ^29.6.2
     typescript: ^5.1.6
     vite: ^4.4.8
-    vite-plugin-dts: ^3.4.0
+    vite-plugin-dts: ^3.5.0
     vite-plugin-static-copy: ^0.17.0
     vue: ^3.3.4
     vue-demi: ^0.14.5
