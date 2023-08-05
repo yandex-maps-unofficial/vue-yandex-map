@@ -2,7 +2,7 @@
 import {
   h, onMounted, PropType, provide, ref,
   defineComponent,
-  shallowRef,
+  shallowRef, nextTick,
 } from 'vue';
 import type { YMap, YMapEntity, YMapProps } from '@yandex/ymaps3-types';
 import { initYmaps } from '../composables/maps';
@@ -100,10 +100,13 @@ export default defineComponent({
             console.error(e);
             return;
           }
-        } else throw new Error('You have set up <yandex-map> component without initializing Yandex maps. Please check initializeOn setting or call initYmaps manually before registering this component.');
+        } else {
+          throw new Error('You have set up <yandex-map> component without initializing Yandex maps. Please check initializeOn setting or call initYmaps manually before registering this component.');
+        }
       }
 
-      setTimeout(init, 300);
+      await nextTick();
+      await init();
     });
 
     return () => {

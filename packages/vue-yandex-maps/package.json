@@ -40,7 +40,8 @@
   "license": "MIT",
   "dependencies": {
     "@nuxt/kit": "^3.6.5",
-    "@yandex/ymaps3-types": "^0.0.13"
+    "@yandex/ymaps3-types": "^0.0.13",
+    "vue-yandex-maps": "workspace:*"
   },
   "devDependencies": {
     "@nuxt/types": "^2.17.1",

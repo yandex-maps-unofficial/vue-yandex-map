@@ -10457,6 +10457,7 @@ __metadata:
     "@nuxt/typescript-build": ^3.0.1
     "@nuxtjs/composition-api": latest
     core-js: ^3.32.0
+    example-vue3: "workspace:*"
     nuxt: ^2.17.1
     typescript: ^5.1.6
     vue: ^2.7.14
@@ -10474,6 +10475,7 @@ __metadata:
     "@nuxt/typescript-build": ^3.0.1
     "@nuxtjs/composition-api": latest
     core-js: ^3.32.0
+    example-vue3: "workspace:*"
     nuxt: ^2.17.1
     typescript: ^5.1.6
     vue: ^2.7.14
@@ -10489,6 +10491,7 @@ __metadata:
   dependencies:
     "@nuxt/devtools": latest
     "@types/node": ^20.4.7
+    example-vue3: "workspace:*"
     nuxt: ^3.6.5
     vue-yandex-maps: "workspace:*"
   languageName: unknown
@@ -10502,6 +10505,7 @@ __metadata:
     "@vue/cli-plugin-typescript": ^5.0.8
     "@vue/cli-service": ^5.0.8
     core-js: ^3.32.0
+    example-vue3: "workspace:*"
     typescript: ^5.1.6
     vue: ^2.7.14
     vue-template-compiler: ^2.7.14
@@ -10509,7 +10513,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"example-vue3@workspace:packages/examples/vue3":
+"example-vue3@workspace:*, example-vue3@workspace:packages/examples/vue3":
   version: 0.0.0-use.local
   resolution: "example-vue3@workspace:packages/examples/vue3"
   dependencies:
@@ -21802,6 +21806,7 @@ __metadata:
     vite-plugin-static-copy: ^0.17.0
     vue: ^3.3.4
     vue-demi: ^0.14.5
+    vue-yandex-maps: "workspace:*"
   peerDependencies:
     "@vue/composition-api": ">=1"
     nuxt: 2||3

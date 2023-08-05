@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "core-js": "^3.32.0",
+    "example-vue3": "workspace:*",
     "vue": "^2.7.14",
     "vue-yandex-maps": "workspace:*"
   },

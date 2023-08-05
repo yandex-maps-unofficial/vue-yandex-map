@@ -10,7 +10,6 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
   },
   "dependencies": {
-    "vue": "^3.3.4",
     "vue-yandex-maps": "workspace:*"
   },
   "devDependencies": {
@@ -20,6 +19,7 @@
     "npm-run-all": "^4.1.5",
     "typescript": "^5.1.6",
     "vite": "^4.4.8",
+    "vue": "^3.3.4",
     "vue-tsc": "^1.8.8"
   }
 }
