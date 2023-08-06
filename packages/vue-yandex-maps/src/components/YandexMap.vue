@@ -62,8 +62,8 @@ export default defineComponent({
    * @see https://yandex.com/dev/maps/jsapi/doc/3.0/dg/concepts/events.html
    */
   emits: {
-    'update:map'(map: Ref<YMap | null>): boolean {
-      return !map.value || typeof ymaps3 === 'undefined' || map.value instanceof ymaps3.YMap;
+    'update:map'(map: YMap | null): boolean {
+      return !map || typeof ymaps3 === 'undefined' || map instanceof ymaps3.YMap;
     },
   },
   setup(props, {
@@ -77,7 +77,7 @@ export default defineComponent({
 
     provide('map', map);
     provide('layers', layers);
-    emit('update:map', map);
+    emit('update:map', map.value);
 
     const init = async () => {
       const container = ymapContainer.value;
@@ -91,6 +91,7 @@ export default defineComponent({
       ]);
 
       map.value = createdMap;
+      emit('update:map', map.value);
     };
 
     onMounted(async () => {
@@ -115,6 +116,7 @@ export default defineComponent({
 
     onBeforeUnmount(() => {
       map.value = null;
+      emit('update:map', map.value);
     });
 
     return () => {
