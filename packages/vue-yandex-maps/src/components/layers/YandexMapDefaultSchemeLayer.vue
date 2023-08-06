@@ -1,5 +1,5 @@
 <script lang="ts">
-import { YMapLayer } from '@yandex/ymaps3-types';
+import { YMapDefaultSchemeLayer } from '@yandex/ymaps3-types';
 import {
   onMounted, watch, PropType, h,
   defineComponent,
@@ -9,15 +9,15 @@ import {
 } from '../../composables/utils';
 
 export default defineComponent({
-  name: 'YMapLayer',
+  name: 'YandexMapDefaultSchemeLayer',
   props: {
     settings: {
-      type: Object as PropType<ConstructorParameters<typeof YMapLayer>[0]>,
+      type: Object as PropType<ConstructorParameters<typeof YMapDefaultSchemeLayer>[0]>,
       default: () => ({}),
     },
   },
   setup(props, { slots }) {
-    let mapLayer: YMapLayer | undefined;
+    let mapLayer: YMapDefaultSchemeLayer | undefined;
 
     watch(() => props, () => {
       mapLayer?.update(props.settings || {});
@@ -26,7 +26,7 @@ export default defineComponent({
     });
 
     onMounted(async () => {
-      mapLayer = await insertLayerIntoMap(() => new ymaps3.YMapLayer(props.settings || {}));
+      mapLayer = await insertLayerIntoMap(() => new ymaps3.YMapDefaultSchemeLayer(props.settings || {}));
     });
 
     return () => h('div', slots.default?.());

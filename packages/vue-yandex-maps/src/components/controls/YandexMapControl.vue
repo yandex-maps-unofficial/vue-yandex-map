@@ -1,23 +1,23 @@
 <script lang="ts">
-import { YMapDefaultFeaturesLayer } from '@yandex/ymaps3-types';
 import {
   onMounted, watch, PropType, h,
   defineComponent,
 } from 'vue';
+import { YMapControl } from '@yandex/ymaps3-types';
 import {
-  insertLayerIntoMap,
+  insertControlIntoMap,
 } from '../../composables/utils';
 
 export default defineComponent({
-  name: 'YMapDefaultFeaturesLayer',
+  name: 'YandexMapControl',
   props: {
     settings: {
-      type: Object as PropType<ConstructorParameters<typeof YMapDefaultFeaturesLayer>[0]>,
+      type: Object as PropType<ConstructorParameters<typeof YMapControl>[0]>,
       default: () => ({}),
     },
   },
   setup(props, { slots }) {
-    let mapLayer: YMapDefaultFeaturesLayer | undefined;
+    let mapLayer: YMapControl | undefined;
 
     watch(() => props, () => {
       mapLayer?.update(props.settings || {});
@@ -26,7 +26,7 @@ export default defineComponent({
     });
 
     onMounted(async () => {
-      mapLayer = await insertLayerIntoMap(() => new ymaps3.YMapDefaultFeaturesLayer(props.settings || {}));
+      mapLayer = await insertControlIntoMap(async () => new ymaps3.YMapControl(props.settings));
     });
 
     return () => h('div', slots.default?.());

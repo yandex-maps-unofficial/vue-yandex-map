@@ -1,15 +1,13 @@
 <script lang="ts">
 import {
-  h, onMounted, PropType, provide, ref,
-  defineComponent,
-  shallowRef, nextTick,
+  defineComponent, h, nextTick, onBeforeUnmount, onMounted, PropType, provide, Ref, ref, shallowRef,
 } from 'vue';
 import type { YMap, YMapEntity, YMapProps } from '@yandex/ymaps3-types';
 import { initYmaps } from '../composables/maps';
 import { VueYandexMaps } from '../types/settings';
 
 export default defineComponent({
-  name: 'YMap',
+  name: 'YandexMap',
   props: {
     map: {
       type: Object as PropType<YMap | null>,
@@ -64,14 +62,18 @@ export default defineComponent({
    * @see https://yandex.com/dev/maps/jsapi/doc/3.0/dg/concepts/events.html
    */
   emits: {
-    'update:map'(map: YMap | unknown) {
-      return map && map instanceof ymaps3.YMap;
+    'update:map'(map: Ref<YMap | null>): boolean {
+      return !map.value || typeof ymaps3 === 'undefined' || map.value instanceof ymaps3.YMap;
     },
   },
-  setup(props, { slots, emit }) {
+  setup(props, {
+    slots,
+    emit,
+  }) {
     const map = shallowRef<YMap | null>(null);
     const layers = shallowRef([]);
     const ymapContainer = ref<HTMLDivElement | null>(null);
+    const mounted = shallowRef(false);
 
     provide('map', map);
     provide('layers', layers);
@@ -106,8 +108,13 @@ export default defineComponent({
         }
       }
 
+      mounted.value = true;
       await nextTick();
       setTimeout(init, 300);
+    });
+
+    onBeforeUnmount(() => {
+      map.value = null;
     });
 
     return () => {
@@ -119,6 +126,8 @@ export default defineComponent({
         },
         ref: ymapContainer,
       });
+
+      if (!mounted.value) return container;
 
       const result = h(props.tag, {
         class: '__ymap',

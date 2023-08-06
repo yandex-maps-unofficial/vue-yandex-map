@@ -6,7 +6,7 @@ import {
 import { insertChildrenIntoMap } from '../composables/utils';
 
 export default defineComponent({
-  name: 'YMapMarker',
+  name: 'YandexMapMarker',
   props: {
     settings: {
       type: Object as PropType<ConstructorParameters<typeof YMapMarker>[0]>,

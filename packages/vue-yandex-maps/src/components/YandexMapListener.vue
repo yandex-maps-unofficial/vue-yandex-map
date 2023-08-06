@@ -9,7 +9,7 @@ import {
 import { insertChildrenIntoMap } from '../composables/utils';
 
 export default defineComponent({
-  name: 'YMapListener',
+  name: 'YandexMapListener',
   props: {
     settings: {
       type: Object as PropType<Partial<DomEvents & MapEvents & BehaviorEvents>>,

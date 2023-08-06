@@ -1,23 +1,23 @@
 <script lang="ts">
+import { YMapLayer } from '@yandex/ymaps3-types';
 import {
   onMounted, watch, PropType, h,
   defineComponent,
 } from 'vue';
-import { YMapZoomControl } from '@yandex/ymaps3-types/packages/controls';
 import {
-  insertControlIntoMap,
+  insertLayerIntoMap,
 } from '../../composables/utils';
 
 export default defineComponent({
-  name: 'YMapZoomControl',
+  name: 'YandexMapLayer',
   props: {
     settings: {
-      type: Object as PropType<ConstructorParameters<typeof YMapZoomControl>[0]>,
+      type: Object as PropType<ConstructorParameters<typeof YMapLayer>[0]>,
       default: () => ({}),
     },
   },
   setup(props, { slots }) {
-    let mapLayer: YMapZoomControl | undefined;
+    let mapLayer: YMapLayer | undefined;
 
     watch(() => props, () => {
       mapLayer?.update(props.settings || {});
@@ -26,7 +26,7 @@ export default defineComponent({
     });
 
     onMounted(async () => {
-      mapLayer = await insertControlIntoMap(() => ymaps3.import('@yandex/ymaps3-controls@0.0.1'), async (controls) => new controls.YMapZoomControl(props.settings));
+      mapLayer = await insertLayerIntoMap(() => new ymaps3.YMapLayer(props.settings || {}));
     });
 
     return () => h('div', slots.default?.());

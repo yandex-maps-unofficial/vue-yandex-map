@@ -1,19 +1,28 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {
-  YMap, YMapDefaultSchemeLayer, YMapListener, YMapMarker, YMapDefaultFeaturesLayer, YMapControls, YMapGeolocationControl, YMapZoomControl,
+  YandexMap,
+  YandexMapControls,
+  YandexMapDefaultFeaturesLayer,
+  YandexMapDefaultSchemeLayer,
+  YandexMapDefaultSatelliteLayer,
+  YandexMapGeolocationControl,
+  YandexMapListener,
+  YandexMapMarker,
+  YandexMapZoomControl,
 } from 'vue-yandex-maps';
 
 export default defineComponent({
   components: {
-    YMapMarker,
-    YMapDefaultSchemeLayer,
-    YMapDefaultFeaturesLayer,
-    YMapListener,
-    YMap,
-    YMapControls,
-    YMapGeolocationControl,
-    YMapZoomControl,
+    YandexMapMarker,
+    YandexMapDefaultSchemeLayer,
+    YandexMapDefaultFeaturesLayer,
+    YandexMapListener,
+    YandexMap,
+    YandexMapControls,
+    YandexMapGeolocationControl,
+    YandexMapDefaultSatelliteLayer,
+    YandexMapZoomControl,
   },
   data() {
     return {
@@ -29,25 +38,26 @@ export default defineComponent({
 </script>
 
 <template>
-  <div id="__app">
-    <y-map width="50dvw" height="75dvh" :settings="{ location: { center: [37.588144, 55.733842], zoom: 7 } }">
-      <y-map-listener :settings="{ onClick: test }" />
-      <y-map-default-scheme-layer :settings="{ theme: 'dark' }" />
-      <y-map-default-features-layer />
-      <y-map-marker :settings="{ coordinates: [37.588144, 55.733842] }">
+  <div id="__app" :key="markerValue">
+    <yandex-map width="50dvw" height="75dvh" :settings="{ location: { center: [37.588144, 55.733842], zoom: 7 } }">
+      <yandex-map-listener :settings="{ onClick: test }" />
+      <yandex-map-default-satellite-layer />
+      <yandex-map-default-scheme-layer :settings="{ theme: 'dark' }" />
+      <yandex-map-default-features-layer />
+      <yandex-map-marker :settings="{ coordinates: [37.588144, 55.733842] }">
         <span style="color: #fff">
           {{ markerValue }}
         </span>
-      </y-map-marker>
-      <y-map-controls :settings="{ position: 'top left', orientation: 'vertical' }">
-        <y-map-geolocation-control />
-        <y-map-zoom-control />
-      </y-map-controls>
-      <y-map-controls :settings="{ position: 'top right', orientation: 'horizontal' }">
-        <y-map-geolocation-control />
-        <y-map-zoom-control />
-      </y-map-controls>
-    </y-map>
+      </yandex-map-marker>
+      <yandex-map-controls :settings="{ position: 'top left', orientation: 'vertical' }">
+        <yandex-map-geolocation-control />
+        <yandex-map-zoom-control />
+      </yandex-map-controls>
+      <yandex-map-controls :settings="{ position: 'top right', orientation: 'horizontal' }">
+        <yandex-map-geolocation-control />
+        <yandex-map-zoom-control />
+      </yandex-map-controls>
+    </yandex-map>
   </div>
 </template>
 

@@ -1,33 +1,37 @@
-import YMap from './YMap.vue';
-import YMapListener from './YMapListener.vue';
-import YMapDefaultFeaturesLayer from './layers/YMapDefaultFeaturesLayer.vue';
-import YMapDefaultSchemeLayer from './layers/YMapDefaultSchemeLayer.vue';
-import YMapTileDataSource from './data-sources/YMapTileDataSource.vue';
-import YMapFeatureDataSource from './data-sources/YMapFeatureDataSource.vue';
-import YMapLayer from './layers/YMapLayer.vue';
-import YMapMarker from './YMapMarker.vue';
-import YMapFeature from './YMapFeature.vue';
-import YMapControls from './controls/YMapControls.vue';
-import YMapGeolocationControl from './controls/YMapGeolocationControl.vue';
-import YMapZoomControl from './controls/YMapZoomControl.vue';
+import YandexMap from './YandexMap.vue';
+import YandexMapListener from './YandexMapListener.vue';
+import YandexMapDefaultFeaturesLayer from './layers/YandexMapDefaultFeaturesLayer.vue';
+import YandexMapDefaultSchemeLayer from './layers/YandexMapDefaultSchemeLayer.vue';
+import YandexMapTileDataSource from './data-sources/YandexMapTileDataSource.vue';
+import YandexMapFeatureDataSource from './data-sources/YandexMapFeatureDataSource.vue';
+import YandexMapLayer from './layers/YandexMapLayer.vue';
+import YandexMapMarker from './YandexMapMarker.vue';
+import YandexMapFeature from './YandexMapFeature.vue';
+import YandexMapControls from './controls/YandexMapControls.vue';
+import YandexMapControl from './controls/YandexMapControl.vue';
+import YandexMapControlButton from './controls/YandexMapControlButton.vue';
+import YandexMapGeolocationControl from './controls/YandexMapGeolocationControl.vue';
+import YandexMapZoomControl from './controls/YandexMapZoomControl.vue';
 
 export {
-  YMap,
-  YMapListener,
-  YMapMarker,
-  YMapFeature,
+  YandexMap,
+  YandexMapListener,
+  YandexMapMarker,
+  YandexMapFeature,
 
   // Data Sources
-  YMapTileDataSource,
-  YMapFeatureDataSource,
+  YandexMapTileDataSource,
+  YandexMapFeatureDataSource,
 
   // Layers
-  YMapDefaultFeaturesLayer,
-  YMapDefaultSchemeLayer,
-  YMapLayer,
+  YandexMapDefaultFeaturesLayer,
+  YandexMapDefaultSchemeLayer,
+  YandexMapLayer,
 
   // Controls
-  YMapControls,
-  YMapGeolocationControl,
-  YMapZoomControl,
+  YandexMapControls,
+  YandexMapGeolocationControl,
+  YandexMapZoomControl,
+  YandexMapControl,
+  YandexMapControlButton,
 };

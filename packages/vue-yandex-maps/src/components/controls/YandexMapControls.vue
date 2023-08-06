@@ -6,7 +6,7 @@ import {
 import { waitTillMapInit, injectMap } from '../../composables/utils';
 
 export default defineComponent({
-  name: 'YMapControls',
+  name: 'YandexMapControls',
   props: {
     settings: {
       type: Object as PropType<ConstructorParameters<typeof YMapControls>[0]>,
