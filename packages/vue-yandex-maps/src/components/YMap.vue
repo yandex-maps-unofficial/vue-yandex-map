@@ -68,13 +68,14 @@ export default defineComponent({
       return map && map instanceof ymaps3.YMap;
     },
   },
-  setup(props, { slots }) {
+  setup(props, { slots, emit }) {
     const map = shallowRef<YMap | null>(null);
     const layers = shallowRef([]);
     const ymapContainer = ref<HTMLDivElement | null>(null);
 
     provide('map', map);
     provide('layers', layers);
+    emit('update:map', map);
 
     const init = async () => {
       const container = ymapContainer.value;
@@ -106,7 +107,7 @@ export default defineComponent({
       }
 
       await nextTick();
-      await init();
+      setTimeout(init, 300);
     });
 
     return () => {

@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  // Needed for local testing only
   alias: {
     'vue-yandex-maps': '../../vue-yandex-maps',
   },

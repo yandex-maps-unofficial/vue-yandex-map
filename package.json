@@ -10,7 +10,8 @@
         "test:vue3": "yarn workspace vue-yandex-maps build:package-only && yarn workspace example-vue3 dev",
         "test:nuxt3": "yarn workspace vue-yandex-maps build && yarn workspace example-nuxt3 dev",
         "lint": "eslint --ext \".js,.ts,.vue\" ./packages/* --max-warnings 0",
-        "lint:fix": "yarn lint --fix"
+        "lint:fix": "yarn lint --fix",
+        "publish":"yarn lint && yarn build && yarn workspace vue-yandex-maps npm:publish"
     },
     "devDependencies": {
         "@babel/eslint-parser": "^7.22.9",

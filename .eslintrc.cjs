@@ -41,6 +41,21 @@ module.exports = {
       'error',
       'always-multiline',
     ],
+    'no-redeclare': 'off',
+    '@typescript-eslint/no-redeclare': ['error'],
+    'no-dupe-class-members': 'off',
+    '@typescript-eslint/no-dupe-class-members': ['error'],
+    'no-useless-constructor': 'off',
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': [
+      'error', {
+        'functions': false,
+      },
+    ],
+    '@typescript-eslint/no-useless-constructor': [
+      'error',
+    ],
+    'space-before-function-paren': 'off',
   },
   parser: 'vue-eslint-parser',
   parserOptions: {

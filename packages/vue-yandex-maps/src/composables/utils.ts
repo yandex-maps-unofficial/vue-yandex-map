@@ -153,7 +153,9 @@ export async function insertLayerIntoMap<T extends YMapEntity<unknown>>(layerCre
   return layer;
 }
 
-export async function insertControlIntoMap<R extends(() => Promise<unknown>), T extends YMapEntity<unknown>>(requiredImport: R, controlCreateFunction: (neededImport: Awaited<ReturnType<R>>) => T | Promise<T>): Promise<T> {
+export async function insertControlIntoMap<T extends YMapEntity<unknown>>(controlCreateFunction: () => T | Promise<T>): Promise<T>
+export async function insertControlIntoMap<R extends (() => Promise<unknown>), T extends YMapEntity<unknown>>(requiredImport: R, controlCreateFunction: (neededImport: Awaited<ReturnType<R>>) => T | Promise<T>): Promise<T>
+export async function insertControlIntoMap<R extends (() => Promise<unknown>), T extends YMapEntity<unknown>>(requiredImport: R | (() => T | Promise<T>), controlCreateFunction?: (neededImport: Awaited<ReturnType<R>>) => T | Promise<T>): Promise<T> {
   if (!getCurrentInstance()) throw new Error('insertControlIntoMap must be only called on runtime. This is likely Vue Yandex Map internal bug.');
 
   const control = injectControl();
@@ -169,7 +171,12 @@ export async function insertControlIntoMap<R extends(() => Promise<unknown>), T 
   await waitTillYmapInit();
 
   if (!control.value) throw new Error('control is undefined in insertControlIntoMap. Please ensure you are calling this component inside <y-map-controls> component.');
-  controlInitPromises?.value.push(requiredImport());
+
+  if (requiredImport && controlCreateFunction) {
+    controlInitPromises?.value.push((requiredImport as R)());
+  }
+
+  controlCreateFunction = controlCreateFunction || requiredImport as (() => T | Promise<T>);
   newControl = await controlCreateFunction(await requiredImport() as Awaited<ReturnType<R>>);
 
   control.value.addChild(newControl);

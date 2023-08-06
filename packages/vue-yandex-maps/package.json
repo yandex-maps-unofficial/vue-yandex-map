@@ -1,6 +1,6 @@
 {
   "name": "vue-yandex-maps",
-  "version": "2.0.0-alpha.49",
+  "version": "2.0.0-alpha.10",
   "description": "Yandex Maps component for VueJS.",
   "main": "./dist/vue-yandex-maps.js",
   "types": "./dist/index.d.ts",
@@ -18,8 +18,13 @@
     "build:package-only": "tsc && vite build",
     "docs:build": "vuepress build docs",
     "docs:dev": "vuepress dev docs",
-    "test": "jest"
+    "test": "jest",
+    "npm:publish":"npm publish"
   },
+  "files": [
+    "package.json",
+    "dist"
+  ],
   "engines": {
     "node": ">=16.14"
   },
@@ -40,8 +45,7 @@
   "license": "MIT",
   "dependencies": {
     "@nuxt/kit": "^3.6.5",
-    "@yandex/ymaps3-types": "^0.0.14",
-    "vue-yandex-maps": "workspace:*"
+    "@yandex/ymaps3-types": "^0.0.14"
   },
   "devDependencies": {
     "@nuxt/types": "^2.17.1",

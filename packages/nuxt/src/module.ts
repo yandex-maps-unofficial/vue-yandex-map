@@ -32,6 +32,9 @@ export default defineNuxtModule<ModuleOptions>({
 
     nuxt.options.runtimeConfig.public.yandexMaps = options;
 
+    if (!nuxt.options.build.transpile) nuxt.options.build.transpile = [];
+    nuxt.options.build.transpile.push('vue-yandex-maps');
+
     addPlugin({
       src: createResolver(import.meta.url)
         .resolve('./runtime/plugin'),
