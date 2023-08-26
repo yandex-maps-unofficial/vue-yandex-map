@@ -1,6 +1,6 @@
 <script lang="ts">
 import {
-  defineComponent, h, nextTick, onBeforeUnmount, onMounted, PropType, provide, Ref, ref, shallowRef,
+  defineComponent, h, nextTick, onBeforeUnmount, onMounted, PropType, provide, ref, shallowRef,
 } from 'vue';
 import type { YMap, YMapEntity, YMapProps } from '@yandex/ymaps3-types';
 import { initYmaps } from '../composables/maps';
@@ -111,6 +111,8 @@ export default defineComponent({
 
       mounted.value = true;
       await nextTick();
+
+      // TODO: подумать можно ли сократить или убрать
       setTimeout(init, 300);
     });
 

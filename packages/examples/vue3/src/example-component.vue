@@ -5,7 +5,6 @@ import {
   YandexMapControls,
   YandexMapDefaultFeaturesLayer,
   YandexMapDefaultSchemeLayer,
-  YandexMapDefaultSatelliteLayer,
   YandexMapGeolocationControl,
   YandexMapListener,
   YandexMapMarker,
@@ -21,7 +20,6 @@ export default defineComponent({
     YandexMap,
     YandexMapControls,
     YandexMapGeolocationControl,
-    YandexMapDefaultSatelliteLayer,
     YandexMapZoomControl,
   },
   data() {
@@ -38,10 +36,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <div id="__app" :key="markerValue">
+  <div id="__app">
     <yandex-map width="50dvw" height="75dvh" :settings="{ location: { center: [37.588144, 55.733842], zoom: 7 } }">
       <yandex-map-listener :settings="{ onClick: test }" />
-      <yandex-map-default-satellite-layer />
       <yandex-map-default-scheme-layer :settings="{ theme: 'dark' }" />
       <yandex-map-default-features-layer />
       <yandex-map-marker :settings="{ coordinates: [37.588144, 55.733842] }">
