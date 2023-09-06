@@ -28,6 +28,7 @@ These settings are optional and below you can see default options:
 ```JavaScript
 const settings = {
   apiKey: '',
+  suggestApiKey: '',
   lang: 'ru_RU',
   coordorder: 'latlong',
   enterprise: false,

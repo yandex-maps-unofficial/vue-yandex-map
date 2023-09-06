@@ -22,6 +22,7 @@ npm install vue-yandex-maps
 ```JavaScript
 const settings = {
   apiKey: '',
+  suggestApiKey: '',
   lang: 'ru_RU',
   coordorder: 'latlong',
   enterprise: false,
