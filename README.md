@@ -12,9 +12,9 @@
 # vue-yandex-maps
 
 ## Version 2.0 (Maps 3.0)
-Version 2.0 with Yandex Maps 3.0 is in Release Candidate stage, stable and documented. It's compatible with all of Vue 2, 3, and Nuxt and comes with full official TS support.
+Version 2.0 with Yandex Maps 3.0 has been released. It's compatible with all of Vue 2, 3, and Nuxt and comes with full official TS support.
 
-If you start a new project with `vue-yandex-maps`, it is highly recommended to use Version 2.0 instead of 0.xx/1.xx. 
+It is highly recommended to use Version 2.0 instead of 0.xx/1.xx. 
 
 Please view [version 2.0 documentation](https://yandex-maps-unofficial.github.io/vue-yandex-maps/).
 
