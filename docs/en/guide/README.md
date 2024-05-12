@@ -1,5 +1,9 @@
 # Introduction
 
+::: danger Important!
+This version is deprecated. LTS version [here](https://github.com/yandex-maps-unofficial/vue-yandex-maps)
+:::
+
 You can easily plug Yandex map in your project with this custom component and you available minimal part of functionality right now from the "box". However If you want to use full functionality of [YandexMap API](https://tech.yandex.ru/maps/doc/jsapi/2.1/quick-start/index-docpage/), you need apply to [map instance](https://tech.yandex.ru/maps/doc/jsapi/2.1/quick-start/index-docpage/) directly.
  
 
