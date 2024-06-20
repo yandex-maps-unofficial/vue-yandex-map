@@ -67,7 +67,7 @@ export default {
   render(h) {
     return h('div', [
       this.$slots.balloon && h('div', { style: 'display: none;' }, [this.$slots.balloon]),
-      this.$slots.balloonLayout && h('div', { style: 'display: none;' }, [this.$slots.balloonLayout])
+      this.$slots.balloonLayout && h('div', { style: 'display: none;' }, [this.$slots.balloonLayout]),
     ]);
   },
   mounted() {
@@ -143,6 +143,8 @@ export default {
           marker.iconContentLayout = ymaps.templateLayoutFactory
             .createClass(this.icon.contentLayout);
         }
+      } else if (this.icon && typeof this.icon.layout === 'string') {
+        marker.iconLayout = ymaps.templateLayoutFactory.createClass(this.icon.layout);
       } else {
         marker.icon = this.icon;
       }
